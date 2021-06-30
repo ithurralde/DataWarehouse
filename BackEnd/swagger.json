@@ -1,0 +1,914 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Swagger Delilah Resto",
+    "description": "API para pedidos de comida deliciosa. Como cliente, podras registrate, ver el listado de nuestros productos y realizar una orden. Los administradores del restaurante tienen la posibilidad de recibir pedidos y actualizarlos.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "usuarios",
+      "description": "Todos los end-points relacionados a un usuario"
+    },
+    {
+      "name": "platos",
+      "description": "Todos los end-points relacionados a un plato"
+    },
+    {
+      "name": "pedidos",
+      "description": "Todos los end-points relacionados a un pedido"
+    }
+  ],
+  "paths": {
+    "/crear_usuario": {
+      "post": {
+        "tags": [
+          "usuarios"
+        ],
+        "summary": "Añade un nuevo usuario a la aplicación",
+        "operationId": "",
+        "requestBody": {
+          "description": "Formato JSON para añadir un usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Respuesta de exito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Usuario registrado exitosamente"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/usuario/loggin": {
+      "post": {
+        "tags": [
+          "usuarios"
+        ],
+        "summary": "Ingresa a la plataforma como usuario registrado",
+        "operationId": "",
+        "requestBody": {
+          "description": "Formato JSON para ingresar como un usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Loggin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario registrado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "id": 1,
+                    "user": "user1",
+                    "password": "password1",
+                    "email": "user1@gmail.com",
+                    "name": "name_user1",
+                    "telefono": 5412345678910,
+                    "direccion": "direccion 1",
+                    "admin": 0
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Usuario o contraseña invalidos."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/usuario/update_password": {
+      "put": {
+        "tags": [
+          "usuarios"
+        ],
+        "summary": "Actualiza la contraseña de un usuario",
+        "operationId": "updatePet",
+        "requestBody": {
+          "description": "Formato JSON para actualizar la contraseña de un usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Respuesta de exito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Contraseña actualizada."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Tiene que ingresar como administrador para realizar la accion solicitada."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "No existe el usuario."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/plato/crear_plato": {
+      "post": {
+        "tags": [
+          "platos"
+        ],
+        "summary": "Crea un nuevo plato",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "description": "Id del usuario que quiere crear un plato debe ser administrador. Ejemplo: idUser=9",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Formato JSON para crear un plato",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Plato"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Respuesta de exito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Plato creado"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Tiene que ingresar como administrador para realizar la accion solicitada."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "El usuario no existe."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/plato/actualizar_precio": {
+      "put": {
+        "tags": [
+          "platos"
+        ],
+        "summary": "Actualiza el precio de un plato",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "description": "Id del usuario que quiere actualizar el precio, debe ser administrador. Ejemplo: idUser=9",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Formato JSON para crear un plato",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPrecio"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Respuesta de exito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Precio actualizado correctamente."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Tiene que ingresar como administrador para realizar la accion solicitada."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "El usuario no existe."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/plato/borrar_plato": {
+      "delete": {
+        "tags": [
+          "platos"
+        ],
+        "summary": "Elimina un plato ya existente de la base de datos",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "idPlato",
+            "in": "query",
+            "description": "Formato JSON para crear un plato",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "idUser",
+            "in": "query",
+            "description": "Id del usuario que quiere actualizar el precio, debe ser administrador. Ejemplo: idUser=9",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Plato eliminado correctamente."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Tiene que ingresar como administrador para realizar la accion solicitada."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "El usuario no existe."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plato/platos": {
+      "get": {
+        "tags": [
+          "platos"
+        ],
+        "summary": "Lista todos los platos existentes",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "description": "Id del usuario que quiere ver todos los platos. Ejemplo: idUser=1",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "JSON del plato solicitado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Platos"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "El usuario no existe."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crear_pedido": {
+      "post": {
+        "tags": [
+          "pedidos"
+        ],
+        "summary": "Crea un nuevo pedido",
+        "operationId": "",
+        "requestBody": {
+          "description": "Formato JSON para crear un plato",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearPedido"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Respuesta de exito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Pedido realizado correctamente."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/pedido": {
+      "get": {
+        "tags": [
+          "pedidos"
+        ],
+        "summary": "Obtiene un pedido",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "query",
+            "description": "Id del pedido que desea obtener, ejemplo: value=2",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "messsage": "Milanesa de carne con papas fritas, Matambre a la pizza, Papas fritas, "
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Respuesta de error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "El pedido solicitado no existe."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/pedido/actualizar_estado": {
+      "put": {
+        "tags": [
+          "pedidos"
+        ],
+        "summary": "Actualiza el estado de un pedido",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "description": "Id del usuario que quiere actualizar el estado, debe ser usuario administrador. Ejemplo: idUser=9",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Formato JSON para actualizar el estado de un pedido",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPedido"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "messsage": "Estado actualizado."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": "Error al validar usuario."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "No existe el pedido."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/pedido/borrar_pedido": {
+      "delete": {
+        "tags": [
+          "pedidos"
+        ],
+        "summary": "Elimina un pedido",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "description": "Id del usuario que quiere actualizar el estado, debe ser usuario administrador. Ejemplo: idUser=9",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "idPedido",
+            "in": "query",
+            "description": "Id del pedido que se quiere eliminar, debe ser usuario administrador. Ejemplo: idUser=9",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "messsage": "Pedido eliminado correctamente."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": "Error al validar usuario."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "No existe el pedido."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Loggin": {
+        "required": [
+          "password",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "user1"
+          },
+          "password": {
+            "type": "string",
+            "example": "password1"
+          }
+        }
+      },
+      "Usuario": {
+        "required": [
+          "admin",
+          "direccion",
+          "email",
+          "name",
+          "password",
+          "telefono",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "admin123"
+          },
+          "name": {
+            "type": "string",
+            "example": "admin04"
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@gmail.com"
+          },
+          "direccion": {
+            "type": "string",
+            "example": "14 de julio 1554"
+          },
+          "telefono": {
+            "type": "string",
+            "example": 54011485619
+          },
+          "admin": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "UpdateUsuario": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "user1"
+          },
+          "password": {
+            "type": "string",
+            "example": "new-password"
+          }
+        }
+      },
+      "Plato": {
+        "required": [
+          "descripcion",
+          "nombrePlato",
+          "precio"
+        ],
+        "type": "object",
+        "properties": {
+          "nombrePlato": {
+            "type": "string",
+            "example": "Ensalada cesar"
+          },
+          "precio": {
+            "type": "integer",
+            "format": "int64",
+            "example": 190
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Lechuga, tomate, pan duro, jamon crudo, salsa cesar"
+          }
+        }
+      },
+      "Platos": {
+        "required": [
+          "descripcion",
+          "nombrePlato",
+          "precio"
+        ],
+        "type": "object",
+        "properties": {
+          "nombrePlato": {
+            "type": "string",
+            "example": "Ensalada cesar"
+          },
+          "precio": {
+            "type": "integer",
+            "format": "int64",
+            "example": 190
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Lechuga, tomate, pan duro, jamon crudo, salsa cesar"
+          }
+        }
+      },
+      "ActualizarPrecio": {
+        "required": [
+          "id",
+          "precio"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 2
+          },
+          "precio": {
+            "type": "integer",
+            "format": "int64",
+            "example": 230
+          }
+        }
+      },
+      "CrearPedido": {
+        "required": [
+          "estado",
+          "idUsuario",
+          "platos"
+        ],
+        "type": "object",
+        "properties": {
+          "platos": {
+            "type": "integer",
+            "format": "int64",
+            "example": [
+              1,
+              2,
+              3
+            ]
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "example": 2
+          },
+          "estado": {
+            "type": "string",
+            "example": "preparando"
+          }
+        }
+      },
+      "ActualizarPedido": {
+        "required": [
+          "id",
+          "estado"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "estado": {
+            "type": "string",
+            "example": "preparando"
+          }
+        }
+      }
+    }
+  }
+}

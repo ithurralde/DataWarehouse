@@ -1,0 +1,10 @@
+<form>
+    <h1>Bienvenido</h1>
+    <section>
+        <input type="text" placeholder="Usuario" [(ngModel)]="usuario" name="usuario">
+        <input type="password" placeholder="Contraseña" [(ngModel)]="contrasenia" name="contrasenia">
+    </section>
+    <section class="boton">
+        <button (click)="mostrar()">Ingresar</button>
+    </section>
+</form>

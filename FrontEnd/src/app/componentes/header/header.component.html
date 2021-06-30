@@ -1,0 +1,21 @@
+<div class="nav-item">
+    <ul class="nav justify-content-start">
+        <li class="nav-item">
+            <h3 class="nav ">LOGO</h3>
+        </li>
+    </ul>
+    <ul *ngIf="logeado" class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/contactos">Contactos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/companias">Compañías</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/usuarios">Usuarios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/region-ciudad">Región/Ciudad</a>
+        </li>
+    </ul>
+</div>
