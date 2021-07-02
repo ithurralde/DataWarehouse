@@ -2,10 +2,9 @@ const { response } = require('express');
 const { QueryTypes } = require('sequelize');
 const myDataBase = require('./conectionDB');
 
-
 async function crearUsuario(usuario) {
-    let existe = await myDataBase.query('SELECT user FROM usuarios WHERE user = ?', {
-      replacements: [usuario.user],
+    let existe = await myDataBase.query('SELECT nombre FROM usuarios WHERE nombre = ?', {
+      replacements: [usuario.nombre],
       type: QueryTypes.SELECT
     });
     if (existe.length == 0){
@@ -14,16 +13,16 @@ async function crearUsuario(usuario) {
         type: QueryTypes.SELECT
       });
       if (existe.length == 0){
-        await myDataBase.query('INSERT INTO usuarios (user, password, name, email, telefono, direccion, admin) VALUES (?, ?, ?, ?, ?, ?, ?)', {
-          replacements: [usuario.user, usuario.password, usuario.name, usuario.email, usuario.telefono, usuario.direccion, usuario.admin],
+        await myDataBase.query('INSERT INTO usuarios (nombre, apellido, email, region, ciudad) VALUES (?, ?, ?, ?, ?)', {
+          replacements: [usuario.nombre, usuario.apellido, usuario.email, usuario.region, usuario.ciudad],
         });
-        return { message: 'Usuario registrado exitosamente' };
+        return {message: 'Usuario registrado exitosamente.'};
       }
     }
     return status(404);
   }
     
-  async function logginUsuario(usuario) {
+  async function loginUsuario(usuario) {
       let resultado = await myDataBase.query('SELECT * FROM usuarios WHERE user = ? AND password = ?', {
           replacements: [usuario.user, usuario.password],
           type: QueryTypes.SELECT
@@ -39,6 +38,13 @@ async function crearUsuario(usuario) {
       replacements: [id],
       type: QueryTypes.SELECT
     });
+  }
+
+  async function getUsuarios(){
+    let datos = await myDataBase.query('SELECT * FROM usuarios', {
+      replacements: QueryTypes.SELECT
+    });
+    return datos[0];
   }
   
   async function setPassword(usuario){
@@ -186,4 +192,4 @@ async function crearUsuario(usuario) {
       type: QueryTypes.DELETE},));
   }
   
-  module.exports = { crearUsuario, logginUsuario, getUsuario, setPassword, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };
+  module.exports = { crearUsuario, loginUsuario, getUsuario, getUsuarios, setPassword, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };

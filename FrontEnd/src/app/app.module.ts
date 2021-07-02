@@ -17,6 +17,9 @@ import { CrearContactoComponent } from './componentes/contactos/crear-contacto/c
 import { RegionComponent } from './componentes/region-ciudad/region/region.component';
 import { PaisComponent } from './componentes/region-ciudad/pais/pais.component';
 import { CiudadComponent } from './componentes/region-ciudad/ciudad/ciudad.component';
+import { DataBaseServices } from './servicios/DataBase.service';
+import { UsuarioService } from './servicios/Usuario.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,9 +41,10 @@ import { CiudadComponent } from './componentes/region-ciudad/ciudad/ciudad.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DataBaseServices, UsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

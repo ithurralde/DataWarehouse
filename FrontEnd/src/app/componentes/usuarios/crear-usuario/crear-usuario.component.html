@@ -1,1 +1,13 @@
-<p>crear-usuario works!</p>
+<form>
+    <h1>Bienvenido</h1>
+    <section>
+        <input type="text" placeholder="Usuario" [(ngModel)]="usuario" name="usuario">
+        <input type="text" placeholder="Apellido" [(ngModel)]="apellido" name="contrasenia">
+        <input type="email" placeholder="Email" [(ngModel)]="email" name="email">
+        <input type="text" placeholder="Region" [(ngModel)]="region" name="region">
+        <input type="text" placeholder="Ciudad" [(ngModel)]="ciudad" name="ciudad">
+    </section>
+    <section class="boton">
+        <button (click)="mostrar()">Crear</button>
+    </section>
+</form>

@@ -14,13 +14,13 @@ import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 const routes: Routes = [
   { path:"", component: LoginComponent},
   { path:"contactos", component: ContactosComponent, children:[
-    { path:":id", component: ContactoComponent},
-    { path:"crear", component: CrearContactoComponent}
+    { path:"crear", component: CrearContactoComponent},
+    { path:":id", component: ContactoComponent}
   ]},
   { path:"companias", component: CompaniasComponent},
   { path:"usuarios", component: UsuariosComponent, children:[
-    { path:":id", component: UsuarioComponent},
-    { path:"crear", component: CrearUsuarioComponent}
+    { path:"crear", component: CrearUsuarioComponent},
+    { path:":id", component: UsuarioComponent}
   ]},
   { path:"region-ciudad", component: RegionCiudadComponent},
   { path:"login", component: LoginComponent},

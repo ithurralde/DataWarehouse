@@ -28,6 +28,7 @@ _En la consola bash de visual studio code se inicializo npm init --yes, y se ins
 * npm i swagger
 * npm i swagger-ui-express
 * npm i swagger-jsdoc
+* npm i cors
 
 ### Comando para ejecutar el servidor
 _En la consola de visual studio code escribir: "node .\server.js" (sin comillas) para correr el servidor_

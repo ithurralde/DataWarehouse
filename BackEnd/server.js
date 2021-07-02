@@ -1,6 +1,8 @@
 let express = require('express');
 let server = express();
 const transactionHandler = require('./DBHandler.js');
+// cors lo necesito para tener permisos y poder conectar el front con el back
+const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const jwtClave = "Cl4V3_J0t4D0bl3VT3$";
 let token;
@@ -16,12 +18,15 @@ server.listen(3000, function () {
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const { response } = require('express');
 
 
 server.use('/datawarehouse', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 server.use(express.json());
+
+server.use(cors());
 
 //middleware global
 server.use((error, request, response, next) => {
@@ -47,3 +52,35 @@ const autenticarUsuario = (request, response, next) => {
   }
 }
 
+server.post('/login', (request, response) => {
+  let usuario = request.body;
+  transactionHandler.loginUsuario(usuario)
+  .then(respuesta => { 
+    // el objeto {expiresIn: 15} hace que el token expira en 15 segundos.
+    token = jwt.sign({usuario: usuario.user, id: usuario.id}, jwtClave/*, {expiresIn: 15}*/);
+    response.status(200).send(respuesta); })
+  .catch(respuesta => {response.status(401).send({ message: "Usuario o contraseña invalidos."})});
+});
+
+server.post('/usuarios/crear', (request, response) => {
+  let usuario = request.body;
+  console.log(request);
+  console.log("Estoy entrando aca? " + usuario.email);
+  console.log(usuario);
+  transactionHandler.crearUsuario(usuario)
+  .then(respuesta =>
+    response.status(201).send(respuesta)
+  )
+  .catch(respuesta => 
+    response.status(400).send({ message: "No se pudo crear el usuario."})
+  );
+});
+
+server.get('/usuarios', (request, response) => {
+  transactionHandler.getUsuarios()
+  .then( respuesta => {
+    response.status(200).send(respuesta);
+  })
+  .catch(respuesta => 
+    response.status(400).send({message: "No se pudo conectar con la base de datos."}))
+})
