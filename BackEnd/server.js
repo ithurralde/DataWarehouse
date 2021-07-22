@@ -57,7 +57,7 @@ server.post('/login', (request, response) => {
   transactionHandler.loginUsuario(usuario)
   .then(respuesta => { 
     // el objeto {expiresIn: 15} hace que el token expira en 15 segundos.
-    token = jwt.sign({usuario: usuario.user, id: usuario.id}, jwtClave/*, {expiresIn: 15}*/);
+    token = jwt.sign({usuario: usuario.user, id: usuario.id}, jwtClave, {expiresIn: 2});
     response.status(200).send(respuesta); })
   .catch(respuesta => {response.status(401).send({ message: "Usuario o contraseña invalidos."})});
 });
@@ -77,10 +77,35 @@ server.post('/usuarios/crear', (request, response) => {
 });
 
 server.get('/usuarios', (request, response) => {
+  console.log("estoy entrando por aca (el que no es)");
   transactionHandler.getUsuarios()
   .then( respuesta => {
     response.status(200).send(respuesta);
   })
   .catch(respuesta => 
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
+})
+
+server.get('/usuarios/:id', (request, response) => {
+  let idParam = request.query.id;
+  console.log("voy a entrar aca (el posta)");
+  console.log(idParam);
+  transactionHandler.getUsuario(idParam)
+  .then( respuesta => {
+    response.status(200).send(respuesta);
+  })
+  .catch(respuesta => 
+    response.status(400).send({message: "No se pudo conectar con la base de datos."}))
+})
+
+server.get('/regiones', (request, response) => {
+  transactionHandler.getRegiones()
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
+})
+
+server.get('/paises', (request, response) => {
+  transactionHandler.getRegiones()
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
 })

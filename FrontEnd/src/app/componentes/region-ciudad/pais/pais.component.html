@@ -1,1 +1,15 @@
-<p>pais works!</p>
+<h1 [(ngModel)]="pais" name="fieldName" ngDefaultControl>{{ pais.nombre }}</h1>
+<button (click)=preAgregarCiudad()>
+    <p>Add city</p>
+</button>
+
+<div *ngIf="puedoAgregar">
+    <p>Nombre de la ciudad:</p>
+    <input type="text" placeholder="Nombre de la ciudad" [(ngModel)]=ciudad name="fieldName" ngDefaultControl>
+    <button (click)=agregarCiudad()>Agregar</button>
+</div>
+
+<app-ciudad *ngFor="let ciudad of ciudades"
+    [ciudad]="ciudad"
+    (borrarCiudad)=delete($event)>
+</app-ciudad>

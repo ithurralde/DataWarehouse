@@ -13,8 +13,8 @@ async function crearUsuario(usuario) {
         type: QueryTypes.SELECT
       });
       if (existe.length == 0){
-        await myDataBase.query('INSERT INTO usuarios (nombre, apellido, email, region, ciudad) VALUES (?, ?, ?, ?, ?)', {
-          replacements: [usuario.nombre, usuario.apellido, usuario.email, usuario.region, usuario.ciudad],
+        await myDataBase.query('INSERT INTO usuarios (usuario, nombre, apellido, email, perfil, admin, contrasenia) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+          replacements: [usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.perfil, usuario.admin, usuario.contrasenia],
         });
         return {message: 'Usuario registrado exitosamente.'};
       }
@@ -22,9 +22,9 @@ async function crearUsuario(usuario) {
     return status(404);
   }
     
-  async function loginUsuario(usuario) {
+  async function loginUsuario(usuario, contrasenia) {
       let resultado = await myDataBase.query('SELECT * FROM usuarios WHERE user = ? AND password = ?', {
-          replacements: [usuario.user, usuario.password],
+          replacements: [usuario, contrasenia],
           type: QueryTypes.SELECT
       });
       if (resultado.length == 0)
@@ -34,10 +34,17 @@ async function crearUsuario(usuario) {
   }
   
   async function getUsuario(id){
-    return await myDataBase.query('SELECT * FROM usuarios WHERE id = ?', {
+    // return await myDataBase.query('SELECT * FROM usuarios WHERE id = ?', {
+    //   replacements: [id],
+    //   type: QueryTypes.SELECT
+    // });
+    let a = await myDataBase.query('SELECT * FROM usuarios WHERE id = ?', {
       replacements: [id],
       type: QueryTypes.SELECT
     });
+    console.log(id);
+    console.log(a);
+    return a;
   }
 
   async function getUsuarios(){
@@ -61,6 +68,29 @@ async function crearUsuario(usuario) {
     return { message: "Contraseña actualizada."}
   }
   
+
+  async function getRegiones(){
+    return await myDataBase.query('SELECT * FROM paises', {
+      type: QueryTypes.SELECT
+    })
+    // falta el grup by para que me tome solo las regiones
+  }
+
+  async function getPaises(){
+    return await myDataBase.query('SELECT * FROM paises', {
+      type: QueryTypes.SELECT
+    })
+  }
+
+
+
+
+
+
+
+
+
+
   async function crearPlato(plato){
     await myDataBase.query('INSERT INTO platos (nombre_plato, precio, descripcion) VALUES (?, ?, ?)', {
       replacements: [plato.nombrePlato, plato.precio, plato.descripcion],
@@ -192,4 +222,4 @@ async function crearUsuario(usuario) {
       type: QueryTypes.DELETE},));
   }
   
-  module.exports = { crearUsuario, loginUsuario, getUsuario, getUsuarios, setPassword, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };
+  module.exports = { crearUsuario, loginUsuario, getUsuario, getUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };

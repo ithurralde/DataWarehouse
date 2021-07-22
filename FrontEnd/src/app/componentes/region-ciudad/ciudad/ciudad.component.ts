@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CiudadModule } from 'src/app/model/ciudad/ciudad.module';
 
 @Component({
   selector: 'app-ciudad',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ciudad.component.css']
 })
 export class CiudadComponent implements OnInit {
-
+  @Input() ciudad: CiudadModule;
+  puedeEditar = false;
+  @Output() borrarCiudad = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  preEditar(){
+    this.puedeEditar = true;
+  }
+  editar(){
+    this.puedeEditar = false;
+  }
+  borrar(){
+    this.borrarCiudad.emit(this.ciudad);
+  }
+  
 }

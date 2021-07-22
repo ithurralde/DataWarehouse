@@ -1,1 +1,13 @@
-<p>region-ciudad works!</p>
+<button (click)=preAgregarRegion()>
+    <p>Agregar región</p>
+</button>
+
+<div *ngIf="puedoAgregar">
+    <p>Nombre de la región:</p>
+    <input type="text" placeholder="Nombre de la región" [(ngModel)]=region >
+    <button (click)=agregarRegion()>Agregar</button>
+</div>
+
+<app-region *ngFor="let region of regiones"
+    [region]="region">
+</app-region>

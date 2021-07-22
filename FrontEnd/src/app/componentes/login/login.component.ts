@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/model/Usuario.model';
-import { DataBaseServices } from 'src/app/servicios/DataBase.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   usuario:string;
   contrasenia:string;
 
-  constructor(private dbService: DataBaseServices) { }
+  constructor(private usuarioService: UsuarioService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -19,7 +19,12 @@ export class LoginComponent implements OnInit {
   async mostrar(){
     console.log(this.usuario);
     console.log(this.contrasenia);
-    let user = new Usuario(this.usuario, "Wayne", "brenwayne13@gmail.com", "Argentina", "Buenos Aires");
-    this.dbService.crearUsuario(user);
+    // let user = new Usuario(this.usuario, "Wayne", "brenwayne13@gmail.com", "Argentina", "Buenos Aires");
+    // this.dbService.crearUsuario(user);
+    let existe = this.usuarioService.existeUsuario(this.usuario, this.contrasenia);
+    if (existe == true){
+      this.usuarioService.logear(this.usuario, this.contrasenia);
+      this.router.navigate(["usuarios"]);
+    }
   }
 }

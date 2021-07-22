@@ -1,1 +1,13 @@
-<p>ciudad works!</p>
+<div>
+    <h1 [(ngModel)]="ciudad" name="fieldName" ngDefaultControl>{{ciudad.nombre}}</h1>
+    <button (click)=preEditar()>
+        <p>Edit</p>
+    </button>
+    <div *ngIf="puedeEditar">
+        <input type="text" placeholder="Editar nombre" [(ngModel)]="ciudad.nombre" ngDefaultControl>
+        <button (click)=editar()>OK!</button>    
+    </div>
+    <button (click)=borrar()>
+        <p>Delete</p>
+    </button>
+</div>

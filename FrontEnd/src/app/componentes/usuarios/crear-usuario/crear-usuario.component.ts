@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/model/Usuario.model';
 import { DataBaseServices } from 'src/app/servicios/DataBase.service';
+import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -9,12 +10,14 @@ import { DataBaseServices } from 'src/app/servicios/DataBase.service';
   styleUrls: ['./crear-usuario.component.css']
 })
 export class CrearUsuarioComponent implements OnInit {
-  usuario: string;
-  apellido: string;
-  email: string;
-  region: string;
-  ciudad: string;
-  constructor(private dbService: DataBaseServices, private router: Router) { 
+  usuario:string;
+  nombre:string;
+  apellido:string; 
+  email:string;
+  perfil:string;
+  admin:boolean; 
+  contrasenia:string;
+  constructor(private dbService: DataBaseServices, private router: Router, private usuarioService: UsuarioService) { 
 
   }
 
@@ -24,8 +27,8 @@ export class CrearUsuarioComponent implements OnInit {
   async mostrar(){
     console.log(this.usuario);
     console.log(this.apellido);
-    let user = new Usuario(this.usuario, this.apellido, this.email, this.region, this.ciudad);
-    this.dbService.crearUsuario(user)
+    let user = new Usuario(this.usuario, this.nombre, this.apellido, this.email, this.perfil, this.admin, this.contrasenia);
+    this.usuarioService.crearUsuario(user)
     .subscribe(
       response => console.log(response),
       error => { 

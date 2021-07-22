@@ -7,6 +7,16 @@ export class UsuarioService {
     usuarios: Usuario[];
 
     constructor(private dbService: DataBaseServices){
+        this.dbService.obtenerUsuarios().subscribe(
+            (response: Usuario[]) => {
+                this.cargarUsuarios(response);
+            }
+        );
+    }
+
+    crearUsuario(usuario: Usuario){
+        this.usuarios.push(usuario);
+        return this.dbService.crearUsuario(usuario);
     }
     
     // carga todos los usuarios que hay en la base de datos
@@ -14,7 +24,25 @@ export class UsuarioService {
         this.usuarios = usuarios;
     }
 
-    // obtiene los usuarios que estane en la base de datos
+    existeUsuario(usuario: string, contraseña: string): boolean{
+        let retorno = false;
+        this.usuarios.forEach(user => {
+            if (user.usuario == usuario && user.contrasenia == contraseña)
+                retorno = true;
+            });
+        return retorno;
+    }
+
+    logear(usuario: string, contrasenia: string) {
+        this.dbService.login(usuario, contrasenia);
+      }
+
+    // no funciona este
+    obtenerUsuario(){
+        return this.dbService.obtenerUsuario();
+    }
+
+    // obtiene los usuarios que estan en la base de datos
     obtenerUsuarios(){
         return this.dbService.obtenerUsuarios();
     }

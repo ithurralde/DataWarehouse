@@ -16,7 +16,7 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.obtenerUsuarios().subscribe(
       (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
-        this.usuarioService.cargarUsuarios(usuarios);
+        // this.usuarioService.cargarUsuarios(usuarios);
       },
       error => { 
         console.log(error);

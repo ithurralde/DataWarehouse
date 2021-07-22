@@ -1,1 +1,14 @@
-<p>region works!</p>
+<h1 [(ngModel)]="region" name="fieldName" ngDefaultControl>{{ region.nombre }}</h1>
+<button (click)=preAgregarPais()>
+    <p>Add country</p>
+</button>
+
+<div *ngIf="puedeAgregar">
+    <p>Nombre del pais:</p>
+    <input type="text" placeholder="Nombre del pais" [(ngModel)]=nombrePais name="fieldName" ngDefaultControl>
+    <button (click)=agregarPais()>Agregar</button>
+</div>
+
+<app-pais *ngFor="let pais of paises"
+    [pais]="pais">
+</app-pais>

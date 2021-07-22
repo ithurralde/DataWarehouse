@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  logeado:boolean = false;
+  logeado:boolean = true;
 
   constructor() { }
 
