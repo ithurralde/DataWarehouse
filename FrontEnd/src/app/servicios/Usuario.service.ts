@@ -7,7 +7,7 @@ export class UsuarioService {
     usuarios: Usuario[];
 
     constructor(private dbService: DataBaseServices){
-        this.dbService.obtenerUsuarios().subscribe(
+        this.dbService.obtenerUsuarioPreLog().subscribe(
             (response: Usuario[]) => {
                 this.cargarUsuarios(response);
             }
@@ -26,15 +26,17 @@ export class UsuarioService {
 
     existeUsuario(usuario: string, contraseña: string): boolean{
         let retorno = false;
-        this.usuarios.forEach(user => {
-            if (user.usuario == usuario && user.contrasenia == contraseña)
-                retorno = true;
-            });
+        if (this.usuarios != null)
+            this.usuarios.forEach(user => {
+                if (user.usuario == usuario && user.contrasenia == contraseña)
+                    retorno = true;
+                });
+        console.log(retorno);
         return retorno;
     }
 
     logear(usuario: string, contrasenia: string) {
-        this.dbService.login(usuario, contrasenia);
+        return this.dbService.login(usuario, contrasenia);
       }
 
     // no funciona este

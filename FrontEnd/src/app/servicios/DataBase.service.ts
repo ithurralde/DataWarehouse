@@ -1,5 +1,7 @@
-import { HttpClient, HttpParams } from "@angular/common/http"
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http"
+import { stringify } from "@angular/compiler/src/util";
 import { Injectable } from "@angular/core"
+import { Observable } from "rxjs";
 import { PaisModule } from "../model/pais/pais.module";
 import { RegionModule } from "../model/region/region.module";
 import { Usuario } from "../model/Usuario.model"
@@ -7,17 +9,41 @@ import { Usuario } from "../model/Usuario.model"
 @Injectable()
 export class DataBaseServices {
     url: string = "http://localhost:3000/";
-    constructor(private httpClient: HttpClient){
+    header = new HttpHeaders({
+        'content-type': 'application/json',
+        //  'Authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc",
+        //  'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc'
+    });
+    tokenJWT:Object;
 
+
+    
+    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.pPblodGgwKxB3YDA5LHdYsx3LYiGjUUEjTkeIHUKKsU delilah
+    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc google
+    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiYWFhcyIsImlhdCI6MTYxOTMwMDcyNX0.Edn7ZsCQl8RpNTQsY6VM19HQ2u5myuA6e5zi-EFasfw postman
+
+    constructor(private httpClient: HttpClient){
     }
 
     login(user: string, contrasenia: string){
-        this.httpClient.post(this.url, {user, contrasenia})
-        .subscribe(
-            response => 
-                console.log("Exito: " + response),
-                error => console.log("Erroraso: " + error)
-        )
+        let resultado = this.httpClient.post(this.url + "login", {user, contrasenia});
+        this.httpClient.post(this.url + "token", {user})
+                        .subscribe(async response => {    
+                                                    this.tokenJWT = await JSON.stringify(response);
+                                                    this.tokenJWT = String(this.tokenJWT).split(":")[1];
+                                                    this.tokenJWT = String(this.tokenJWT).split("\"")[1];
+                                                    this.header = new HttpHeaders({
+                                                        'content-type': 'application/json',
+                                                        // 'Authorization': jwt,
+                                                        'Authorization': String(this.tokenJWT),
+                                                    });
+
+                                                },
+                                    error =>  {
+                                                console.log("rompi por todos lados");
+                                                console.log(error)
+                                            });
+        return resultado;
     }
 
     crearUsuario(user: Usuario){
@@ -31,7 +57,11 @@ export class DataBaseServices {
     }
 
     obtenerUsuarios(){
-        return this.httpClient.get<Usuario[]>(this.url + "usuarios");
+        return this.httpClient.get<Usuario[]>(this.url + "usuarios" , {headers: this.header});
+    }
+
+    obtenerUsuarioPreLog(){
+        return this.httpClient.get<Usuario[]>(this.url + "usuarios_log");
     }
 
     obtenerUsuario(){

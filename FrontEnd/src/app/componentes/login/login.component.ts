@@ -23,8 +23,16 @@ export class LoginComponent implements OnInit {
     // this.dbService.crearUsuario(user);
     let existe = this.usuarioService.existeUsuario(this.usuario, this.contrasenia);
     if (existe == true){
-      this.usuarioService.logear(this.usuario, this.contrasenia);
-      this.router.navigate(["usuarios"]);
+      this.usuarioService.logear(this.usuario, this.contrasenia)
+      .subscribe(
+        response => 
+            {console.log("Exito al loguear: " + response);
+            console.log(response);
+            this.router.navigate(["usuarios"]);},
+        error => {console.log("Error al loguear: " + error);
+                  console.log(error);}
+    );
+      // this.router.navigate(["usuarios"]);
     }
   }
 }

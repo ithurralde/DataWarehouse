@@ -1,4 +1,5 @@
 const { response } = require('express');
+const { TokenExpiredError } = require('jsonwebtoken');
 const { QueryTypes } = require('sequelize');
 const myDataBase = require('./conectionDB');
 
@@ -23,14 +24,18 @@ async function crearUsuario(usuario) {
   }
     
   async function loginUsuario(usuario, contrasenia) {
-      let resultado = await myDataBase.query('SELECT * FROM usuarios WHERE user = ? AND password = ?', {
+      let resultado = await myDataBase.query('SELECT * FROM usuarios WHERE usuario = ? AND contrasenia = ?', {
           replacements: [usuario, contrasenia],
           type: QueryTypes.SELECT
       });
+      console.log(resultado[0]);
+      console.log(resultado.length);
       if (resultado.length == 0)
         return status(401);
-      else
-        return resultado;
+      else{
+        console.log("estoy entrando bien");
+        return resultado[0];
+      }
   }
   
   async function getUsuario(id){
