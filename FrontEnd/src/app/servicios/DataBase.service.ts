@@ -53,7 +53,7 @@ export class DataBaseServices {
         // no funciona con json, le tengo que mandar el objeto (con json me llega un body vacio)
         // let json = JSON.stringify(user);
         // console.log("[DataBaseService] soy el json: " + json);
-        return this.httpClient.post( this.url + "usuarios/crear", user);
+        return this.httpClient.post( this.url + "usuarios/crear", user, {headers: this.header});
     }
 
     obtenerUsuarios(){

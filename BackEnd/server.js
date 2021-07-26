@@ -45,7 +45,7 @@ const autenticarUsuario = (request, response, next) => {
       // console.log(request.headers.authorization);
       // token = request.headers.authorization.split(' ')[1];
       token = request.headers.authorization;
-      // console.log(token);
+      console.log(token);
       const verificarToken = jwt.verify(token, jwtClave);
       if (verificarToken) {
         request.usuario = verificarToken;
@@ -94,6 +94,8 @@ server.post('/', (request, response) => {
 
 server.post('/usuarios/crear', autenticarUsuario, (request, response) => {
   let usuario = request.body;
+  console.log("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  console.log(usuario);
   transactionHandler.crearUsuario(usuario)
   .then(respuesta =>
     response.status(201).send(respuesta)
