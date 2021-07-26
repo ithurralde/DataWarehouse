@@ -17,7 +17,7 @@ export class CrearUsuarioComponent implements OnInit {
   perfil:string;
   admin:boolean; 
   contrasenia:string;
-  constructor(private dbService: DataBaseServices, private router: Router, private usuarioService: UsuarioService) { 
+  constructor(private router: Router, private usuarioService: UsuarioService) { 
 
   }
 

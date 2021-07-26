@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import { Usuario } from 'src/app/model/Usuario.model';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
@@ -9,6 +10,7 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 })
 export class UsuarioComponent implements OnInit {
   @Input() user: Usuario;
+  editable:boolean = false;
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
@@ -24,5 +26,18 @@ export class UsuarioComponent implements OnInit {
     //   console.log(error);
     //   console.error("Error: " + error.error.message)}
     // );
+  }
+
+  editar(){
+    if (this.editable == false)
+      this.editable = true;
+    else{
+      this.editable = false;
+      this.usuarioService.updateUsuario(this.user);
+    }
+  }
+
+  borrar(){
+    
   }
 }

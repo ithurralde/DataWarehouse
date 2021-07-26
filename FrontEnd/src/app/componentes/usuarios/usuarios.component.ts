@@ -14,20 +14,6 @@ export class UsuariosComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    let username:string;
-    this.usuarioService.obtenerUsuario().subscribe(
-      (usuario: Usuario) => {
-        username = usuario.usuario;
-        console.log(username);
-        this.usuarioService.isAdmin(username).subscribe(
-          (admin:any) => {
-            console.log(admin[0]);
-            console.log(admin[0].admin);
-            this.isAdmin = admin[0].admin;
-          }
-        )
-      }
-    );
     this.usuarioService.obtenerUsuarios().subscribe(
       (usuarios: Usuario[]) => {
         this.usuarios = usuarios;

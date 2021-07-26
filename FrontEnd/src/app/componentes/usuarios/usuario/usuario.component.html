@@ -7,3 +7,16 @@
     <p>admin: {{user.admin}}</p>
     <p>contraseña: {{user.contrasenia}}</p>
 </section>
+<button (click)="editar()">Editar</button>
+<button (click)="borrar()">Borrar</button>
+
+<section *ngIf="editable">
+    <input [(ngModel)]="user.usuario">usuario: {{user.usuario}}
+    <input [(ngModel)]="user.nombre">nombre: {{user.nombre}}
+    <input [(ngModel)]="user.apellido">apellido: {{user.apellido}}
+    <input [(ngModel)]="user.email">email: {{user.email}}
+    <input [(ngModel)]="user.perfil">perfil: {{user.perfil}}
+    <input [(ngModel)]="user.admin">admin: {{user.admin}}
+    <input [(ngModel)]="user.contrasenia">contraseña: {{user.contrasenia}}
+    <button (click)="editar()"> OK!</button>
+</section>

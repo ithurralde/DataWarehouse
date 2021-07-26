@@ -5,3 +5,7 @@ section {
 p{
     padding-right: 5px;
 }
+
+input{
+    height: 25px;
+}

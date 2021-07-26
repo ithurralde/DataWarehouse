@@ -73,6 +73,13 @@ async function crearUsuario(usuario) {
     });
     return datos[0];
   }
+
+  async function updateUsuarios(usuario, id){
+    await myDataBase.query('UPDATE usuarios SET usuario = ?, nombre = ?, apellido = ?, email = ?, perfil = ?, admin = ?, contrasenia = ? WHERE id = ?', {
+      replacements: [usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.perfil, usuario.admin, usuario.contrasenia, id],
+      type: QueryTypes.UPDATE
+    })
+  }
   
   async function setPassword(usuario){
     let existe = await myDataBase.query('SELECT * FROM usuarios WHERE user = ?', {
@@ -242,4 +249,4 @@ async function crearUsuario(usuario) {
       type: QueryTypes.DELETE},));
   }
   
-  module.exports = { crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };
+  module.exports = { crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, updateUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };

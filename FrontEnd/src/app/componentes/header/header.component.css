@@ -6,3 +6,11 @@
 a {
     color: cornsilk;
 }
+
+.lista {
+    display: none;
+}
+
+.usuarios {
+    display: none;
+}

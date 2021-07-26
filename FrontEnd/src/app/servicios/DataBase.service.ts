@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { PaisModule } from "../model/pais/pais.module";
 import { RegionModule } from "../model/region/region.module";
 import { Usuario } from "../model/Usuario.model"
+import { ActivatedRoute} from '@angular/router'
 
 @Injectable()
 export class DataBaseServices {
@@ -15,6 +16,7 @@ export class DataBaseServices {
         //  'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc'
     });
     tokenJWT:Object;
+    id:String;
 
 
     
@@ -22,7 +24,7 @@ export class DataBaseServices {
     //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc google
     //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiYWFhcyIsImlhdCI6MTYxOTMwMDcyNX0.Edn7ZsCQl8RpNTQsY6VM19HQ2u5myuA6e5zi-EFasfw postman
 
-    constructor(private httpClient: HttpClient){
+    constructor(private httpClient: HttpClient, private route:ActivatedRoute){
     }
 
     login(user: string, contrasenia: string){
@@ -79,6 +81,12 @@ export class DataBaseServices {
         // );
          
         // return this.httpClient.get<Usuario>(this.url + "usuarios/:id");
+        // this.id = this.route.snapshot.paramMap.get('id');
+
+
+
+        // console.log("HOLANDAAAAAAAAAAAAAAAAAAAAAA");
+        // console.log(this.route.snapshot.paramMap.get('id'));
         return this.httpClient.get<Usuario>(this.url + "usuario");
     }
     
@@ -95,5 +103,9 @@ export class DataBaseServices {
         console.log("el username desde el front antes de ir al back: " + username);
         console.log(username);
         return this.httpClient.post<Usuario>(this.url + "isAdmin", {username});
+    }
+
+    updateUsuario(user: Usuario){
+        return this.httpClient.put<Usuario>(this.url + "usuarios", user);
     }
 }

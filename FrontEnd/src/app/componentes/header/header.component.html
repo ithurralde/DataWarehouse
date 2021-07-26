@@ -4,18 +4,18 @@
             <h3 class="nav ">LOGO</h3>
         </li>
     </ul>
-    <ul *ngIf="logeado" class="nav justify-content-end">
+    <ul class="nav justify-content-end lista">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/contactos">Contactos</a>
+            <a class="nav-link active" aria-current="page" routerLink="/contactos" (click)="cargar()">Contactos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/companias">Compañías</a>
+            <a class="nav-link" routerLink="/companias" (click)="cargar()">Compañías</a>
+        </li>
+        <li class="nav-item usuarios">
+            <a class="nav-link" routerLink="/usuarios" (click)="cargar()">Usuarios</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/usuarios">Usuarios</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/region-ciudad">Región/Ciudad</a>
+            <a class="nav-link" routerLink="/region-ciudad" (click)="cargar()">Región/Ciudad</a>
         </li>
     </ul>
 </div>

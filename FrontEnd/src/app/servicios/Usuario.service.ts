@@ -52,4 +52,8 @@ export class UsuarioService {
     isAdmin(username: string){
         return this.dbService.isAdmin(username);
     }
+
+    updateUsuario(user: Usuario){
+        return this.dbService.updateUsuario(user);
+    }
 }

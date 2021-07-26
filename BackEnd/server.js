@@ -114,6 +114,15 @@ server.get('/usuarios', autenticarUsuario, (request, response) => {
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
 });
 
+server.put('/usuarios', autenticarUsuario, (request, response) => {
+  let user = request.body;
+  let indice = request.body.indice;
+  console.log(user);
+  transactionHandler.updateUsuarios(user, indice)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.send(error));
+})
+
 // obtengo el nombre del usuario para el front (para crear usuarios desde el front)
 server.get('/usuario', (request, response) => {
   request.usuario = jwt.verify(token, jwtClave)
