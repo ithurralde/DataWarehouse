@@ -18,8 +18,9 @@ server.listen(3000, function () {
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
-const { response } = require('express');
+const { response, request } = require('express');
 const { conf_password } = require('./configuracionDB.js');
+const myDataBase = require('./conectionDB.js');
 
 
 server.use('/datawarehouse', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -40,11 +41,11 @@ server.use((error, request, response, next) => {
 
 const autenticarUsuario = (request, response, next) => {
   try {
-      console.log(request.headers);
-      console.log(request.headers.authorization);
+      // console.log(request.headers);
+      // console.log(request.headers.authorization);
       // token = request.headers.authorization.split(' ')[1];
       token = request.headers.authorization;
-      console.log(token);
+      // console.log(token);
       const verificarToken = jwt.verify(token, jwtClave);
       if (verificarToken) {
         request.usuario = verificarToken;
@@ -71,7 +72,8 @@ server.post('/login', (request, response) => {
 });
 
 server.post('/token', (request, response) => {
-  token = jwt.sign({usuario: request.body.user/*, id: usuario.id*/}, jwtClave, {expiresIn: 2});
+  let unDia = 60*60*24;
+  token = jwt.sign({usuario: request.body.user/*, id: usuario.id*/}, jwtClave, {expiresIn: unDia});
   const p1 = Promise.resolve({"token": token});
   p1
     .then(respuesta => {
@@ -90,11 +92,8 @@ server.post('/', (request, response) => {
   .catch(respuesta => {response.status(401).send({ message: "Usuario o contraseña invalidos."})});
 });
 
-server.post('/usuarios/crear',/* autenticarUsuario,*/ (request, response) => {
+server.post('/usuarios/crear', autenticarUsuario, (request, response) => {
   let usuario = request.body;
-  console.log(request);
-  console.log("Estoy entrando aca? " + usuario.email);
-  console.log(usuario);
   transactionHandler.crearUsuario(usuario)
   .then(respuesta =>
     response.status(201).send(respuesta)
@@ -105,20 +104,35 @@ server.post('/usuarios/crear',/* autenticarUsuario,*/ (request, response) => {
 });
 
 server.get('/usuarios', autenticarUsuario, (request, response) => {
-  console.log("estoy entrando por aca (el que no es)");
-  console.log("dale papu, el token: ");
-  console.log("dale papu, el token: " + token);
-  console.log(token);
   transactionHandler.getUsuarios()
   .then( respuesta => {
     response.status(200).send(respuesta);
   })
   .catch(respuesta => 
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
+});
+
+// obtengo el nombre del usuario para el front (para crear usuarios desde el front)
+server.get('/usuario', (request, response) => {
+  request.usuario = jwt.verify(token, jwtClave)
+  const p1 = Promise.resolve(request.usuario);
+  p1
+  .then(resultado => {response.status(200).send(resultado)})
+  .catch(error => { response.status(400).send(error)})
+});
+
+// verifica que sea admin (para crear usuarios desde el front)
+server.post('/isAdmin', (request, response) => {
+  let usuario = request.body;
+  console.log("el supuesto usuario: " + usuario);
+  console.log(usuario);
+  transactionHandler.isAdmin(usuario)
+  .then(resultado => response.status(200).send(resultado))
+  .catch(error => response.status(404).send({message: "Te la creiste weyyy JAJAJAAJAJA"}));
 })
 
+// obtengo los usuarios antes de logear
 server.get('/usuarios_log', (request, response) => {
-  console.log("estoy entrando por aca (el que no es)");
   transactionHandler.getUsuarios()
   .then( respuesta => {
     response.status(200).send(respuesta);
@@ -139,13 +153,13 @@ server.get('/usuarios/:id', (request, response) => {
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
 })
 
-server.get('/regiones', /*autenticarUsuario, */(request, response) => {
+server.get('/regiones', /*autenticarUsuario,*/ (request, response) => {
   transactionHandler.getRegiones()
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
 })
 
-server.get('/paises', /*autenticarUsuario, */(request, response) => {
+server.get('/paises',/* autenticarUsuario,*/ (request, response) => {
   transactionHandler.getRegiones()
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));

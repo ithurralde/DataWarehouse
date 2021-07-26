@@ -37,6 +37,21 @@ async function crearUsuario(usuario) {
         return resultado[0];
       }
   }
+
+  async function isAdmin(usuario){
+    console.log("pero estoy entrando aca???");
+    console.log(usuario);
+    console.log(usuario.username);
+    let resultado = await myDataBase.query('SELECT admin FROM usuarios WHERE usuario = ?', {
+      replacements: [usuario.username],
+      type: QueryTypes.SELECT
+    })
+    console.log("El admin es: " + resultado);
+    return resultado;
+    // if (resultado == 0)
+    //   return false;
+    // else return true;
+  }
   
   async function getUsuario(id){
     // return await myDataBase.query('SELECT * FROM usuarios WHERE id = ?', {
@@ -227,4 +242,4 @@ async function crearUsuario(usuario) {
       type: QueryTypes.DELETE},));
   }
   
-  module.exports = { crearUsuario, loginUsuario, getUsuario, getUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };
+  module.exports = { crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };

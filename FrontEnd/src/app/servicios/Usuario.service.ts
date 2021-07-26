@@ -48,4 +48,8 @@ export class UsuarioService {
     obtenerUsuarios(){
         return this.dbService.obtenerUsuarios();
     }
+
+    isAdmin(username: string){
+        return this.dbService.isAdmin(username);
+    }
 }

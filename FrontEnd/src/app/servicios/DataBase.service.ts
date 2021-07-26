@@ -66,19 +66,20 @@ export class DataBaseServices {
 
     obtenerUsuario(){
         // no funciona nada de esto
-        let param = new HttpParams();
-        let id = param.get("id");
-        console.log("quien concha soy");
-        console.log(id);
-        this.httpClient.get<Usuario>(this.url + "usuarios/:id").subscribe(
-            (user: Usuario) => {
-            console.log("pero quien poronga me mando a hacer esto?");
-            console.log(user);
-            console.log(id);
-            }
-        );
+        // let param = new HttpParams();
+        // let id = param.get("id");
+        // console.log("quien concha soy");
+        // console.log(id);
+        // this.httpClient.get<Usuario>(this.url + "usuarios/:id").subscribe(
+        //     (user: Usuario) => {
+        //     console.log("pero quien poronga me mando a hacer esto?");
+        //     console.log(user);
+        //     console.log(id);
+        //     }
+        // );
          
-        return this.httpClient.get<Usuario>(this.url + "usuarios/:id");
+        // return this.httpClient.get<Usuario>(this.url + "usuarios/:id");
+        return this.httpClient.get<Usuario>(this.url + "usuario");
     }
     
 
@@ -88,5 +89,11 @@ export class DataBaseServices {
 
     obtenerPaises(){
         return this.httpClient.get<PaisModule[]>(this.url + "paises");
+    }
+
+    isAdmin(username:string){
+        console.log("el username desde el front antes de ir al back: " + username);
+        console.log(username);
+        return this.httpClient.post<Usuario>(this.url + "isAdmin", {username});
     }
 }
