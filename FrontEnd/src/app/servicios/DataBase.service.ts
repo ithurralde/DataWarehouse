@@ -106,6 +106,10 @@ export class DataBaseServices {
     }
 
     updateUsuario(user: Usuario){
-        return this.httpClient.put<Usuario>(this.url + "usuarios", user, {headers:this.header});
+        return this.httpClient.put<Usuario>(this.url + "usuarios", user, {headers: this.header});
+    }
+
+    borrarUsuario(user: Usuario){
+        return this.httpClient.delete<Usuario>(this.url + "usuarios/?user=" + user.usuario, {headers: this.header});
     }
 }

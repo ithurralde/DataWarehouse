@@ -129,11 +129,39 @@ server.get('/usuarios', isAdmin, autenticarUsuario, (request, response) => {
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
 });
 
-server.put('/usuarios', isAdmin, autenticarUsuario, (request, response) => {
+server.put('/usuarios', isAdmin, autenticarUsuario, async (request, response) => {
   let user = request.body;
-  let indice = request.body.indice;
   console.log(user);
-  transactionHandler.updateUsuarios(user, indice)
+  let id;
+  await transactionHandler.getId(user.usuario)
+  .then(respuesta => id = respuesta)
+  .catch(error => response.status(404).send({ message: "Error al obtener el id del usuario: " + error}));
+  
+  console.log("el id antes de updatear: ");
+  console.log(id);
+
+  await transactionHandler.updateUsuarios(user, id)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.send(error));
+  
+})
+
+server.delete('/usuarios', isAdmin, autenticarUsuario, async (request, response) => {
+  let userParam = request.query.user;
+  console.log("********************************************************************************************************");
+  console.log(userParam);
+  console.log("********************************************************************************************************");
+  let id;
+  await transactionHandler.getId(userParam)
+  .then(respuesta => id = respuesta)
+  .catch(error => response.status(404).send({ message: "Error al obtener el id del usuario: " + error}));
+
+  console.log("********************************************************************************************************");
+  console.log(id);
+  console.log("********************************************************************************************************");
+
+  
+  await transactionHandler.deleteUsuarios(id)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.send(error));
 })

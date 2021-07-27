@@ -1,5 +1,6 @@
 section {
     display: flex;
+    flex-direction: column;
 }
 
 p{
@@ -7,5 +8,14 @@ p{
 }
 
 input{
+    
     height: 25px;
+}
+
+.userInput{
+    width: 300px;
+}
+
+.boton {
+    width: 70px;
 }

@@ -10,14 +10,15 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
 export class UsuariosComponent implements OnInit {
   usuarios: Usuario[];
-  isAdmin: Boolean;
+  
+  // isAdmin: Boolean;
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
     this.usuarioService.obtenerUsuarios().subscribe(
       (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
-        this.isAdmin = true;
+        // this.isAdmin = true;
         // this.usuarioService.cargarUsuarios(usuarios);
       },
       error => { 
@@ -25,8 +26,15 @@ export class UsuariosComponent implements OnInit {
         console.error("Error: " + error.error.message)}
     );
   }
-
   
-  
-
+ async borrar(usuario: Usuario){
+    for (let i = 0; i < this.usuarios.length; i++){
+      if (this.usuarios[i].usuario === usuario.usuario){
+        this.usuarios.splice(i,1);
+        this.usuarioService.borrarUsuario(usuario).subscribe(
+         () => console.log("Usuario eliminado: " + usuario.usuario)
+        );
+      }
+    }
+  }
 }

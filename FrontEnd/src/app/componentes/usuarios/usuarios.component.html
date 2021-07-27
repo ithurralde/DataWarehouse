@@ -1,5 +1,6 @@
-<app-crear-usuario *ngIf="isAdmin"></app-crear-usuario>
+<app-crear-usuario></app-crear-usuario>
 <app-usuario *ngFor="let usuario of usuarios" 
-[user]="usuario">
+[user]="usuario"
+(borrarUsuario)=borrar($event)>
 </app-usuario>
 <router-outlet></router-outlet>

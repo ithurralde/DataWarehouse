@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { Usuario } from 'src/app/model/Usuario.model';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
@@ -11,6 +11,7 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 export class UsuarioComponent implements OnInit {
   @Input() user: Usuario;
   editable:boolean = false;
+  @Output() borrarUsuario = new EventEmitter<Usuario>();
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
@@ -33,11 +34,15 @@ export class UsuarioComponent implements OnInit {
       this.editable = true;
     else{
       this.editable = false;
-      this.usuarioService.updateUsuario(this.user);
+      this.usuarioService.updateUsuario(this.user).subscribe(
+        (respuesta:Usuario )=> {
+          this.user = respuesta;
+        }
+      );
     }
   }
 
   borrar(){
-    
+    this.borrarUsuario.emit(this.user);
   }
 }

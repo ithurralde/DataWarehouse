@@ -54,6 +54,18 @@ export class UsuarioService {
     }
 
     updateUsuario(user: Usuario){
+        for (let i = 0; i < this.usuarios.length; i++){
+            if (this.usuarios[i].usuario == user.usuario)
+              this.usuarios[i] = user;
+        }
         return this.dbService.updateUsuario(user);
+    }
+
+    borrarUsuario(user: Usuario){
+        for (let i = 0; i < this.usuarios.length; i++){
+            if (this.usuarios[i].usuario == user.usuario)
+              this.usuarios.splice(i,1);
+        }
+        return this.dbService.borrarUsuario(user);
     }
 }

@@ -75,10 +75,33 @@ async function crearUsuario(usuario) {
     return datos[0];
   }
 
+  async function getId(usuario){
+    let id = await myDataBase.query('SELECT id FROM usuarios WHERE usuario = ?', {
+      replacements: [usuario],
+      type: QueryTypes.SELECT
+    });
+    console.log("el id en el endpoint duro de la BD");
+    console.log(id);
+    console.log(id[0]);
+    console.log(id[0].id);
+    return id[0].id;
+  }
+
   async function updateUsuarios(usuario, id){
-    await myDataBase.query('UPDATE usuarios SET usuario = ?, nombre = ?, apellido = ?, email = ?, perfil = ?, admin = ?, contrasenia = ? WHERE id = ?', {
-      replacements: [usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.perfil, usuario.admin, usuario.contrasenia, id],
+    console.log("el usuario : ");
+    console.log(usuario.usuario);
+    console.log("el id: ");
+    console.log(id);
+      await myDataBase.query('UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, perfil = ?, admin = ?, contrasenia = ? WHERE id = ?', {
+      replacements: [usuario.nombre, usuario.apellido, usuario.email, usuario.perfil, usuario.admin, usuario.contrasenia, id],
       type: QueryTypes.UPDATE
+    })
+  }
+
+  async function deleteUsuarios(id){
+    await myDataBase.query('DELETE FROM usuarios WHERE id = ?', {
+      replacements: [id],
+      type: QueryTypes.DELETE
     })
   }
   
@@ -250,4 +273,4 @@ async function crearUsuario(usuario) {
       type: QueryTypes.DELETE},));
   }
   
-  module.exports = { crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, updateUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };
+  module.exports = { crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, deleteUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };
