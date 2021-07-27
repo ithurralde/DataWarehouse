@@ -92,20 +92,20 @@ export class DataBaseServices {
     
 
     obtenerRegiones(){
-        return this.httpClient.get<RegionModule[]>(this.url + "regiones");
+        return this.httpClient.get<RegionModule[]>(this.url + "regiones", {headers:this.header});
     }
 
     obtenerPaises(){
-        return this.httpClient.get<PaisModule[]>(this.url + "paises");
+        return this.httpClient.get<PaisModule[]>(this.url + "paises",  {headers:this.header});
     }
 
-    isAdmin(username:string){
-        console.log("el username desde el front antes de ir al back: " + username);
-        console.log(username);
-        return this.httpClient.post<Usuario>(this.url + "isAdmin", {username});
+    isAdmin(usuario:string){
+        console.log("el username desde el front antes de ir al back: " + usuario);
+        console.log(usuario);
+        return this.httpClient.post<Usuario>(this.url + "isAdmin", {usuario});
     }
 
     updateUsuario(user: Usuario){
-        return this.httpClient.put<Usuario>(this.url + "usuarios", user);
+        return this.httpClient.put<Usuario>(this.url + "usuarios", user, {headers:this.header});
     }
 }

@@ -16,7 +16,10 @@ export class RegionCiudadComponent implements OnInit {
   ngOnInit(): void {
     this.regionService.obtenerRegiones().subscribe(
       (regiones: RegionModule[]) => {
+        console.log("las regiones que me da el back: ");
+        console.log(regiones);
         this.regiones = regiones;
+        console.log(this.regiones);
         // this.usuarioService.cargarUsuarios(usuarios);
       },
       error => { 

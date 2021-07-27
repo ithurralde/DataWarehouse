@@ -47,6 +47,8 @@ const autenticarUsuario = (request, response, next) => {
       token = request.headers.authorization;
       console.log(token);
       const verificarToken = jwt.verify(token, jwtClave);
+      console.log("verificarToken:");
+      console.log(verificarToken);
       if (verificarToken) {
         request.usuario = verificarToken;
         console.log(request.usuario);
@@ -56,6 +58,19 @@ const autenticarUsuario = (request, response, next) => {
       //response.json({ error: "Error al validar usuario." }); 
       return response.status(403).send({ message: "Error al validar usuario." });
   }
+}
+
+async function isAdmin(request, response, next){
+  let user = jwt.verify(token, jwtClave);
+  let admin;
+  await transactionHandler.isAdmin(user)
+  .then(respuesta => admin = respuesta[0].admin)
+  .catch(error => response.status(404).send( {message: "Error en la verificacion de usuario administrador: " + error}));
+  if (!admin){
+    let message = { message: "Tiene que ingresar como administrador para realizar la accion solicitada." }
+    return response.status(403).send(message);
+  }
+  return next();
 }
 
 server.post('/login', (request, response) => {
@@ -105,7 +120,7 @@ server.post('/usuarios/crear', autenticarUsuario, (request, response) => {
   );
 });
 
-server.get('/usuarios', autenticarUsuario, (request, response) => {
+server.get('/usuarios', isAdmin, autenticarUsuario, (request, response) => {
   transactionHandler.getUsuarios()
   .then( respuesta => {
     response.status(200).send(respuesta);
@@ -114,7 +129,7 @@ server.get('/usuarios', autenticarUsuario, (request, response) => {
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
 });
 
-server.put('/usuarios', autenticarUsuario, (request, response) => {
+server.put('/usuarios', isAdmin, autenticarUsuario, (request, response) => {
   let user = request.body;
   let indice = request.body.indice;
   console.log(user);
@@ -164,13 +179,17 @@ server.get('/usuarios/:id', (request, response) => {
     response.status(400).send({message: "No se pudo conectar con la base de datos."}))
 })
 
-server.get('/regiones', /*autenticarUsuario,*/ (request, response) => {
+server.get('/regiones', autenticarUsuario, (request, response) => {
+  console.log("El token: ");
+  console.log(token);
   transactionHandler.getRegiones()
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
 })
 
-server.get('/paises',/* autenticarUsuario,*/ (request, response) => {
+server.get('/paises', autenticarUsuario, (request, response) => {
+  console.log("El token: ");
+  console.log(token);
   transactionHandler.getRegiones()
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));

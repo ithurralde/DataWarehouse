@@ -41,9 +41,9 @@ async function crearUsuario(usuario) {
   async function isAdmin(usuario){
     console.log("pero estoy entrando aca???");
     console.log(usuario);
-    console.log(usuario.username);
+    console.log(usuario.usuario);
     let resultado = await myDataBase.query('SELECT admin FROM usuarios WHERE usuario = ?', {
-      replacements: [usuario.username],
+      replacements: [usuario.usuario],
       type: QueryTypes.SELECT
     })
     console.log("El admin es: " + resultado);
@@ -62,6 +62,7 @@ async function crearUsuario(usuario) {
       replacements: [id],
       type: QueryTypes.SELECT
     });
+    console.log("el id y el a de getUsuario: ");
     console.log(id);
     console.log(a);
     return a;
