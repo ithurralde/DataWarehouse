@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegionModule } from 'src/app/model/region/region.module';
+import { DataBaseServices } from 'src/app/servicios/DataBase.service';
 import { RegionService } from 'src/app/servicios/Region.service';
 
 @Component({
@@ -15,11 +16,14 @@ export class RegionCiudadComponent implements OnInit {
 
   ngOnInit(): void {
     this.regionService.obtenerRegiones().subscribe(
-      (regiones: RegionModule[]) => {
+      (regiones: any[]) => {
         console.log("las regiones que me da el back: ");
         console.log(regiones);
-        this.regiones = regiones;
-        console.log(this.regiones);
+        // let i = 0;
+        regiones.forEach(element => {
+          this.regiones.push(new RegionModule(element.region));
+          // i++;
+        });
         // this.usuarioService.cargarUsuarios(usuarios);
       },
       error => { 
@@ -34,11 +38,11 @@ export class RegionCiudadComponent implements OnInit {
 
   agregarRegion(){
     this.puedoAgregar = false;
-    console.log("Estoy agregando?");
     let region = new RegionModule(this.region);
-    // let region = new RegionModule("holanda");
-    console.log(this.region);
     this.regiones.push(region);
+    this.regionService.agregarRegion(region).subscribe(
+      ()=> { console.log("Agregada la region " + region.nombre + " a la BD.")}
+    );
   }
 
 }

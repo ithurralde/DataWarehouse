@@ -2,6 +2,18 @@
 <button (click)=preAgregarCiudad()>
     <p>Add city</p>
 </button>
+<button (click)="preEditPais()">
+    <p>Edit</p>
+</button>
+
+<section>
+    <input type="text" [(ngModel)]="pais.nombre" name="fieldName" ngDefaultControl *ngIf="editable">
+    <button (click)="preEditPais()" *ngIf="editable">OK!</button>
+</section>
+<button (click)="deletePais()">
+    <p>Delete</p>
+</button>
+
 
 <div *ngIf="puedoAgregar">
     <p>Nombre de la ciudad:</p>

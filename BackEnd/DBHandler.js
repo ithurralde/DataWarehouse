@@ -114,6 +114,7 @@ async function crearUsuario(usuario) {
       return status(404);
     await myDataBase.query('UPDATE usuarios SET password = ? WHERE user = ?', {
       replacements: [usuario.password, usuario.user],
+      type: QueryTypes.UPDATE
     });
   
     return { message: "Contraseña actualizada."}
@@ -121,17 +122,114 @@ async function crearUsuario(usuario) {
   
 
   async function getRegiones(){
-    return await myDataBase.query('SELECT * FROM paises', {
+    return await myDataBase.query('SELECT * FROM paises GROUP BY region', {
       type: QueryTypes.SELECT
     })
     // falta el grup by para que me tome solo las regiones
   }
 
-  async function getPaises(){
-    return await myDataBase.query('SELECT * FROM paises', {
+  async function addRegion(region){
+      return await myDataBase.query('INSERT INTO paises (region, nombre) VALUES (?, ?)', {
+        replacements: [region.nombre, null],
+        type: QueryTypes.INSERT
+      })
+      //INSERT INTO usuarios (usuario, nombre, apellido, email, perfil, admin, contrasenia) VALUES (?, ?, ?, ?, ?, ?, ?)'
+  }
+
+  async function getPaises(region){
+    return await myDataBase.query('SELECT * FROM paises WHERE region = ?', {
+      replacements: [region],
       type: QueryTypes.SELECT
     })
   }
+
+  async function addPais(pais){
+    console.log(pais);
+    console.log(pais.region);
+    console.log(pais.pais);
+    console.log(pais.region.nombre);
+    console.log(pais.pais.nombre);
+
+    return await myDataBase.query('INSERT INTO paises (region, nombre) VALUES (?, ?)', {
+      replacements: [pais.region.nombre, pais.pais.nombre],
+      type: QueryTypes.INSERT
+    })
+  }
+
+  async function borrarPais(pais){
+    console.log("quien poronga soy : pais ");
+    console.log(pais);
+    let idPais = await myDataBase.query('SELECT id FROM paises WHERE nombre = ?', {
+      replacements: [pais],
+      type: QueryTypes.SELECT
+    });
+
+    console.log("el idPais: ");
+    console.log(idPais);
+
+    await myDataBase.query('DELETE FROM ciudades WHERE id_pais = ?', {
+      replacements: [idPais[0].id],
+      type: QueryTypes.DELETE
+    });
+
+    return await myDataBase.query('DELETE FROM paises WHERE nombre = ?', {
+      replacements: [pais],
+      type: QueryTypes.DELETE
+    });
+  }
+
+  async function getCiudades(pais){
+    let idPais = await myDataBase.query('SELECT id FROM paises WHERE nombre = ?', {
+      replacements: [pais],
+      type: QueryTypes.SELECT
+    });
+
+    let resultado = await myDataBase.query('SELECT * FROM ciudades WHERE id_pais = ?', {
+      replacements: [idPais[0].id],
+      type: QueryTypes.SELECT
+    })
+    console.log(resultado);
+    if (resultado.length !== 0)
+      return resultado;
+    else return;
+
+  }
+
+  async function addCiudad(ciudad, region, pais){
+    // consulto por region y pais para los casos en que hayan paises con el mismo nombre (dudo que pase)
+    let idPais = await myDataBase.query('SELECT id FROM paises WHERE region = ? AND nombre = ?', {
+      replacements: [region.nombre, pais.nombre],
+      type: QueryTypes.SELECT
+    });
+    
+    return await myDataBase.query('INSERT INTO ciudades (nombre, id_pais) VALUES (?, ?)', {
+      replacements: [ciudad.nombre, idPais[0].id],
+      type: QueryTypes.INSERT
+    })
+  }
+
+  async function borrarCiudad(ciudad){
+    return await myDataBase.query('DELETE FROM ciudades WHERE nombre = ?', {
+      replacements: [ciudad],
+      type: QueryTypes.DELETE
+    })
+  }
+
+
+
+
+
+
+
+
+  
+  module.exports = {  crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, 
+                      deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
+                      getCiudades, addCiudad ,borrarCiudad
+                    };
+
+
+
 
 
 
@@ -273,4 +371,3 @@ async function crearUsuario(usuario) {
       type: QueryTypes.DELETE},));
   }
   
-  module.exports = { crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, deleteUsuarios, setPassword, getRegiones, getPaises, crearPlato, getPlatos, actualizarPrecio, borrarPlato, crearPedido, actualizar_estado, getPedido, borrarPedido };

@@ -16,9 +16,16 @@ export class RegionComponent implements OnInit {
   constructor(private paisService: PaisService) { }
 
   ngOnInit(): void {
-    this.paisService.obtenerPaises().subscribe(
-      (paises: RegionModule[]) => {
-        this.paises = paises;
+    this.paisService.obtenerPaises(this.region).subscribe(
+      (paises: PaisModule[]) => {
+        // let i = 0;
+        paises.forEach(element => {
+          if (element.nombre != null){
+            this.paises.push(new PaisModule(element.nombre));
+          }
+          // i++;
+        });
+        // this.paises = paises;
         // this.usuarioService.cargarUsuarios(usuarios);
       },
       error => { 
@@ -35,6 +42,24 @@ export class RegionComponent implements OnInit {
     this.puedeAgregar = false;
     let pais = new PaisModule(this.nombrePais);
     console.log(pais.nombre);
+    console.log(this.region);
     this.paises.push(pais);
+    this.paisService.agregarPais(this.region, pais).subscribe(
+      ()=> console.log("Agregado el pais " + pais.nombre + " a la BD.")
+    )
+  }
+
+  deletePais(pais: PaisModule){
+    for (let i = 0; i < this.paises.length; i++){
+      if (this.paises[i] == pais){
+        this.paisService.borrarPais(this.paises[i]).subscribe(
+          () => {
+            console.log("Pais " + this.paises[i] + " eliminado correctamente.")
+            this.paises.splice(i,1);
+          }
+        );
+        // this.paises.splice(i,1);
+      }
+    }
   }
 }

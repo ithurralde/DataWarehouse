@@ -10,5 +10,7 @@
 </div>
 
 <app-pais *ngFor="let pais of paises"
-    [pais]="pais">
+    [pais]="pais"
+    (borrarPais)="deletePais($event)"
+    [region]="region">
 </app-pais>

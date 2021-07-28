@@ -6,6 +6,7 @@ import { PaisModule } from "../model/pais/pais.module";
 import { RegionModule } from "../model/region/region.module";
 import { Usuario } from "../model/Usuario.model"
 import { ActivatedRoute} from '@angular/router'
+import { CiudadModule } from "../model/ciudad/ciudad.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -95,8 +96,8 @@ export class DataBaseServices {
         return this.httpClient.get<RegionModule[]>(this.url + "regiones", {headers:this.header});
     }
 
-    obtenerPaises(){
-        return this.httpClient.get<PaisModule[]>(this.url + "paises",  {headers:this.header});
+    obtenerPaises(region: RegionModule){
+        return this.httpClient.get<PaisModule[]>(this.url + "paises/?region=" + region.nombre,  {headers:this.header});
     }
 
     isAdmin(usuario:string){
@@ -111,5 +112,31 @@ export class DataBaseServices {
 
     borrarUsuario(user: Usuario){
         return this.httpClient.delete<Usuario>(this.url + "usuarios/?user=" + user.usuario, {headers: this.header});
+    }
+
+    agregarRegion(region: RegionModule){
+        console.log("la region que estoy por agregar: ");
+        console.log(region);
+        return this.httpClient.post<RegionModule>(this.url + "regiones", region, {headers: this.header});
+    }
+
+    agregarPais(region: RegionModule, pais: PaisModule){
+        return this.httpClient.post(this.url + "paises", {region, pais}, {headers: this.header});
+    }
+
+    borrarPais(pais: PaisModule){
+        return this.httpClient.delete(this.url + "paises/?pais=" + pais.nombre, { headers:this.header });
+    }
+
+    obtenerCiudades(pais: PaisModule){
+        return this.httpClient.get<CiudadModule[]>(this.url + "ciudad/?pais=" + pais.nombre, { headers: this.header});
+    }
+
+    agregarCiudad(ciudad: CiudadModule, pais: PaisModule, region: RegionModule){
+        return this.httpClient.post(this.url + "ciudad", {ciudad, pais, region}, {headers: this.header})
+    }
+
+    borrarCiudad(ciudad: CiudadModule){
+        return this.httpClient.delete(this.url + "ciudad/?ciudad=" + ciudad.nombre, { headers:this.header });
     }
 }

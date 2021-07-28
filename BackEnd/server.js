@@ -182,7 +182,7 @@ server.post('/isAdmin', (request, response) => {
   console.log(usuario);
   transactionHandler.isAdmin(usuario)
   .then(resultado => response.status(200).send(resultado))
-  .catch(error => response.status(404).send({message: "Te la creiste weyyy JAJAJAAJAJA"}));
+  .catch(error => response.status(404).send({message: "Hubo un error: " + error}));
 })
 
 // obtengo los usuarios antes de logear
@@ -215,10 +215,67 @@ server.get('/regiones', autenticarUsuario, (request, response) => {
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
 })
 
+server.post('/regiones', autenticarUsuario, (request, response) => {
+  let region = request.body;
+  console.log(region);
+  console.log(region.nombre);
+  transactionHandler.addRegion(region)
+  .then( respuesta => response.status(200).send(respuesta))
+  .catch( error => response.status(404).send( { message: "Error al agregar region: " + error} ));
+})
+
 server.get('/paises', autenticarUsuario, (request, response) => {
   console.log("El token: ");
   console.log(token);
-  transactionHandler.getRegiones()
+  let regionParam = request.query.region;
+  transactionHandler.getPaises(regionParam)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
+})
+
+server.post('/paises', autenticarUsuario, (request, response) => {
+  let pais = request.body;
+  console.log("[server.paises] pais: ");
+  console.log(pais);
+  transactionHandler.addPais(pais)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos " + error + "."}));
+})
+
+server.delete('/paises', autenticarUsuario, (request, response) => {
+  let paisToDelete = request.query.pais;
+  console.log("[Server.Delete.Paises] pais a borrar : ");
+  console.log(paisToDelete);
+  transactionHandler.borrarPais(paisToDelete)
+  .then( respuesta => response.status(200).send(respuesta))
+  .catch( error => response.status(404).send(error));
+})
+
+server.get('/ciudad', autenticarUsuario, (request, response) => {
+  let paisParam = request.query.pais;
+  console.log("ciudad param: ");
+  console.log(paisParam);
+  transactionHandler.getCiudades(paisParam)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
+})
+
+server.post('/ciudad', autenticarUsuario, (request, response) => {
+  let ciudad = request.body;
+  transactionHandler.addCiudad(ciudad.ciudad, ciudad.region, ciudad.pais)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch( error => response.status(404).send( { message: "Error en el server: " + error}));
+})
+
+server.put('/ciudad', autenticarUsuario, (request, response) => {
+  
+})
+
+server.delete('/ciudad', autenticarUsuario, (request, response) => {
+  let ciudadToDelete = request.query.ciudad;
+  console.log("[Server.Delete.Paises] pais a borrar : ");
+  console.log(ciudadToDelete);
+  transactionHandler.borrarCiudad(ciudadToDelete)
+  .then( respuesta => response.status(200).send(respuesta))
+  .catch( error => response.status(404).send(error));
 })
