@@ -10,6 +10,7 @@ export class CiudadComponent implements OnInit {
   @Input() ciudad: CiudadModule;
   puedeEditar = false;
   @Output() borrarCiudad = new EventEmitter();
+  @Output() actualizarCiudad = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
@@ -18,9 +19,12 @@ export class CiudadComponent implements OnInit {
   preEditar(){
     this.puedeEditar = true;
   }
+  
   editar(){
     this.puedeEditar = false;
+    this.actualizarCiudad.emit(this.ciudad);
   }
+
   borrar(){
     this.borrarCiudad.emit(this.ciudad);
   }

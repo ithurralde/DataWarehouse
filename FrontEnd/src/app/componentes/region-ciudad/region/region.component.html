@@ -1,16 +1,19 @@
-<h1 [(ngModel)]="region" name="fieldName" ngDefaultControl>{{ region.nombre }}</h1>
-<button (click)=preAgregarPais()>
-    <p>Add country</p>
-</button>
+<section class="contenedor">
+    <h1 [(ngModel)]="region" name="fieldName" ngDefaultControl>{{ region.nombre }}</h1>
+    <button (click)=preAgregarPais() class="btn btn-primary btnCountry">
+        <p>Add country</p>
+    </button>
 
-<div *ngIf="puedeAgregar">
-    <p>Nombre del pais:</p>
-    <input type="text" placeholder="Nombre del pais" [(ngModel)]=nombrePais name="fieldName" ngDefaultControl>
-    <button (click)=agregarPais()>Agregar</button>
-</div>
+    <div *ngIf="puedeAgregar">
+        <p>Nombre del pais:</p>
+        <input type="text" placeholder="Nombre del pais" [(ngModel)]=nombrePais name="fieldName" ngDefaultControl>
+        <button (click)=agregarPais()>Agregar</button>
+    </div>
 
-<app-pais *ngFor="let pais of paises"
-    [pais]="pais"
-    (borrarPais)="deletePais($event)"
-    [region]="region">
-</app-pais>
+    <app-pais *ngFor="let pais of paises"
+        [pais]="pais"
+        (borrarPais)="deletePais($event)"
+        (actualizarPais)="updatePais($event)"
+        [region]="region">
+    </app-pais>
+</section>

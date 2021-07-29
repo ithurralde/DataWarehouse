@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { actPaisModule } from 'src/app/model/pais/actPais.module';
 import { PaisModule } from 'src/app/model/pais/pais.module';
 import { RegionModule } from 'src/app/model/region/region.module';
 import { PaisService } from 'src/app/servicios/pais-service.service';
@@ -62,4 +63,19 @@ export class RegionComponent implements OnInit {
       }
     }
   }
+
+  updatePais(pais: actPaisModule){
+    console.log("se puede o no pa??");
+    for (let i = 0; i < this.paises.length; i++){
+      if (this.paises[i].nombre == pais.nombre){
+        this.paisService.actualizarPais(this.region, pais).subscribe(
+          () => {
+            console.log("Pais " + pais + " eliminado correctamente.");
+            this.paises[i].nombre = pais.nombre;
+          }
+        );
+      }
+    }
+  }
+
 }

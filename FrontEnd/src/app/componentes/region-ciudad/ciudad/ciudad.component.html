@@ -1,13 +1,15 @@
-<div>
-    <h1 [(ngModel)]="ciudad" name="fieldName" ngDefaultControl>{{ciudad.nombre}}</h1>
-    <button (click)=preEditar()>
-        <p>Edit</p>
-    </button>
-    <div *ngIf="puedeEditar">
-        <input type="text" placeholder="Editar nombre" [(ngModel)]="ciudad.nombre" ngDefaultControl>
-        <button (click)=editar()>OK!</button>    
-    </div>
-    <button (click)=borrar()>
-        <p>Delete</p>
-    </button>
-</div>
+<section class="contenedor">
+    <h1 class="nombreCiudad" [(ngModel)]="ciudad" name="fieldName" ngDefaultControl>{{ciudad.nombre}}</h1>
+    <section class="btnEditDelete">
+        <button (click)=preEditar() class="btn btn-primary">
+            <p>Edit</p>
+        </button>
+        <div *ngIf="puedeEditar">
+            <input type="text" placeholder="Editar nombre" [(ngModel)]="ciudad.nombre" ngDefaultControl>
+            <button (click)=editar() class="btn btn-primary">OK!</button>    
+        </div>
+        <button (click)=borrar() class="btn btn-primary">
+            <p>Delete</p>
+        </button>
+    </section>
+</section>

@@ -156,6 +156,33 @@ async function crearUsuario(usuario) {
     })
   }
 
+  async function actualizarPais(pais){
+    console.log("*******************************************************************************************************************************************************");
+    console.log("pais de la BD");
+    console.log(pais);
+    console.log("*******************************************************************************************************************************************************");
+    let idPais = await myDataBase.query('SELECT id FROM paises WHERE region = ? AND nombre = ?', {
+      replacements: [pais.region.nombre, pais.pais.nombre_anterior],
+      type: QueryTypes.SELECT
+    });
+
+    console.log("que carajo es el pais??");
+    console.log(pais.pais.nombre);
+    console.log("que carajo es el region??");
+    console.log(pais.region.nombre);
+    console.log("que carajo es el id??");
+    console.log(idPais[0].id);
+    console.log("ACTUALIZANDO CIUDAD MEEEEN");
+    console.log(idPais[0].id);
+
+    console.log("me esta llamando a este metodo??");
+    console.log(pais.pais.nombre);
+    return await myDataBase.query('UPDATE paises SET nombre = ? WHERE id = ?', {
+      replacements: [pais.pais.nombre, idPais[0].id],
+      type: QueryTypes.UPDATE
+    })
+  }
+
   async function borrarPais(pais){
     console.log("quien poronga soy : pais ");
     console.log(pais);
@@ -215,6 +242,19 @@ async function crearUsuario(usuario) {
     })
   }
 
+  async function actualizarCiudad(ciudad){
+    let idPais = await myDataBase.query('SELECT id FROM paises WHERE nombre = ?', {
+      replacements: [ciudad.pais.nombre],
+      type: QueryTypes.SELECT
+    });
+    console.log("ACTUALIZANDO CIUDAD MEEEEN");
+    console.log(idPais[0].id);
+
+    return await myDataBase.query('UPDATE ciudades SET nombre = ? WHERE id_pais = ?', {
+      replacements: [ciudad.ciudad.nombre, idPais[0].id],
+      type: QueryTypes.UPDATE
+    })
+  }
 
 
 
@@ -225,7 +265,7 @@ async function crearUsuario(usuario) {
   
   module.exports = {  crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, 
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
-                      getCiudades, addCiudad ,borrarCiudad
+                      actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad
                     };
 
 

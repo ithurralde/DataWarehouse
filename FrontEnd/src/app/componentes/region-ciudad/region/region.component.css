@@ -1,0 +1,9 @@
+.contenedor{
+    padding: 10px 0 0 50px;
+}
+
+.btnCountry{
+    position: absolute;
+    left: 82%;
+    margin-top: -60px
+}

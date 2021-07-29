@@ -1,0 +1,19 @@
+.contenedor{
+    padding: 70px 0 0 80px;
+    margin-bottom: -80px;
+}
+
+.nombreCiudad{
+    width: 130px;
+}
+
+.btnEditDelete{
+    position: relative;
+    left: 26%;
+    bottom: 65px;
+    width: 145px;
+}
+
+button{
+    margin-right: 10px;
+}

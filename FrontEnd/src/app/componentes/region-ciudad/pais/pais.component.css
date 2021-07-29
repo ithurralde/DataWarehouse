@@ -1,0 +1,29 @@
+.contenedor{
+    padding: 20px 0 100px 90px;
+}
+
+.nombrePais{
+    width: 100px;
+}
+
+.containerPrincipal{
+    position: absolute;
+    /* left: 80%; */
+    width: 12%;
+}
+
+.btnDelEdit{
+    position: relative;
+    left: 140%;
+    margin-top: -55px;
+}
+
+.btnAdd{
+    position: relative;
+    left: 628%;
+    margin-top: -55px;
+}
+
+button{
+    margin-right: 10px;
+}

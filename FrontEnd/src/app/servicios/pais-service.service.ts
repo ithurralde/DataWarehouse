@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CiudadModule } from '../model/ciudad/ciudad.module';
+import { actPaisModule } from '../model/pais/actPais.module';
 import { PaisModule } from '../model/pais/pais.module';
 import { RegionModule } from '../model/region/region.module';
 import { DataBaseServices } from './DataBase.service';
@@ -31,5 +32,9 @@ export class PaisService {
 
   borrarPais(pais: PaisModule){
     return this.dbService.borrarPais(pais);
+  }
+
+  actualizarPais(region: RegionModule, pais: actPaisModule){
+    return this.dbService.actualizarPais(region, pais);
   }
 }

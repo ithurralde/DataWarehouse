@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CiudadModule } from 'src/app/model/ciudad/ciudad.module';
+import { actPaisModule } from 'src/app/model/pais/actPais.module';
 import { PaisModule } from 'src/app/model/pais/pais.module';
 import { RegionModule } from 'src/app/model/region/region.module';
 import { CiudadService } from 'src/app/servicios/ciudad-service.service';
@@ -14,6 +15,8 @@ export class PaisComponent implements OnInit {
   @Input() borrarCiudad: CiudadModule;
   @Input() region: RegionModule;
   @Output() borrarPais = new EventEmitter;
+  @Output() actualizarPais = new EventEmitter;
+  prePais: actPaisModule;
   editable: boolean;
   ciudades: CiudadModule[] = [];
   ciudad: string;
@@ -70,10 +73,29 @@ export class PaisComponent implements OnInit {
   }
 
   preEditPais(){
-    if (this.editable)
-      this.editable = false;
-    else{
-      this.editable = true;
+    this.editable = true;
+    this.prePais = new actPaisModule("null", this.pais.nombre);
+  }
+
+  EditPais(){
+    this.editable = false;
+    this.prePais.nombre = this.pais.nombre;
+    console.log("dale la re concha de tu madre");
+    this.actualizarPais.emit(this.prePais);
+  }
+
+  update(ciudad: CiudadModule){
+    for (let i = 0; i < this.ciudades.length; i++){
+      console.log(this.ciudades[i].nombre);
+      console.log(ciudad.nombre);
+      if (this.ciudades[i] === ciudad){
+        this.ciudadService.actualizarCiudad(ciudad, this.pais).subscribe(
+          () => {
+            console.log("Ciudad " + ciudad + " eliminada correctamente.");
+            this.ciudades[i] = ciudad;
+          }
+        );
+      }
     }
   }
 

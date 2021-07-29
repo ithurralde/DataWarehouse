@@ -22,4 +22,8 @@ export class CiudadService {
   borrarCiudad(ciudad: CiudadModule){
     return this.dbService.borrarCiudad(ciudad);
   }
+
+  actualizarCiudad(ciudad: CiudadModule, pais: PaisModule){
+    return this.dbService.actualizarCiudad(ciudad, pais);
+  }
 }

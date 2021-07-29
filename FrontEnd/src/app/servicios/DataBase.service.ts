@@ -7,6 +7,7 @@ import { RegionModule } from "../model/region/region.module";
 import { Usuario } from "../model/Usuario.model"
 import { ActivatedRoute} from '@angular/router'
 import { CiudadModule } from "../model/ciudad/ciudad.module";
+import { actPaisModule } from "../model/pais/actPais.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -128,6 +129,10 @@ export class DataBaseServices {
         return this.httpClient.delete(this.url + "paises/?pais=" + pais.nombre, { headers:this.header });
     }
 
+    actualizarPais(region: RegionModule, pais: actPaisModule){
+        return this.httpClient.put(this.url + "paises", {region, pais}, {headers:this.header});
+    }
+
     obtenerCiudades(pais: PaisModule){
         return this.httpClient.get<CiudadModule[]>(this.url + "ciudad/?pais=" + pais.nombre, { headers: this.header});
     }
@@ -138,5 +143,9 @@ export class DataBaseServices {
 
     borrarCiudad(ciudad: CiudadModule){
         return this.httpClient.delete(this.url + "ciudad/?ciudad=" + ciudad.nombre, { headers:this.header });
+    }
+
+    actualizarCiudad(ciudad: CiudadModule, pais: PaisModule){
+        return this.httpClient.put(this.url + "ciudad", {ciudad, pais}, {headers: this.header});
     }
 }

@@ -233,6 +233,13 @@ server.get('/paises', autenticarUsuario, (request, response) => {
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
 })
 
+server.put('/paises', autenticarUsuario, (request, response) => {
+  let nombre = request.body;
+  transactionHandler.actualizarPais(nombre)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
+})
+
 server.post('/paises', autenticarUsuario, (request, response) => {
   let pais = request.body;
   console.log("[server.paises] pais: ");
@@ -268,7 +275,10 @@ server.post('/ciudad', autenticarUsuario, (request, response) => {
 })
 
 server.put('/ciudad', autenticarUsuario, (request, response) => {
-  
+  let nombre = request.body;
+  transactionHandler.actualizarCiudad(nombre)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
 })
 
 server.delete('/ciudad', autenticarUsuario, (request, response) => {

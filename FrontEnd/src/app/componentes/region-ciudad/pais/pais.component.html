@@ -1,27 +1,36 @@
-<h1 [(ngModel)]="pais" name="fieldName" ngDefaultControl>{{ pais.nombre }}</h1>
-<button (click)=preAgregarCiudad()>
-    <p>Add city</p>
-</button>
-<button (click)="preEditPais()">
-    <p>Edit</p>
-</button>
+<section class="contenedor">
+    <section class="containerPrincipal">
+        <h1 class="nombrePais" [(ngModel)]="pais" name="fieldName" ngDefaultControl>{{ pais.nombre }}</h1>
+        <section class="btnDelEdit">
+            <button (click)="preEditPais()" class="btn btn-primary">
+                <p>Edit</p>
+            </button>
+            <button (click)="deletePais()" class="btn btn-primary">
+                <p>Delete</p>
+            </button>
+        </section>
+        
 
-<section>
-    <input type="text" [(ngModel)]="pais.nombre" name="fieldName" ngDefaultControl *ngIf="editable">
-    <button (click)="preEditPais()" *ngIf="editable">OK!</button>
+        <section>
+            <input type="text" [(ngModel)]="pais.nombre" name="fieldName" ngDefaultControl *ngIf="editable">
+            <button (click)="EditPais()" *ngIf="editable" class="btn btn-primary">OK!</button>
+        </section>
+        <section class="btnAdd">
+            <button (click)=preAgregarCiudad() class="btn btn-primary">
+                <p>Add city</p>
+            </button>
+        </section>
+    </section>
+
+    <div *ngIf="puedoAgregar">
+        <p>Nombre de la ciudad:</p>
+        <input type="text" placeholder="Nombre de la ciudad" [(ngModel)]="ciudad" name="fieldName" ngDefaultControl>
+        <button (click)=agregarCiudad() class="btn btn-primary">Agregar</button>
+    </div>
+
+    <app-ciudad *ngFor="let ciudad of ciudades"
+        [ciudad]="ciudad"
+        (borrarCiudad)=delete($event)
+        (actualizarCiudad)=update($event)>
+    </app-ciudad>
 </section>
-<button (click)="deletePais()">
-    <p>Delete</p>
-</button>
-
-
-<div *ngIf="puedoAgregar">
-    <p>Nombre de la ciudad:</p>
-    <input type="text" placeholder="Nombre de la ciudad" [(ngModel)]=ciudad name="fieldName" ngDefaultControl>
-    <button (click)=agregarCiudad()>Agregar</button>
-</div>
-
-<app-ciudad *ngFor="let ciudad of ciudades"
-    [ciudad]="ciudad"
-    (borrarCiudad)=delete($event)>
-</app-ciudad>
