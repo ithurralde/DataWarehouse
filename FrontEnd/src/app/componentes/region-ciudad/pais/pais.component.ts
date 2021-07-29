@@ -58,6 +58,7 @@ export class PaisComponent implements OnInit {
   }
 
   delete(ciudad: CiudadModule){
+    // podria mandarle la region y el pais para que no borre todas las ciudades con el mismo nombre
     for (let i = 0; i < this.ciudades.length; i++){
       console.log(this.ciudades[i].nombre);
       console.log(ciudad.nombre);
@@ -100,6 +101,7 @@ export class PaisComponent implements OnInit {
   }
 
   deletePais(){
+    // le mando la region para los casos en que haya paises con el mismo nombre
     this.borrarPais.emit(this.pais);
   }
 

@@ -1,0 +1,48 @@
+.formulario{
+    border: black 1px solid;
+    width: 36%;
+    text-align: center;
+    padding-bottom: 10px;
+    position: relative;
+    left: 33%;
+    margin-top: 40px;
+}
+
+h1{
+    padding: 15px;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+input{
+    margin-bottom: 30px;
+    width: 50%;
+    align-self: flex-end;
+    position: relative;
+    right: 15%;
+    margin-top: -40px
+}
+
+.boton{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    right: 15%;
+}
+
+/* p{
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+} */
+
+p{
+    /* position: absolute; */
+    position: relative;
+    text-align: start;
+    left: 10%;
+}

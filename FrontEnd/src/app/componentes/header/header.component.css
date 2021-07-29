@@ -9,6 +9,11 @@ a {
 
 .lista {
     display: none;
+    margin-top: -75px;
+}
+
+li{
+    padding-right: 8%;
 }
 
 .usuarios {

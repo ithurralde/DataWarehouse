@@ -1,15 +1,15 @@
-<form>
-    <h1>Bienvenido</h1>
-    <section>
-        <input type="text" placeholder="Usuario" [(ngModel)]="usuario" name="usuario">
-        <input type="text" placeholder="Nombre" [(ngModel)]="nombre" name="nombre">
-        <input type="text" placeholder="Apellido" [(ngModel)]="apellido" name="apellido">
-        <input type="text" placeholder="Email" [(ngModel)]="email" name="email">
-        <input type="email" placeholder="Perfil" [(ngModel)]="perfil" name="perfil">
-        <input type="text" placeholder="Admin" [(ngModel)]="admin" name="admin">
-        <input type="text" placeholder="Contraseña" [(ngModel)]="contrasenia" name="contrasenia">
+<form class="formulario">
+    <h1>Crear Usuario</h1>
+    <section class="inputs">
+        <p>Usuario</p> <input type="text" placeholder="Usuario" [(ngModel)]="usuario" name="usuario">
+        <p>Nombre</p><input type="text" placeholder="Nombre" [(ngModel)]="nombre" name="nombre">
+        <p>Apellido</p><input type="text" placeholder="Apellido" [(ngModel)]="apellido" name="apellido">
+        <p>Email</p><input type="text" placeholder="Email" [(ngModel)]="email" name="email">
+        <p>Perfil</p><input type="email" placeholder="Perfil" [(ngModel)]="perfil" name="perfil">
+        <p>Admin</p><input type="text" placeholder="Admin" [(ngModel)]="admin" name="admin">
+        <p>Contraseña</p><input type="text" placeholder="Contraseña" [(ngModel)]="contrasenia" name="contrasenia">
     </section>
     <section class="boton">
-        <button (click)="mostrar()">Crear</button>
+        <button (click)="mostrar()" class="btn btn-primary">Crear</button>
     </section>
 </form>

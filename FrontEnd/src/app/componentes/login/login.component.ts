@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     let existe = this.usuarioService.existeUsuario(this.usuario, this.contrasenia);
     if (existe == true){
       if (this.log)
-      this.log.style.display = "block";
+      this.log.style.display = "flex";
       this.usuarioService.logear(this.usuario, this.contrasenia)
       .subscribe(
         response => 
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
               (admin:any) => {
                 console.log(admin);
                 if (this.admin && admin[0].admin === 1)
-                  this.admin.style.display = "block";
+                  this.admin.style.display = "flex";
               }
             )
             },
