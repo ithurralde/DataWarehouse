@@ -12,8 +12,8 @@ CREATE TABLE usuarios(
 
 CREATE TABLE paises(
 	id INT NOT NULL AUTO_INCREMENT,
-    region INT NOT NULL,
-    nombre VARCHAR(35) NOT NULL,
+    region VARCHAR(35) NOT NULL,
+    nombre VARCHAR(35),
     CONSTRAINT pk_id_paises PRIMARY KEY (id)
 );
 
@@ -46,7 +46,7 @@ CREATE TABLE ciudades(
 
 CREATE TABLE companias(
 	id INT NOT NULL AUTO_INCREMENT,
-    nombre INT NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
     direccion VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL,
     telefono VARCHAR(30) NOT NULL,

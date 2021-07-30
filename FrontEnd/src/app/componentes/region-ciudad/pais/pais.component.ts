@@ -4,6 +4,7 @@ import { actPaisModule } from 'src/app/model/pais/actPais.module';
 import { PaisModule } from 'src/app/model/pais/pais.module';
 import { RegionModule } from 'src/app/model/region/region.module';
 import { CiudadService } from 'src/app/servicios/ciudad-service.service';
+import { CompaniaService } from 'src/app/servicios/compania.service';
 
 @Component({
   selector: 'app-pais',
@@ -21,7 +22,7 @@ export class PaisComponent implements OnInit {
   ciudades: CiudadModule[] = [];
   ciudad: string;
   puedoAgregar = false;
-  constructor(private ciudadService: CiudadService) { }
+  constructor(private ciudadService: CiudadService, private companiaService: CompaniaService) { }
 
   ngOnInit(): void {
     this.ciudadService.obtenerCiudades(this.pais).subscribe(
@@ -63,12 +64,15 @@ export class PaisComponent implements OnInit {
       console.log(this.ciudades[i].nombre);
       console.log(ciudad.nombre);
       if (this.ciudades[i] === ciudad){
-        this.ciudadService.borrarCiudad(this.ciudades[i]).subscribe(
+        this.companiaService.borrarCompaniaPais(ciudad.nombre).subscribe(
           () => {
-            console.log("Ciudad " + this.ciudades[i] + " eliminada correctamente.");
-            this.ciudades.splice(i,1);
-          }
-        );
+            this.ciudadService.borrarCiudad(this.ciudades[i]).subscribe(
+              () => {
+                console.log("Ciudad " + this.ciudades[i] + " eliminada correctamente.");
+                this.ciudades.splice(i,1);
+              }
+            );
+          });
       }
     }
   }

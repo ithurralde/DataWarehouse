@@ -6,7 +6,8 @@ export class Usuario{
                 public email:string, 
                 public perfil:string,
                 public admin:boolean, 
-                public contrasenia:string){
+                public contrasenia:string,
+                public repcontrasenia:string){
         
     }
 }

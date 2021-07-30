@@ -6,8 +6,8 @@
     <p>perfil: {{user.perfil}}</p>
     <p>admin: {{user.admin}}</p>
     <p>contraseña: {{user.contrasenia}}</p>
-    <button (click)="editar()" class="boton">Editar</button>
-    <button (click)="borrar()" class="boton">Borrar</button>
+    <button (click)="editar()" class="boton btn btn-primary">Editar</button>
+    <button (click)="borrar()" class="boton btn btn-primary">Borrar</button>
 </section>
 
 
@@ -19,5 +19,5 @@
     <p>Perfil: <input [(ngModel)]="user.perfil" placeholder="perfil">perfil: {{user.perfil}}</p>
     <p>Admin: <input [(ngModel)]="user.admin" placeholder="admin">admin: {{user.admin}}</p>
     <p>Contraseña:<input [(ngModel)]="user.contrasenia" placeholder="contraseña">contraseña: {{user.contrasenia}}</p>
-    <button (click)="editar()"> OK!</button>
+    <button (click)="editar()" class="btn btn-primary"> OK!</button>
 </section>

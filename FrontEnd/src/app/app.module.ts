@@ -20,6 +20,7 @@ import { CiudadComponent } from './componentes/region-ciudad/ciudad/ciudad.compo
 import { DataBaseServices } from './servicios/DataBase.service';
 import { UsuarioService } from './servicios/Usuario.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CompaniaComponent } from './componentes/companias/compania/compania.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     CrearContactoComponent,
     RegionComponent,
     PaisComponent,
-    CiudadComponent
+    CiudadComponent,
+    CompaniaComponent
   ],
   imports: [
     BrowserModule,

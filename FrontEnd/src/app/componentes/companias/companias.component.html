@@ -1,1 +1,39 @@
-<p>companias works!</p>
+<section class="container">
+    <section class="header">
+        <h1>Compañias</h1>
+        <button class="btn btn-primary" (click)="cargar()">Agregar</button>
+    </section>
+    <section class="containerAgregar" *ngIf="editable">
+        <section class="agregar">
+            <h3>Agregar Compañia</h3>
+            <input type="text" *ngIf="editable" placeholder="Nombre" [(ngModel)]="nombre"> 
+            <input type="text" *ngIf="editable" placeholder="Direccion" [(ngModel)]="direccion">
+            <input type="text" *ngIf="editable" placeholder="Email" [(ngModel)]="email"> 
+            <input type="text" *ngIf="editable" placeholder="Telefono" [(ngModel)]="telefono"> 
+            <input type="text" *ngIf="editable" placeholder="Ciudad" [(ngModel)]="ciudad">
+            <button *ngIf="editable" (click)="agregar()" class="btn btn-primary btnAgregar">Agregar compañia</button>
+        </section>
+    </section>
+    <section class="base">
+        <ul>
+            <li>
+                <h4>Nombre</h4>
+            </li>
+            <li>
+                <h4>Direccion</h4>
+            </li>
+            <li>
+                <h4>Email</h4>
+            </li>
+            <li>
+                <h4>Telefono</h4>
+            </li>
+            <li>
+                <h4>Ciudad</h4>
+            </li>
+        </ul>
+        <app-compania *ngFor="let compania of companias"
+            [compania]="compania">
+        </app-compania>
+    </section>
+</section>

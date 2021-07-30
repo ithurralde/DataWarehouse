@@ -8,6 +8,7 @@ import { Usuario } from "../model/Usuario.model"
 import { ActivatedRoute} from '@angular/router'
 import { CiudadModule } from "../model/ciudad/ciudad.module";
 import { actPaisModule } from "../model/pais/actPais.module";
+import { CompaniaModule } from "../model/compania/compania.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -147,5 +148,26 @@ export class DataBaseServices {
 
     actualizarCiudad(ciudad: CiudadModule, pais: PaisModule){
         return this.httpClient.put(this.url + "ciudad", {ciudad, pais}, {headers: this.header});
+    }
+
+    obtenerCompanias(){
+        return this.httpClient.get<CompaniaModule[]>(this.url + "companias", {headers:this.header});
+    }
+
+    agregarCompania(compania: CompaniaModule){
+        return this.httpClient.post(this.url + "companias", compania, {headers:this.header});
+    }
+
+    borrarCompania(compania: CompaniaModule){
+        return this.httpClient.delete(this.url + "companias/?compania=" + compania, {headers: this.header} );
+    }
+
+    borrarCompaniaPais(ciudad: string){
+        return this.httpClient.delete(this.url + "companiasPais/?ciudad=" + ciudad, {headers: this.header} );
+    }
+
+    borrarCompaniaRegion(pais: string){
+        console.log(pais);
+        return this.httpClient.delete(this.url + "companiasRegion/?pais=" + pais, {headers: this.header} );
     }
 }

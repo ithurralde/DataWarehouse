@@ -1,4 +1,5 @@
 <app-crear-usuario></app-crear-usuario>
+<h1>Lista de usuarios:</h1>
 <app-usuario *ngFor="let usuario of usuarios" 
 [user]="usuario"
 (borrarUsuario)=borrar($event)>

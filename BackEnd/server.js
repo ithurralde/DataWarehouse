@@ -289,3 +289,43 @@ server.delete('/ciudad', autenticarUsuario, (request, response) => {
   .then( respuesta => response.status(200).send(respuesta))
   .catch( error => response.status(404).send(error));
 })
+
+server.get('/companias', autenticarUsuario, (request, response) => {
+  transactionHandler.getCompanias()
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send(error));
+})
+
+server.post('/companias', autenticarUsuario, (request, response) => {
+  let compania = request.body;
+  transactionHandler.addCompania(compania)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+})
+
+server.delete('/companias', autenticarUsuario, (request, response) => {
+  let compania = request.body;
+  transactionHandler.borrarCompania(compania)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+})
+
+server.delete('/companiasPais', autenticarUsuario, (request, response) => {
+  let nombre = request.query.ciudad;
+  console.log("************************************************************************************************************************************************");
+  console.log(nombre);
+  console.log("************************************************************************************************************************************************");
+  transactionHandler.borrarCompaniaPais(nombre)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+})
+
+server.delete('/companiasRegion', autenticarUsuario, (request, response) => {
+  let pais = request.query.pais;
+  console.log("************************************************************************************************************************************************");
+  console.log(pais);
+  console.log("************************************************************************************************************************************************");
+  transactionHandler.borrarCompaniaRegion(pais)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+})

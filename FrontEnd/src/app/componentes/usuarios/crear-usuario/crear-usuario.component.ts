@@ -17,6 +17,7 @@ export class CrearUsuarioComponent implements OnInit {
   perfil:string;
   admin:boolean; 
   contrasenia:string;
+  repContrasenia:string;
   constructor(private router: Router, private usuarioService: UsuarioService) { 
 
   }
@@ -27,7 +28,7 @@ export class CrearUsuarioComponent implements OnInit {
   async mostrar(){
     console.log(this.usuario);
     console.log(this.apellido);
-    let user = new Usuario(this.usuario, this.nombre, this.apellido, this.email, this.perfil, this.admin, this.contrasenia);
+    let user = new Usuario(this.usuario, this.nombre, this.apellido, this.email, this.perfil, this.admin, this.contrasenia, this.repContrasenia);
     this.usuarioService.crearUsuario(user)
     .subscribe(
       response => console.log(response),

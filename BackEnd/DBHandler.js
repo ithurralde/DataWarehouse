@@ -8,7 +8,7 @@ async function crearUsuario(usuario) {
       replacements: [usuario.nombre],
       type: QueryTypes.SELECT
     });
-    if (existe.length == 0){
+    if (existe.length == 0 && usuario.contrasenia === usuario.repcontrasenia){
       existe = await myDataBase.query('SELECT email FROM usuarios WHERE email = ?', {
         replacements: [usuario.email],
         type: QueryTypes.SELECT
@@ -256,8 +256,93 @@ async function crearUsuario(usuario) {
     })
   }
 
+  async function getCompanias(){
+    console.log("aca si quiera?");
+    let companias = await myDataBase.query('SELECT * FROM companias', {
+      type: QueryTypes.SELECT
+    });
 
+    let ciudades = new Array;
+    for (let i = 0 ; i < companias.length ; i++)
+      ciudades.push(await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?',{
+          replacements: [companias[i].id_ciudad],
+          type: QueryTypes.SELECT
+        })
+      );
 
+    let retorno = { ciudades, companias };
+    console.log("pero que concha tiene esto: retorno");
+    console.log(retorno);
+    console.log(retorno.ciudades[0][0]);
+    console.log(retorno.ciudades[1][0]);
+  
+    return {ciudades, companias};
+  }
+
+  async function addCompania(compania){
+    let existeCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+      replacements: [compania.ciudad],
+      type: QueryTypes.SELECT
+    });
+    console.log("tamaño de la ciudad= " + existeCiudad.length);
+    if (existeCiudad.length != 0){
+        return await myDataBase.query('INSERT INTO companias (nombre, direccion, email, telefono, id_ciudad) VALUES (?, ?, ?, ?, ?)',{
+          replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, existeCiudad[0].id],
+          type: QueryTypes.INSERT
+        })
+    }
+    else {
+      console.log("por ende deberia estar entrando por aca....");
+      return status(404);
+    }
+  }
+
+  async function borrarCompania(compania){
+
+  }
+
+  async function borrarCompaniaPais(nombreCiudad){
+    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+      replacements: [nombreCiudad],
+      type: QueryTypes.SELECT
+    });
+
+    let resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
+      replacements: [idCiudad[0].id],
+      type: QueryTypes.DELETE
+    });
+
+    await borrarCiudad(nombreCiudad);
+
+    return resultado;
+  }
+
+  
+  async function borrarCompaniaRegion(pais){
+    let idPais = await myDataBase.query('SELECT id FROM paises WHERE nombre = ?', {
+      replacements: [pais],
+      type: QueryTypes.SELECT
+    });
+
+    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE id_pais = ?', {
+      replacements: [idPais[0].id],
+      type: QueryTypes.SELECT
+    });
+
+    let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?',{
+      replacements: [idCiudad[0].id],
+      type: QueryTypes.SELECT
+    })
+
+    let resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
+      replacements: [idCiudad[0].id],
+      type: QueryTypes.DELETE
+    });
+
+    await borrarCiudad(nombreCiudad[0].nombre);
+
+    return resultado;
+  }
 
 
 
@@ -265,7 +350,8 @@ async function crearUsuario(usuario) {
   
   module.exports = {  crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, 
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
-                      actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad
+                      actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
+                      addCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
                     };
 
 

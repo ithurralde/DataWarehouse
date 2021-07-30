@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { actPaisModule } from 'src/app/model/pais/actPais.module';
 import { PaisModule } from 'src/app/model/pais/pais.module';
 import { RegionModule } from 'src/app/model/region/region.module';
+import { CompaniaService } from 'src/app/servicios/compania.service';
 import { PaisService } from 'src/app/servicios/pais-service.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class RegionComponent implements OnInit {
   nombrePais: string;
   paises: PaisModule[] = [];
   puedeAgregar = false;
-  constructor(private paisService: PaisService) { }
+  constructor(private paisService: PaisService, private companiaService: CompaniaService) { }
 
   ngOnInit(): void {
     this.paisService.obtenerPaises(this.region).subscribe(
@@ -53,12 +54,15 @@ export class RegionComponent implements OnInit {
   deletePais(pais: PaisModule){
     for (let i = 0; i < this.paises.length; i++){
       if (this.paises[i] == pais){
-        this.paisService.borrarPais(this.paises[i]).subscribe(
+        this.companiaService.borrarCompaniaRegion(pais.nombre).subscribe(
           () => {
-            console.log("Pais " + this.paises[i] + " eliminado correctamente.")
-            this.paises.splice(i,1);
-          }
-        );
+            this.paisService.borrarPais(this.paises[i]).subscribe(
+              () => {
+                console.log("Pais " + this.paises[i] + " eliminado correctamente.")
+                this.paises.splice(i,1);
+              }
+            );
+          });
         // this.paises.splice(i,1);
       }
     }
