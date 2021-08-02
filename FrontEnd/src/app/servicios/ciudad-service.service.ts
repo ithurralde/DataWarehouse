@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { CiudadAnteriorModule } from '../model/ciudad/ciudad-anterior.module';
 import { CiudadModule } from '../model/ciudad/ciudad.module';
+import { actPaisModule } from '../model/pais/actPais.module';
 import { PaisModule } from '../model/pais/pais.module';
 import { RegionModule } from '../model/region/region.module';
 import { DataBaseServices } from './DataBase.service';
@@ -23,7 +25,7 @@ export class CiudadService {
     return this.dbService.borrarCiudad(ciudad);
   }
 
-  actualizarCiudad(ciudad: CiudadModule, pais: PaisModule){
+  actualizarCiudad(ciudad: CiudadAnteriorModule, pais: PaisModule){
     return this.dbService.actualizarCiudad(ciudad, pais);
   }
 }

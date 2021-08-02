@@ -250,8 +250,15 @@ async function crearUsuario(usuario) {
     console.log("ACTUALIZANDO CIUDAD MEEEEN");
     console.log(idPais[0].id);
 
-    return await myDataBase.query('UPDATE ciudades SET nombre = ? WHERE id_pais = ?', {
-      replacements: [ciudad.ciudad.nombre, idPais[0].id],
+    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ? AND id_pais = ?', {
+      replacements: [ciudad.ciudad_ant.nombre_anterior, idPais[0].id],
+      type: QueryTypes.SELECT
+    })
+
+    console.log(idCiudad[0].id);
+
+    return await myDataBase.query('UPDATE ciudades SET nombre = ? WHERE  id = ?', {
+      replacements: [ciudad.ciudad_ant.nombre, idCiudad[0].id],
       type: QueryTypes.UPDATE
     })
   }

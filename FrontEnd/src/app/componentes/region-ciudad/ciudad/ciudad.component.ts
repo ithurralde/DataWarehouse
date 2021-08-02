@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CiudadAnteriorModule } from 'src/app/model/ciudad/ciudad-anterior.module';
 import { CiudadModule } from 'src/app/model/ciudad/ciudad.module';
 
 @Component({
@@ -11,18 +12,21 @@ export class CiudadComponent implements OnInit {
   puedeEditar = false;
   @Output() borrarCiudad = new EventEmitter();
   @Output() actualizarCiudad = new EventEmitter();
+  ciudad_ant: CiudadAnteriorModule;
   constructor() { }
 
   ngOnInit(): void {
   }
 
   preEditar(){
+    this.ciudad_ant = new CiudadAnteriorModule("null", this.ciudad.nombre);
     this.puedeEditar = true;
   }
   
   editar(){
     this.puedeEditar = false;
-    this.actualizarCiudad.emit(this.ciudad);
+    this.ciudad_ant.nombre = this.ciudad.nombre;
+    this.actualizarCiudad.emit(this.ciudad_ant);
   }
 
   borrar(){

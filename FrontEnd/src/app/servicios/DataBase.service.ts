@@ -9,6 +9,7 @@ import { ActivatedRoute} from '@angular/router'
 import { CiudadModule } from "../model/ciudad/ciudad.module";
 import { actPaisModule } from "../model/pais/actPais.module";
 import { CompaniaModule } from "../model/compania/compania.module";
+import { CiudadAnteriorModule } from "../model/ciudad/ciudad-anterior.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -146,8 +147,8 @@ export class DataBaseServices {
         return this.httpClient.delete(this.url + "ciudad/?ciudad=" + ciudad.nombre, { headers:this.header });
     }
 
-    actualizarCiudad(ciudad: CiudadModule, pais: PaisModule){
-        return this.httpClient.put(this.url + "ciudad", {ciudad, pais}, {headers: this.header});
+    actualizarCiudad(ciudad_ant:CiudadAnteriorModule, pais: PaisModule){
+        return this.httpClient.put(this.url + "ciudad", {ciudad_ant, pais}, {headers: this.header});
     }
 
     obtenerCompanias(){

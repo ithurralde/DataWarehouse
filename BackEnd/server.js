@@ -276,6 +276,8 @@ server.post('/ciudad', autenticarUsuario, (request, response) => {
 
 server.put('/ciudad', autenticarUsuario, (request, response) => {
   let nombre = request.body;
+  console.log("el nombre de ciudad, ciudad ant y pais: ");
+  console.log(nombre);
   transactionHandler.actualizarCiudad(nombre)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
