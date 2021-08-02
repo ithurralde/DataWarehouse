@@ -1,21 +1,25 @@
 <div class="nav-item">
     <ul class="nav justify-content-start">
         <li class="nav-item">
-            <h3 class="nav ">LOGO</h3>
+            <h3 class="nav logo">LOGO</h3>
         </li>
     </ul>
     <ul class="nav lista justify-content-end">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/contactos" (click)="cargar()">Contactos</a>
+            <a class="active" aria-current="page" routerLink="/contactos" (click)="cargar()" (click)="contactos()">Contactos</a>
+            <div class="lineaBlanca" [ngClass]="{lineaBlanca: onClickContactos}"></div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/companias" (click)="cargar()">Compañías</a>
+            <a routerLink="/companias" (click)="cargar()" (click)="companias()">Compañías</a>
+            <div class="lineaBlanca" [ngClass]="{lineaBlanca: onClickCompanias}"></div>
         </li>
-        <li class="usuarios nav-item">
-            <a class="nav-link" routerLink="/usuarios" (click)="cargar()">Usuarios</a>
+        <li class="nav-item usuarios">
+            <a routerLink="/usuarios" (click)="cargar()" (click)="usuarios()">Usuarios</a>
+            <div class="lineaBlanca" [ngClass]="{lineaBlanca: onClickUsuarios}"></div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/region-ciudad" (click)="cargar()">Región/Ciudad</a>
+            <a routerLink="/region-ciudad" (click)="cargar()" (click)="region()">Región/Ciudad</a>
+            <div class="lineaBlanca" [ngClass]="{lineaBlanca: onClickRegion}"></div>
         </li>
     </ul>
 </div>

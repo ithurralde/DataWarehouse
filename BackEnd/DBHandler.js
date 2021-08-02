@@ -317,22 +317,17 @@ async function crearUsuario(usuario) {
 
     console.log(idCompania[0].id);
 
-    if (compania.nombre === compania.nombre_anterior)
-      return await myDataBase.query('UPDATE companias SET nombre=?, direccion=?, email=?, telefono=?, id_ciudad=? WHERE  id = ?', {
-        replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, idCiudad[0].id, idCompania[0].id],
-        type: QueryTypes.UPDATE
-      });
-    else{
-      idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
-        replacements: [compania.ciudad],
-        type: QueryTypes.SELECT
-      });
-      
-      return await myDataBase.query('UPDATE companias SET nombre=?, direccion=?, email=?, telefono=?, id_ciudad=? WHERE  id = ?', {
-        replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, idCiudad[0].id, idCompania[0].id],
-        type: QueryTypes.UPDATE
-      });
-    }
+    // vuelvo a tomar el id para los casos en donde haya editado la ciudad, 
+    // el id de la ciudad deberia cambiar para levantarla correctamente
+    idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+      replacements: [compania.ciudad],
+      type: QueryTypes.SELECT
+    });
+
+    return await myDataBase.query('UPDATE companias SET nombre=?, direccion=?, email=?, telefono=?, id_ciudad=? WHERE  id = ?', {
+      replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, idCiudad[0].id, idCompania[0].id],
+      type: QueryTypes.UPDATE
+    });
   }
 
   async function borrarCompania(compania){

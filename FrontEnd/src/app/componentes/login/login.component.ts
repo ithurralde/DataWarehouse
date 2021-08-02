@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
               (admin:any) => {
                 console.log(admin);
                 if (this.admin && admin[0].admin === 1)
-                  this.admin.style.display = "flex";
+                  this.admin.style.display = "block";
               }
             )
             },

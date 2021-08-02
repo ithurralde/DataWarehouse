@@ -9,7 +9,10 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 })
 export class HeaderComponent implements OnInit {
   isAdmin:boolean;
-  
+  onClickContactos:boolean;
+  onClickCompanias:boolean
+  onClickUsuarios:boolean
+  onClickRegion:boolean
   constructor(private usuarioService: UsuarioService) {
     
    }
@@ -34,6 +37,34 @@ export class HeaderComponent implements OnInit {
         )
       }
     );
+  }
+
+  contactos(){
+    this.onClickContactos = true;
+    this.onClickCompanias = false;
+    this.onClickUsuarios = false;
+    this.onClickRegion = false;
+  }
+
+  companias(){
+    this.onClickContactos = false;
+    this.onClickCompanias = true;
+    this.onClickUsuarios = false;
+    this.onClickRegion = false;
+  }
+
+  usuarios(){
+    this.onClickContactos = false;
+    this.onClickCompanias = false;
+    this.onClickUsuarios = true;
+    this.onClickRegion = false;
+  }
+
+  region(){
+    this.onClickContactos = false;
+    this.onClickCompanias = false;
+    this.onClickUsuarios = false;
+    this.onClickRegion = true;
   }
 
 }
