@@ -9,7 +9,7 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 })
 export class HeaderComponent implements OnInit {
   isAdmin:boolean;
-  onClickContactos:boolean;
+  onClickContactos:boolean = true;
   onClickCompanias:boolean
   onClickUsuarios:boolean
   onClickRegion:boolean

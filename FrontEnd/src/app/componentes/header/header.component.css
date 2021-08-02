@@ -17,11 +17,9 @@ a {
 }
 
 .lineaBlanca{
-    margin-top: 20px;
+    margin-top: 22px;
     background: white;
-    border-radius: 2px;
-    /* width: inherit; */
-    height: 5px;
+    height: 3px;
     padding: 0;
 }
 
@@ -35,7 +33,7 @@ a {
 }
 
 li{
-    padding-right: 8%;
+    padding-right: 3%;
 }
 
 .usuarios {
