@@ -33,7 +33,9 @@
             </li>
         </ul>
         <app-compania *ngFor="let compania of companias"
-            [compania]="compania">
+            [compania]="compania"
+            (borrarCompania)=delete($event)
+            (editarCompania)=update($event)>
         </app-compania>
     </section>
 </section>

@@ -305,8 +305,19 @@ server.post('/companias', autenticarUsuario, (request, response) => {
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
 })
 
-server.delete('/companias', autenticarUsuario, (request, response) => {
+server.put('/companias', autenticarUsuario, (request, response) => {
   let compania = request.body;
+  transactionHandler.actualizarCompania(compania)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+})
+
+server.delete('/companias', autenticarUsuario, (request, response) => {
+  let compania = request.query.compania;
+  compania = JSON.parse(compania);
+  console.log("aca la compania para eliminar: ");
+  console.log(compania);
+  console.log(compania.compania);
   transactionHandler.borrarCompania(compania)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));

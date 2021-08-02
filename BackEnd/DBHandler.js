@@ -304,8 +304,49 @@ async function crearUsuario(usuario) {
     }
   }
 
-  async function borrarCompania(compania){
+  async function actualizarCompania(compania){
+    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+      replacements: [compania.ciudad_ant],
+      type: QueryTypes.SELECT
+    });
 
+    idCompania = await myDataBase.query('SELECT id FROM companias WHERE nombre = ? AND direccion = ? AND id_ciudad = ?', {
+      replacements: [compania.nombre_ant, compania.direccion_ant, idCiudad[0].id],
+      type: QueryTypes.SELECT
+    });
+
+    console.log(idCompania[0].id);
+
+    if (compania.nombre === compania.nombre_anterior)
+      return await myDataBase.query('UPDATE companias SET nombre=?, direccion=?, email=?, telefono=?, id_ciudad=? WHERE  id = ?', {
+        replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, idCiudad[0].id, idCompania[0].id],
+        type: QueryTypes.UPDATE
+      });
+    else{
+      idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+        replacements: [compania.ciudad],
+        type: QueryTypes.SELECT
+      });
+      
+      return await myDataBase.query('UPDATE companias SET nombre=?, direccion=?, email=?, telefono=?, id_ciudad=? WHERE  id = ?', {
+        replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, idCiudad[0].id, idCompania[0].id],
+        type: QueryTypes.UPDATE
+      });
+    }
+  }
+
+  async function borrarCompania(compania){
+    console.log("me estas imprimiendo esto?");
+    console.log(compania.nombre);
+    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+      replacements: [compania.ciudad],
+      type: QueryTypes.SELECT
+    });
+
+    return await myDataBase.query('DELETE FROM companias WHERE nombre = ? AND direccion = ? AND id_ciudad = ?', {
+      replacements: [compania.nombre, compania.direccion, idCiudad[0].id],
+      type: QueryTypes.DELETE
+    });
   }
 
   async function borrarCompaniaPais(nombreCiudad){
@@ -358,7 +399,8 @@ async function crearUsuario(usuario) {
   module.exports = {  crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, 
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
-                      addCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
+                      addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
+
                     };
 
 

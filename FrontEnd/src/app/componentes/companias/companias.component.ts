@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CompaniaAnteriorModule } from 'src/app/model/compania/compania-anterior.module';
 import { CompaniaModule } from 'src/app/model/compania/compania.module';
 import { CompaniaService } from 'src/app/servicios/compania.service';
 
@@ -54,5 +55,35 @@ export class CompaniasComponent implements OnInit {
         this.companias.push(compania);
       }
     );
+  }
+
+  delete(compania: CompaniaModule){
+    for (let i = 0; i < this.companias.length; i++){  
+      if (this.companias[i] == compania)  
+        this.companiaService.borrarCompania(compania).subscribe(
+          () => {
+            console.log("Compañia " + compania + " borrada con exito.");
+            this.companias.splice(i, 1);
+          }
+        );
+    }
+  }
+
+  update(compania_ant: CompaniaAnteriorModule){
+    for (let i = 0; i < this.companias.length; i++){  
+      if (this.companias[i].nombre == compania_ant.nombre &&
+          this.companias[i].direccion == compania_ant.direccion &&
+          this.companias[i].email == compania_ant.email &&
+          this.companias[i].telefono == compania_ant.telefono &&
+          this.companias[i].ciudad == compania_ant.ciudad){
+              this.companiaService.editarCompania(compania_ant).subscribe(
+                () => {
+                  console.log("Compañia " + compania_ant + " editada con exito.");
+                  this.companias[i] = new CompaniaModule(compania_ant.nombre, compania_ant.direccion, 
+                                                        compania_ant.email, compania_ant.telefono, compania_ant.ciudad);
+                }
+              );
+            }
+    }
   }
 }

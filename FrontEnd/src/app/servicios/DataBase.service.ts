@@ -10,6 +10,7 @@ import { CiudadModule } from "../model/ciudad/ciudad.module";
 import { actPaisModule } from "../model/pais/actPais.module";
 import { CompaniaModule } from "../model/compania/compania.module";
 import { CiudadAnteriorModule } from "../model/ciudad/ciudad-anterior.module";
+import { CompaniaAnteriorModule } from "../model/compania/compania-anterior.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -160,7 +161,7 @@ export class DataBaseServices {
     }
 
     borrarCompania(compania: CompaniaModule){
-        return this.httpClient.delete(this.url + "companias/?compania=" + compania, {headers: this.header} );
+        return this.httpClient.delete(this.url + "companias/?compania=" + JSON.stringify(compania), {headers: this.header} );
     }
 
     borrarCompaniaPais(ciudad: string){
@@ -168,7 +169,10 @@ export class DataBaseServices {
     }
 
     borrarCompaniaRegion(pais: string){
-        console.log(pais);
         return this.httpClient.delete(this.url + "companiasRegion/?pais=" + pais, {headers: this.header} );
+    }
+
+    editarCompania(compania_ant: CompaniaAnteriorModule){
+        return this.httpClient.put(this.url + "companias", compania_ant, {headers: this.header});
     }
 }
