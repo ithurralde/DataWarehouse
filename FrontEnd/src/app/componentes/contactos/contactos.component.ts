@@ -68,11 +68,17 @@ export class ContactosComponent implements OnInit {
   }
 
   agregar(){
-    if (this.crear)
+    let html = document.querySelector<HTMLElement>(".body");
+    if (this.crear && html){
       this.crear = false;
-    else{
+      html.style.backgroundColor = "transparent";
+      // html.style.opacity = "1";
+    }
+    else if (html){
       this.crear = true;
       this.desplegable = false;
+      html.style.backgroundColor = "gray";
+      // html.style.opacity = "0.4";
     }
   }
 

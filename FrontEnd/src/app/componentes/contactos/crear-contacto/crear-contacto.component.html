@@ -1,55 +1,58 @@
 <form class="parte1">
-    <section>
-        <p>Nombre<span>*</span></p>
-        <input type="text" [(ngModel)]="nombre" name="nombre" required>
-    </section>
-    <section>
-        <p>Apellido<span>*</span></p>
-        <input type="text" [(ngModel)]="apellido" name="apellido" required>
-    </section>
-    <section>
-        <p>Cargo<span>*</span></p>
-        <input type="text" [(ngModel)]="nombre" name="cargo" required>
-    </section>
-    <section>
-        <p>Email<span>*</span></p>
-        <input type="email" [(ngModel)]="email" name="email" required>
-    </section>
-    <section>
-        <p>Companía <span>*</span></p>
-        <select name="datos" class="region">
-            <option value="dato"></option>
-         </select>
+    <p class="nvoContacto">Nuevo contacto</p>
+    <section class="datosPrincipales">
+        <section>
+            <p>Nombre<span>*</span></p>
+            <input type="text" [(ngModel)]="nombre" name="nombre" required>
+        </section>
+        <section>
+            <p>Apellido<span>*</span></p>
+            <input type="text" [(ngModel)]="apellido" name="apellido" required>
+        </section>
+        <section>
+            <p>Cargo<span>*</span></p>
+            <input type="text" [(ngModel)]="nombre" name="cargo" required>
+        </section>
+        <section>
+            <p>Email<span>*</span></p>
+            <input type="email" [(ngModel)]="email" name="email" required>
+        </section>
+        <section>
+            <p>Companía<span>*</span></p>
+            <select name="datos" class="region">
+                <option value="dato">Youtube</option>
+            </select>
+        </section>
     </section>
 </form>
 <form class="parte2">
     <section class="region">
         <p>Región</p>
-        <select name="datos" class="region">
-            <option value="dato"></option>
+        <select name="datos">
+            <option value="dato">America</option>
          </select>
     </section>
     <section class="pais">
         <p>País</p>
-        <select name="datos" class="region">
-            <option value="dato"></option>
+        <select name="datos">
+            <option value="dato">Argentina</option>
          </select>
     </section>
     <section class="ciudad">
         <p>Ciudad</p>
-        <select name="datos" class="region">
-            <option value="dato"></option>
+        <select name="datos">
+            <option value="dato">Balcarce</option>
          </select>
     </section>
     <section class="direccion">
         <p>Dirección</p>
-        <input name="datos" class="region" placeholder="Ingresa una dirección">
+        <input name="datos" placeholder="Ingresa una dirección">
     </section>
     <section class="interes">
         <p>Interés</p>
         <section>
             <!-- la barra de carga de interes -->
-            <select name="datos" class="region">
+            <select name="datos" class="selectInteres">
                 <option value="dato">0%</option>
                 <option value="dato">25%</option>
                 <option value="dato">50%</option>
@@ -58,24 +61,33 @@
             </select>
         </section>
     </section>
+</form>
+<form class="parte3">
     <section class="canal">
         <p>Canal de contacto</p>
-        <select name="datos" class="region">
-            <option value="dato"></option>
+        <select name="datos" class="selectCanal">
+            <option value="dato">Teléfono</option>
+            <option value="dato">Whatsapp</option>
+            <option value="dato">Instagram</option>
+            <option value="dato">Facebook</option>
+            <option value="dato">Linkedin</option>
          </select>
     </section>
     <section class="cuenta">
         <p>Cuenta de usuario</p>
-        <select name="datos" class="region">
-            <option value="dato"></option>
+        <select name="datos" class="selectCuenta">
+            <option value="dato">Red social (red social)</option>
+            <option value="dato">Telefono (numero de telefono)</option>
          </select>
     </section>
-    <section>
-        <button>
+    <section class="sectionAgregarCanal">
+        <button class="btnAgregar">
             <i class="fas fa-plus plus"></i>
-            <p>Agregar Canal</p>
+            <p class="pAgregarCanal">Agregar Canal</p>
         </button>
     </section>
 </form>
-<button class="btn btn-outline-secondary btn-lg">Cancelar</button>
-<button class="btn btn-secondary btn-lg" (click)="crear()">Guardar contacto</button>
+<section class="botones">
+    <button class="btn btn-outline-secondary btn-lg">Cancelar</button>
+    <button class="btn btn-secondary btn-lg" (click)="crear()">Guardar contacto</button>
+</section>

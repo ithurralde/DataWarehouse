@@ -1,12 +1,129 @@
+span{
+    color: red;
+}
+
+select{
+    width: 95px;
+    height: 30px;
+}
 .parte1{
     display: flex;
+    justify-content: center;
+    background-color: #1d72c2;
+    margin-left: 18%;
+    width: 65%;
+    height: 90px;
+    flex-wrap: wrap;
 }
 
 .parte2{
     display: flex;
+    flex-wrap: wrap;
+    margin-left: 18%;
+    padding-top: 80px;
+    padding-left: 30px;
+    background-color: white;
+    width: 65%;
+}
+
+.parte3{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    width: 65%;
+    margin-left: 18%;
+    padding-right: 14%;
+    height: 75px;
+}
+
+.nvoContacto{
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    margin-left: 3%;
+    margin-top: 12px;
+}
+
+.datosPrincipales{
+    display: flex;
+    border: 3px solid #0683f9;
+    border-radius: 5px;
+    background: white;
+    padding: 10px 15px 10px 15px;
 }
 
 .plus{
     opacity: 0.5;
     font-size: 20px;
+    padding: 0 15px 0 30px;
+}
+
+.botones{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    right: -18%;
+    background: white;
+    width: 65%;
+    padding: 60px 40px 40px 0;
+}
+
+.region{
+    width: 100px;
+}
+
+.pais{
+    width: 100px;
+}
+
+.ciudad{
+    width: 100px;
+}
+
+.direccion{
+    width: 200px;
+}
+
+.interes{
+    width: 200px;
+}
+
+.canal{
+    width: 200px;
+}
+
+.cuenta{
+    width: 200px;
+    padding-left: 10px;
+}
+
+.selectInteres{
+    width: 200px;
+}
+
+.btnAgregar{
+    display: flex;
+    position: relative;
+    top: 25px;
+    align-items: center;
+}
+
+.pAgregarCanal{
+    padding: 0 30px 0px 0px;
+    position: relative;
+    top: 6px;
+}
+
+.sectionAgregarCanal{
+    padding-left: 25px;
+}
+
+.selectCanal{
+    padding: 0;
+    width: 200px;
+}
+
+.selectCuenta{
+    padding: 0;
+    width: 200px;
 }
