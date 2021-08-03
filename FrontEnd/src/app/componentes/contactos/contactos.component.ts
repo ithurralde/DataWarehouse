@@ -82,6 +82,13 @@ export class ContactosComponent implements OnInit {
     }
   }
 
+  cerrarVentana(bool: boolean){
+    let html = document.querySelector<HTMLElement>(".body");
+    this.crear = bool;
+    if (html)
+      html.style.backgroundColor = "transparent";
+  }
+
   cargarRegiones(){
     let compania = document.querySelector<HTMLSelectElement>(".region");
     if (this.selector && compania){

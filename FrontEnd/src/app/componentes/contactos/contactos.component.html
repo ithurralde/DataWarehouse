@@ -42,6 +42,6 @@
     <button class="btn btn-primary" (click)="agregar()">Agregar contacto</button>
 </section>
 
-<app-crear-contacto *ngIf="crear"></app-crear-contacto>
+<app-crear-contacto *ngIf="crear" (cerrarVentana)="cerrarVentana($event)"></app-crear-contacto>
 
 <app-contacto *ngFor="let contacto of filtroContactos"></app-contacto>

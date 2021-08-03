@@ -1,5 +1,8 @@
 <form class="parte1">
-    <p class="nvoContacto">Nuevo contacto</p>
+    <section class="header">
+        <p class="nvoContacto">Nuevo contacto</p>
+        <button class="btn btnEquis" (click)="cerrar()"><i class="fas fa-times equis"></i></button>
+    </section>
     <section class="datosPrincipales">
         <section>
             <p>Nombre<span>*</span></p>
@@ -11,7 +14,7 @@
         </section>
         <section>
             <p>Cargo<span>*</span></p>
-            <input type="text" [(ngModel)]="nombre" name="cargo" required>
+            <input type="text" [(ngModel)]="cargo" name="cargo" required>
         </section>
         <section>
             <p>Email<span>*</span></p>

@@ -6,6 +6,24 @@ select{
     width: 95px;
     height: 30px;
 }
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.equis{
+    color: white;
+    margin-right: 3%;
+    font-size: 20px;
+}
+
+.btnEquis{
+    margin-right: 1%;
+}
+
 .parte1{
     display: flex;
     justify-content: center;
@@ -37,11 +55,10 @@ select{
 }
 
 .nvoContacto{
-    width: 100%;
     color: white;
     font-size: 20px;
-    margin-left: 3%;
     margin-top: 12px;
+    margin-left: 3%;
 }
 
 .datosPrincipales{

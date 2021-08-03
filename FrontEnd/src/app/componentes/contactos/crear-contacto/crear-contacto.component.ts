@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ContactoModule } from 'src/app/model/contacto/contacto.module';
 
 @Component({
@@ -7,8 +7,10 @@ import { ContactoModule } from 'src/app/model/contacto/contacto.module';
   styleUrls: ['./crear-contacto.component.css']
 })
 export class CrearContactoComponent implements OnInit {
+  @Output() cerrarVentana = new EventEmitter();
   nombre:string;
   apellido:string;
+  cargo:string;
   email:string;
   compania:string;
   direccion:string;
@@ -23,5 +25,9 @@ export class CrearContactoComponent implements OnInit {
   
   crear(){
     // let nuevoContacto = new ContactoModule()
+  }
+
+  cerrar(){
+    this.cerrarVentana.emit(false);
   }
 }
