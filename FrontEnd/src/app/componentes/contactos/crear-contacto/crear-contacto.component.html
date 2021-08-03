@@ -1,1 +1,81 @@
-<p>crear-contacto works!</p>
+<form class="parte1">
+    <section>
+        <p>Nombre<span>*</span></p>
+        <input type="text" [(ngModel)]="nombre" name="nombre" required>
+    </section>
+    <section>
+        <p>Apellido<span>*</span></p>
+        <input type="text" [(ngModel)]="apellido" name="apellido" required>
+    </section>
+    <section>
+        <p>Cargo<span>*</span></p>
+        <input type="text" [(ngModel)]="nombre" name="cargo" required>
+    </section>
+    <section>
+        <p>Email<span>*</span></p>
+        <input type="email" [(ngModel)]="email" name="email" required>
+    </section>
+    <section>
+        <p>Companía <span>*</span></p>
+        <select name="datos" class="region">
+            <option value="dato"></option>
+         </select>
+    </section>
+</form>
+<form class="parte2">
+    <section class="region">
+        <p>Región</p>
+        <select name="datos" class="region">
+            <option value="dato"></option>
+         </select>
+    </section>
+    <section class="pais">
+        <p>País</p>
+        <select name="datos" class="region">
+            <option value="dato"></option>
+         </select>
+    </section>
+    <section class="ciudad">
+        <p>Ciudad</p>
+        <select name="datos" class="region">
+            <option value="dato"></option>
+         </select>
+    </section>
+    <section class="direccion">
+        <p>Dirección</p>
+        <input name="datos" class="region" placeholder="Ingresa una dirección">
+    </section>
+    <section class="interes">
+        <p>Interés</p>
+        <section>
+            <!-- la barra de carga de interes -->
+            <select name="datos" class="region">
+                <option value="dato">0%</option>
+                <option value="dato">25%</option>
+                <option value="dato">50%</option>
+                <option value="dato">75%</option>
+                <option value="dato">100%</option>
+            </select>
+        </section>
+    </section>
+    <section class="canal">
+        <p>Canal de contacto</p>
+        <select name="datos" class="region">
+            <option value="dato"></option>
+         </select>
+    </section>
+    <section class="cuenta">
+        <p>Cuenta de usuario</p>
+        <select name="datos" class="region">
+            <option value="dato"></option>
+         </select>
+    </section>
+    <section>
+        <button>
+            <i class="fas fa-plus plus"></i>
+            <p>Agregar Canal</p>
+        </button>
+    </section>
+</form>
+<button class="btn btn-outline-secondary btn-lg">Cancelar</button>
+<button class="btn btn-secondary btn-lg" (click)="crear()">Guardar contacto</button>

@@ -1,0 +1,73 @@
+.titulo{
+    padding-top: 35px;
+    margin-left:1.5%;
+}
+
+.subTitulo{
+    justify-content: space-between;
+    padding: 15px 1.5% 0 1.5%;
+}
+
+.input{
+    width: 80%;
+    display: flex;
+    position: relative;
+}
+
+.inpt{
+    width: 50%;
+    height: 52px;
+    font-size: large;
+    padding-left: 20px;
+    border-radius: 5px;
+}
+
+.flechaBaja{
+    position: absolute;
+    left: 47%;
+    top: 10px;
+    font-size: 23px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.lupa{
+    margin-left: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 25px;
+    border: black 1px solid;
+    align-self: center;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.desplegable{
+    position: absolute;
+    top: 60px;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: #E8E8E8 1px solid;
+    border-radius: 5px;
+    padding: 26px 0px 2px 22px;
+}
+
+.inptDesplegable{
+    width: 62%;
+    border: none;
+    border-bottom: black 1px solid;
+    opacity: 0.5;
+}
+
+.cargo{
+    margin-left: 24%;
+}
+
+select{
+    position: absolute;
+    left: 50%;
+    margin-top: -48px;
+    width: 40%;
+}

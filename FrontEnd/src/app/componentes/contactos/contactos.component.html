@@ -1,8 +1,47 @@
-<p>contactos works!</p>
-<button routerLink="/contactos/crear">Agregar contacto</button>
-<router-outlet></router-outlet>
-<!--
-<app-contacto *ngFor="let contacto of contactos" 
-[user]="contacto">
-</app-contacto>
-<router-outlet></router-outlet> -->
+<section class="titulo">
+    <h1>Contactos</h1>
+</section>
+<section class="nav subTitulo">
+    <section class="input">
+        <input class="inpt" type="text" placeholder="Buscar contacto" disabled>
+        <i class="fas fa-sort-down flechaBaja" (click)="desplegarInput()"></i>
+        <i class="fas fa-search lupa" (click)="cargarInput()"></i>
+        <section *ngIf="desplegable" class="desplegable">
+            <p>Nombre del contacto <input class="inptDesplegable" type="text" placeholder="Introduce el nombre del contacto" [(ngModel)]="nombreContacto"></p>
+            <p>Cargo <input class="inptDesplegable cargo" type="text" placeholder="Introduce el cargo del contacto" [(ngModel)]="cargo"></p>
+            <section class="despRegion">
+                <p>País/Región</p>
+                <select name="datos" class="region" (click)="cargarRegiones()">
+                    <option value="todos" >Todos</option>
+                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                 </select>
+            </section>
+            <section class="despRegion">
+                <p>Compañía</p>
+                <select name="datos" class="compania" (click)="cargarCompanias()">
+                    <option value="todos" >Todos</option>
+                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                </select>
+            </section>
+            <section class="despRegion">
+                <p>Canal favorito</p>
+                <select name="datos" class="canal" (click)="cargarCanalFav()">
+                    <option value="todos" >Todos</option>
+                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                 </select>
+            </section>
+            <section class="despRegion">
+                <p>Interés</p>
+                <select name="datos" class="interes" (click)="cargarInteres()">
+                    <option value="todos" >Todos</option>
+                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                 </select>
+            </section>
+        </section>
+    </section>
+    <button class="btn btn-primary" (click)="agregar()">Agregar contacto</button>
+</section>
+
+<app-crear-contacto *ngIf="crear"></app-crear-contacto>
+
+<app-contacto *ngFor="let contacto of filtroContactos"></app-contacto>

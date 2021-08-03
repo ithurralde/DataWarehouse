@@ -6,12 +6,12 @@
     <section class="containerAgregar" *ngIf="editable">
         <section class="agregar">
             <h3>Agregar Compañia</h3>
-            <input type="text" *ngIf="editable" placeholder="Nombre" [(ngModel)]="nombre"> 
-            <input type="text" *ngIf="editable" placeholder="Direccion" [(ngModel)]="direccion">
-            <input type="text" *ngIf="editable" placeholder="Email" [(ngModel)]="email"> 
-            <input type="text" *ngIf="editable" placeholder="Telefono" [(ngModel)]="telefono"> 
-            <input type="text" *ngIf="editable" placeholder="Ciudad" [(ngModel)]="ciudad">
-            <button *ngIf="editable" (click)="agregar()" class="btn btn-primary btnAgregar">Agregar compañia</button>
+            <input type="text"  placeholder="Nombre" [(ngModel)]="nombre"> 
+            <input type="text"  placeholder="Direccion" [(ngModel)]="direccion">
+            <input type="text"  placeholder="Email" [(ngModel)]="email"> 
+            <input type="text"  placeholder="Telefono" [(ngModel)]="telefono"> 
+            <input type="text"  placeholder="Ciudad" [(ngModel)]="ciudad">
+            <button (click)="agregar()" class="btn btn-primary btnAgregar">Agregar compañia</button>
         </section>
     </section>
     <section class="base">

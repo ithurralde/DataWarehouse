@@ -387,6 +387,16 @@ async function crearUsuario(usuario) {
     return resultado;
   }
 
+  async function getContactos(){
+    let resultado = await myDataBase.query('SELECT * FROM contactos', {
+      type: QueryTypes.SELECT
+    });
+
+    if (resultado.length != 0)
+      return resultado;
+    return;
+  }
+
 
 
 
@@ -395,7 +405,7 @@ async function crearUsuario(usuario) {
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
-
+                      getContactos, 
                     };
 
 

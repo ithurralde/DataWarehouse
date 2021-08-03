@@ -342,3 +342,21 @@ server.delete('/companiasRegion', autenticarUsuario, (request, response) => {
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
 })
+
+server.get('/contactos', autenticarUsuario, (request, response) => {
+  transactionHandler.getContactos()
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+});
+
+server.post('/contactos', autenticarUsuario, (request, response) => {
+  
+});
+
+server.put('/contactos', autenticarUsuario, (request, response) => {
+  
+});
+
+server.delete('/contactos', autenticarUsuario, (request, response) => {
+  
+});

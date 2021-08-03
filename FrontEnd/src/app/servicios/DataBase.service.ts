@@ -11,6 +11,7 @@ import { actPaisModule } from "../model/pais/actPais.module";
 import { CompaniaModule } from "../model/compania/compania.module";
 import { CiudadAnteriorModule } from "../model/ciudad/ciudad-anterior.module";
 import { CompaniaAnteriorModule } from "../model/compania/compania-anterior.module";
+import { ContactoModule } from "../model/contacto/contacto.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -174,5 +175,9 @@ export class DataBaseServices {
 
     editarCompania(compania_ant: CompaniaAnteriorModule){
         return this.httpClient.put(this.url + "companias", compania_ant, {headers: this.header});
+    }
+
+    obtenerContactos(){
+        return this.httpClient.get<ContactoModule[]>(this.url + "contactos", {headers: this.header});
     }
 }

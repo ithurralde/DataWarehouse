@@ -1,0 +1,12 @@
+.parte1{
+    display: flex;
+}
+
+.parte2{
+    display: flex;
+}
+
+.plus{
+    opacity: 0.5;
+    font-size: 20px;
+}
