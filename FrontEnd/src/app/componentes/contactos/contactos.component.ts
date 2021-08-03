@@ -45,8 +45,15 @@ export class ContactosComponent implements OnInit {
   desplegarInput(){
     if (this.desplegable)
       this.desplegable = false;
-    else
+    else{
       this.desplegable = true;
+      // this.nombreContacto = "Todos";
+      // this.cargo = "Todos";
+      this.pais = "Todos";
+      this.compania = "Todos";
+      this.canal = "Todos";
+      this.interes = "Todos";
+    }
   }
 
   cargarInput(){
@@ -72,8 +79,8 @@ export class ContactosComponent implements OnInit {
   cargarRegiones(){
     let compania = document.querySelector<HTMLSelectElement>(".region");
     if (this.selector && compania){
-      console.log("Hubo un click! " + this.test[compania.selectedIndex -1]);
-      this.pais = this.test[compania.selectedIndex -1];
+      console.log("Hubo un click! " + this.test[compania.selectedIndex-1]);
+      this.pais = this.test[compania.selectedIndex-1];
       this.selector = false;
     }
     else
