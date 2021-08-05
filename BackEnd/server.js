@@ -349,6 +349,20 @@ server.get('/contactos', autenticarUsuario, (request, response) => {
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
 });
 
+server.get('/contactos/:tipo', autenticarUsuario, (request, response) => {
+  let tipo = request.params.tipo;
+  console.log(tipo);
+  let id_ciudad = request.query.id_ciudad;
+  if (tipo == "region")
+    transactionHandler.getRegion(id_ciudad)
+    .then(respuesta => response.status(200).send(respuesta))
+    .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+  else if (tipo == "pais")
+    transactionHandler.getPais(id_ciudad)
+    .then(respuesta => response.status(200).send(respuesta))
+    .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+});
+
 server.post('/contactos', autenticarUsuario, (request, response) => {
   
 });

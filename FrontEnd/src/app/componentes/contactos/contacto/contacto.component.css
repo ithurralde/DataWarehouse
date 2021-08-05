@@ -1,0 +1,44 @@
+.container{
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid gray;
+    padding: 0;
+    text-align: center;
+}
+
+.regionPaisCiudad{
+    border: brown 1px solid;
+}
+
+.checkbox{
+    align-self: center;
+}
+
+.nombreApellidoEmail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.nombreApellido{
+    width: 150px;
+    align-self: flex-end;
+}
+
+.email{
+    width: 150px;
+    align-self: flex-end;
+    font-size: 14px;
+    color: #a5a5a5;
+}
+
+.elemento{
+    width: 90px;
+    align-self: center;
+}
+
+.puntos{
+    opacity: 0.7;
+    cursor: pointer;
+    margin-left: 30px;
+}

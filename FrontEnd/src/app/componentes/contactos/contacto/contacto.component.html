@@ -1,1 +1,33 @@
-<p>contacto works!</p>
+<section class="container">
+    <div class="form-check checkbox">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+      </label>
+    </div>
+    <section class="nombreApellidoEmail  elemento">
+      <div class="nombreApellido">
+        <p>{{contacto.nombre}} {{contacto.apellido}}</p>
+      </div>
+      <div class="email">
+        <p>{{contacto.email}}</p>
+      </div>
+    </section>
+    <section class="regionPaisCiudad elemento">
+      <p>{{pais}}</p>
+      <p>{{region}}</p>
+    </section>
+    <section class="elemento">
+      <p>{{contacto.compania}}</p>
+    </section>
+    <section class="elemento">
+      <p>{{contacto.cargo}}</p>
+    </section>
+    <section class="elemento">
+      <div>
+        <p>{{contacto.interes}}</p>
+      </div>
+    </section>
+    <section class="elemento">
+      <i class="fas fa-ellipsis-h puntos"></i>
+    </section>
+</section>

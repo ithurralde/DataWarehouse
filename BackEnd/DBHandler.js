@@ -397,6 +397,34 @@ async function crearUsuario(usuario) {
     return;
   }
 
+  async function getRegion(id_ciudad){
+    let id_pais = await myDataBase.query('SELECT id_pais FROM ciudades WHERE id = ?', {
+      replacements: [id_ciudad],
+      type: QueryTypes.SELECT
+    });
+
+    return await myDataBase.query('SELECT region FROM paises WHERE id = ?', {
+      replacements: [id_pais[0].id_pais],
+      type: QueryTypes.SELECT
+    });
+  }
+
+  async function getPais(id_ciudad){
+    console.log("////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////")
+    console.log("id ciudad antes de la query: " + id_ciudad);
+    let id_pais = await myDataBase.query('SELECT id_pais FROM ciudades WHERE id = ?', {
+      replacements: [id_ciudad],
+      type: QueryTypes.SELECT
+    });
+    console.log("el id pais en get pais: ");
+    console.log(id_pais[0].id_pais);
+    console.log("id ciudad es: " + id_ciudad);
+
+    return await myDataBase.query('SELECT nombre FROM paises WHERE id = ?', {
+      replacements: [id_pais[0].id_pais],
+      type: QueryTypes.SELECT
+    });
+  }
 
 
 
@@ -405,7 +433,7 @@ async function crearUsuario(usuario) {
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
-                      getContactos, 
+                      getContactos, getRegion, getPais, 
                     };
 
 

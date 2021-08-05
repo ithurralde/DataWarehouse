@@ -180,4 +180,12 @@ export class DataBaseServices {
     obtenerContactos(){
         return this.httpClient.get<ContactoModule[]>(this.url + "contactos", {headers: this.header});
     }
+
+    obtenerRegion(id_ciudad:number){
+        return this.httpClient.get<string>(this.url + "contactos/region?id_ciudad=" + id_ciudad, {headers: this.header});
+    }
+
+    obtenerPais(id_ciudad:number){
+        return this.httpClient.get<string>(this.url + "contactos/pais?id_ciudad=" + id_ciudad, {headers: this.header});
+    }
 }

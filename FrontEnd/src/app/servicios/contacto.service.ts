@@ -11,4 +11,12 @@ export class ContactoService {
   obtenerContactos(){
     return this.dbServices.obtenerContactos();
   }
+
+  obtenerRegion(id_ciudad:number){
+    return this.dbServices.obtenerRegion(id_ciudad);
+  }
+
+  obtenerPais(id_ciudad:number){
+    return this.dbServices.obtenerPais(id_ciudad);
+  }
 }

@@ -7,34 +7,38 @@
         <i class="fas fa-sort-down flechaBaja" (click)="desplegarInput()"></i>
         <i class="fas fa-search lupa" (click)="cargarInput()"></i>
         <section *ngIf="desplegable" class="desplegable">
-            <p>Nombre del contacto <input class="inptDesplegable" type="text" placeholder="Introduce el nombre del contacto" [(ngModel)]="nombreContacto"></p>
-            <p>Cargo <input class="inptDesplegable cargo" type="text" placeholder="Introduce el cargo del contacto" [(ngModel)]="cargo"></p>
+            <section class="pInput">
+                <p>Nombre del contacto</p><input class="inptDesplegable" type="text" placeholder="Introduce el nombre del contacto" [(ngModel)]="nombreContacto">
+            </section>
+            <section class="pInput">
+                <p>Cargo</p><input class="inptDesplegable cargo" type="text" placeholder="Introduce el cargo del contacto" [(ngModel)]="cargo">
+            </section>
             <section class="despRegion">
                 <p>País/Región</p>
                 <select name="datos" class="region" (click)="cargarRegiones()">
                     <option value="todos" selected>Todos</option>
-                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                    <option value="dato" *ngFor="let dato of regionesPaises">{{dato}}</option>
                  </select>
             </section>
             <section class="despRegion">
                 <p>Compañía</p>
                 <select name="datos" class="compania" (click)="cargarCompanias()">
-                    <option value="todos" selected>Todos</option>
-                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                    <option value="todos" selected>Todas</option>
+                    <option value="dato" *ngFor="let dato of companias">{{dato}}</option>
                 </select>
             </section>
             <section class="despRegion">
                 <p>Canal favorito</p>
                 <select name="datos" class="canal" (click)="cargarCanalFav()">
-                    <option value="todos" selected>Todos</option>
-                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                    <option value="todos" selected>Cualquiera</option>
+                    <option value="dato" *ngFor="let dato of canales">{{dato}}</option>
                  </select>
             </section>
             <section class="despRegion">
                 <p>Interés</p>
                 <select name="datos" class="interes" (click)="cargarInteres()">
-                    <option value="todos" selected>Todos</option>
-                    <option value="dato" *ngFor="let dato of test">{{dato}}</option>
+                    <option value="todos" selected>Cualquiera</option>
+                    <option value="dato" *ngFor="let dato of intereses">{{dato}}</option>
                  </select>
             </section>
         </section>
@@ -44,4 +48,38 @@
 
 <app-crear-contacto *ngIf="crear" (cerrarVentana)="cerrarVentana($event)"></app-crear-contacto>
 
-<app-contacto *ngFor="let contacto of filtroContactos"></app-contacto>
+
+<section class="contactos">
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+        </label>
+    </div>
+    <section class="interno">
+        <p>Contacto</p>
+        <i class="fas fa-exchange-alt sort"></i>
+    </section>
+    <section class="interno">
+        <p>País/Región</p>
+        <i class="fas fa-exchange-alt sort"></i>
+    </section>
+    <section class="interno">
+        <p>Compañía</p>
+        <i class="fas fa-exchange-alt sort"></i>
+    </section>
+    <section class="interno">
+        <p>Cargo</p>
+        <i class="fas fa-exchange-alt sort"></i>
+    </section>
+    <section class="interno">
+        <p>Interés</p>
+        <i class="fas fa-exchange-alt sort"></i>
+    </section>
+    <section>
+        <p>Acciones</p>
+    </section>
+</section>
+<section>
+    <app-contacto *ngFor="let contacto of filtroContactos"
+        [contacto]="contacto"></app-contacto>
+</section>
