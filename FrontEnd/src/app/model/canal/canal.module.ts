@@ -11,7 +11,9 @@ import { CommonModule } from '@angular/common';
 // })
 export class CanalModule { 
 
-  constructor(public canal:string, cuentaUsuario:string, preferencia:string) {
+  constructor(public canal:string,
+              public cuentaUsuario:string, 
+              public preferencia:string) {
 
   }
 }

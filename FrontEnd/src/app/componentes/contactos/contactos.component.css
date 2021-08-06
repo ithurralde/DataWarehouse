@@ -108,3 +108,7 @@ select{
     align-items: baseline;
     width: 90px;
 }
+
+.ocultar{
+    visibility: hidden;
+}
