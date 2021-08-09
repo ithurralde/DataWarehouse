@@ -18,6 +18,8 @@ export class FiltroCargoModule extends FiltroModule{
 
   public filtrar(element: string) {
     let resultado:any[] = [];
+    if (element == "")
+      return this.contactos;
     if (element != undefined){
       element = element.toLowerCase();
       for (let i = 0; i < this.contactos.length; i++){

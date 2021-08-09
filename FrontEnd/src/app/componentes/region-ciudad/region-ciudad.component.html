@@ -1,11 +1,11 @@
-<button (click)=preAgregarRegion() class="btnAddRegion btn btn-primary">
-    <p>Agregar región</p>
+<button (click)="preAgregarRegion()" class="btnAddRegion btn btn-primary" [(ngModel)]="btn_add_cancel" name="btn-add-cancel" ngDefaultControl>
+    <p>{{btn_add_cancel}}</p>
 </button>
 
 <div *ngIf="puedoAgregar">
     <p>Nombre de la región:</p>
-    <input type="text" placeholder="Nombre de la región" [(ngModel)]=region >
-    <button (click)=agregarRegion() class="btn btn-primary">Agregar</button>
+    <input type="text" placeholder="Nombre de la región" [(ngModel)]="region" >
+    <button (click)="agregarRegion()" class="btn btn-primary" >Agregar</button>
 </div>
 
 <app-region *ngFor="let region of regiones"

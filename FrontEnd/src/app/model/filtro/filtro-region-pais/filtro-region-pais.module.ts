@@ -18,14 +18,20 @@ export class FiltroRegionPaisModule extends FiltroModule{
 
   public filtrar(element: string) {
     let resultado: any[] = [];
-    let i = 0;
+    console.log(this.contactofull);
     if (element == "Todos")
       return this.contactos;
-    this.contactofull.forEach(contacto => {
-      if (contacto.pais == element || contacto.region == element)
-        resultado.push(this.contactos[i]);
-      i++;
-    })
+    
+    for (let i=0; i < this.contactos.length; i++){
+      this.contactofull.forEach(contacto => {
+        if (this.contactos[i].nombre == contacto.contacto.nombre &&
+            this.contactos[i].apellido == contacto.contacto.apellido){
+              if (this.contactofull[i].pais == element || this.contactofull[i].region == element)
+                resultado.push(this.contactos[i]);
+              
+        }
+      });
+    }
     return resultado;
   }
 }

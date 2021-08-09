@@ -10,8 +10,9 @@ import { RegionService } from 'src/app/servicios/Region.service';
 })
 export class RegionCiudadComponent implements OnInit {
   regiones: RegionModule[] = [];
-  puedoAgregar = false;
+  puedoAgregar:boolean = false;
   region: string;
+  btn_add_cancel: string = "Agregar región";
   constructor(private regionService: RegionService) { }
 
   ngOnInit(): void {
@@ -33,7 +34,15 @@ export class RegionCiudadComponent implements OnInit {
   }
 
   preAgregarRegion(){
-    this.puedoAgregar = true;
+    if (this.puedoAgregar){
+      this.puedoAgregar = false;
+      this.btn_add_cancel = "Agregar región";
+      console.log("no tengo que estar entrando aca en la primera");
+    }
+    else{
+      this.puedoAgregar = true;
+      this.btn_add_cancel = "Cancelar";
+    }
   }
 
   agregarRegion(){

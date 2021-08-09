@@ -2,8 +2,10 @@ import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_c
 import { Component, OnInit } from '@angular/core';
 import { CanalModule } from 'src/app/model/canal/canal.module';
 import { ContactoModule } from 'src/app/model/contacto/contacto.module';
+import { FiltroCanalModule } from 'src/app/model/filtro/filtro-canal/filtro-canal.module';
 import { FiltroCargoModule } from 'src/app/model/filtro/filtro-cargo/filtro-cargo.module';
 import { FiltroCompaniaModule } from 'src/app/model/filtro/filtro-compania/filtro-compania.module';
+import { FiltroInteresModule } from 'src/app/model/filtro/filtro-interes/filtro-interes.module';
 import { FiltroNombreContactoModule } from 'src/app/model/filtro/filtro-nombre-contacto/filtro-nombre-contacto.module';
 import { FiltroRegionPaisModule } from 'src/app/model/filtro/filtro-region-pais/filtro-region-pais.module';
 import { ContactoService } from 'src/app/servicios/contacto.service';
@@ -181,7 +183,7 @@ export class ContactosComponent implements OnInit {
       this.pais = "Todos";
       this.compania = "Todos";
       this.canal = "Todos";
-      this.interes = 0;
+      this.interes = -1;
     }
   }
 
@@ -211,24 +213,51 @@ export class ContactosComponent implements OnInit {
     console.log("Canal favorito: " + this.canal);
     console.log("Interes: " + this.interes);
 
-    // nombre apellido
+    
     console.log(this.contactos);
-    let filtro = new FiltroNombreContactoModule(this.contactos);
-    this.filtroContactos = [];
+    this.filtroContactos = this.contactos;
+
+    // nombre apellido
+    let filtro = new FiltroNombreContactoModule(this.filtroContactos);
+    console.log("filtro completo: ");
+    console.log(this.filtroContactos);
+    console.log(this.nombreContacto)
     this.filtroContactos = filtro.filtrar(this.nombreContacto);
+    console.log("filtro por nombre: ");
+    console.log(this.filtroContactos);
 
     // region pais
-    let filtro2 = new FiltroRegionPaisModule(this.contactos, this.contactoFull);
-    // this.filtroContactos = [];
-    // this.filtroContactos = filtro2.filtrar(this.pais);
+    let filtro2 = new FiltroRegionPaisModule(this.filtroContactos, this.contactoFull);
 
-    let filtro3 = new FiltroCargoModule(this.contactos);
-    // this.filtroContactos = [];
-    // this.filtroContactos = filtro3.filtrar(this.cargo);
-    let filtro4 = new FiltroCompaniaModule(this.contactos);
-    // this.filtroContactos = [];
+    this.filtroContactos = filtro2.filtrar(this.pais);
+    console.log("filtro por region pais: ");
+    console.log(this.filtroContactos);
+  
+    // cargo
+    let filtro3 = new FiltroCargoModule(this.filtroContactos);
+
+    this.filtroContactos = filtro3.filtrar(this.cargo);
+    console.log("filtro por cargo: ");
+    console.log(this.filtroContactos);
+
+    // companias
+    let filtro4 = new FiltroCompaniaModule(this.filtroContactos);
+
     this.filtroContactos = filtro4.filtrar(this.compania);
-    console.log("los filtros: ");
+    console.log("filtro por compania: ");
+    console.log(this.filtroContactos);
+
+
+    // intereses
+    let filtro5 = new FiltroInteresModule(this.filtroContactos);
+    this.filtroContactos = filtro5.filtrar(this.interes);
+    console.log("filtro por interes: ");
+    console.log(this.filtroContactos);
+
+    // canales
+    let filtro6 = new FiltroCanalModule(this.filtroContactos);
+    this.filtroContactos = filtro6.filtrar(this.canal);
+    console.log("filtro por canales: ");
     console.log(this.filtroContactos);
   }
 
