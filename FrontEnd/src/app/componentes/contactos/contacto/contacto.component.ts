@@ -11,17 +11,19 @@ export class ContactoComponent implements OnInit {
   @Input() contacto: ContactoModule;
   pais:string;
   region:string;
+  interes:number;
   constructor(private contactoService: ContactoService) { }
 
-  ngOnInit(): void {
-    this.contactoService.obtenerRegion(this.contacto.id_ciudad).subscribe(
+  async ngOnInit() {
+    this.interes = this.contacto.interes;
+    (await this.contactoService.obtenerRegion(this.contacto.id_ciudad)).subscribe(
       (region:any) => {
         this.region = region[0].region;
         console.log("la region es: " + region[0].region);
         console.log(region[0].region);
       }
     );
-    this.contactoService.obtenerPais(this.contacto.id_ciudad).subscribe(
+    (await this.contactoService.obtenerPais(this.contacto.id_ciudad)).subscribe(
       (pais:any) => {
         this.pais = pais[0].nombre;
         console.log("el pais es: " + pais[0].nombre);

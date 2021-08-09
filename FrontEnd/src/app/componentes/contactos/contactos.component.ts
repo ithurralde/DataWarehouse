@@ -52,12 +52,12 @@ export class ContactosComponent implements OnInit {
         console.log(contactos);
       }
     );
-    this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], "Sin preferencia", 19),
-                                  new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], "LinkedIn", 5),
-                                  new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], "Twitter", 6),
+    this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 0.25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], "Sin preferencia", 19),
+                                  new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 0.50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], "LinkedIn", 5),
+                                  new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 0.25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], "Twitter", 6),
                                   new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 15),
-                                  new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 100, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 13),
-                                  new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 19),
+                                  new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 13),
+                                  new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 19),
                                   new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], "TuVieja", 19));
     
     this.contactos = this.filtroContactos;
@@ -65,7 +65,7 @@ export class ContactosComponent implements OnInit {
 
       // agrego paises y regiones
       this.obtenerRegion(element);
-      this.obtenerPais(element);
+      // this.obtenerPais(element);
 
       // agrego companias
       this.agregarCompanias(element);
@@ -98,7 +98,8 @@ export class ContactosComponent implements OnInit {
           "region": region[0].region
         });
         
-        this.regionesPaises = this.regionesPaises.sort();      
+        this.regionesPaises = this.regionesPaises.sort();  
+        this.obtenerPais(element);    
       }
     );
   }
@@ -116,10 +117,10 @@ export class ContactosComponent implements OnInit {
         this.contactoFull.forEach(full => {
           if (full.contacto.nombre == element.nombre &&
               full.contacto.apellido == element.apellido &&
-              full.contacto.ciudad == element.id_ciudad)
+              full.contacto.ciudad == element.id_ciudad){
             full.pais = pais[0].nombre;
+              }
         })
-
         this.regionesPaises = this.regionesPaises.sort();
       }
     );
@@ -226,12 +227,17 @@ export class ContactosComponent implements OnInit {
     console.log("filtro por nombre: ");
     console.log(this.filtroContactos);
 
+    console.log("contactos full antes de filtrar");
+    console.log(this.contactoFull);
+
     // region pais
     let filtro2 = new FiltroRegionPaisModule(this.filtroContactos, this.contactoFull);
 
     this.filtroContactos = filtro2.filtrar(this.pais);
     console.log("filtro por region pais: ");
     console.log(this.filtroContactos);
+    console.log("contactos full despues de filtrar");
+    console.log(this.contactoFull);
   
     // cargo
     let filtro3 = new FiltroCargoModule(this.filtroContactos);

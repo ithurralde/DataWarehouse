@@ -38,7 +38,7 @@
                 <p>Interés</p>
                 <select name="datos" class="interes" (click)="cargarInteres()">
                     <option value="todos">Cualquiera</option>
-                    <option value="dato" *ngFor="let dato of intereses">{{dato}}</option>
+                    <option value="dato" *ngFor="let dato of intereses">{{dato | percent}}</option>
                  </select>
             </section>
         </section>

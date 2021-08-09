@@ -7,7 +7,6 @@
 }
 
 .regionPaisCiudad{
-    border: brown 1px solid;
 }
 
 .checkbox{
@@ -41,4 +40,66 @@
     opacity: 0.7;
     cursor: pointer;
     margin-left: 30px;
+}
+
+
+.interes{
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+}
+
+.interesFondo{
+    background: #E8E8E8;
+    position: absolute;
+    border-radius: 6.5px;
+    top: 5px;
+    left: 70px;
+    height: 15px;
+    width: 100%;
+}
+
+.barraInteres0{
+    background: transparent;
+    position: absolute;
+}
+
+.barraInteres25{
+    position: absolute;
+    border-radius: 6.5px;
+    background: #1CC1F5;
+    top: 5px;
+    left: 70px;
+    height: 15px;
+    width: 25%;
+}
+
+.barraInteres50{
+    position: absolute;
+    border-radius: 6.5px;
+    background: #FFC700;
+    top: 5px;
+    left: 70px;
+    height: 15px;
+    width: 50%;
+}
+
+.barraInteres75{
+    position: absolute;
+    border-radius: 6.5px;
+    background: #FF6F00;
+    top: 5px;
+    left: 70px;
+    height: 15px;
+    width: 75%;
+}
+
+.barraInteres100{
+    position: absolute;
+    border-radius: 6.5px;
+    background: #DE0028;
+    top: 5px;
+    left: 70px;
+    height: 15px;
+    width: 100%;
 }

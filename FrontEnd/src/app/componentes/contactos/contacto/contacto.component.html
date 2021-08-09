@@ -23,8 +23,14 @@
       <p>{{contacto.cargo}}</p>
     </section>
     <section class="elemento">
-      <div>
-        <p>{{contacto.interes}}</p>
+      <div class="interes">
+        <p>{{contacto.interes | percent}}</p>
+        <div class="interesFondo"></div>
+        <div [ngClass]="{barraInteres0: interes === 0,
+                          barraInteres25: interes === 0.25,
+                          barraInteres50: interes === 0.50,
+                          barraInteres75: interes === 0.75,
+                          barraInteres100: interes === 1}"></div>
       </div>
     </section>
     <section class="elemento">

@@ -34,7 +34,7 @@ CREATE TABLE contactos(
     compania VARCHAR(30) NOT NULL,
     direccion VARCHAR(30) NOT NULL,
     interes INT NOT NULL,
-    canal_contacto VARCHAR(30) NOT NULL,
+    canal_contacto INT NOT NULL,
     preferencias VARCHAR(30) NOT NULL,
     id_ciudad INT NOT NULL,
     CONSTRAINT pk_contactos PRIMARY KEY (id),
@@ -58,4 +58,20 @@ CREATE TABLE contactos_trabajan_en_companias(
     CONSTRAINT pk_id_contactos_trabajan_en_companias PRIMARY KEY (id_contacto, id_compania),
     CONSTRAINT fk_id_contacto FOREIGN KEY (id_contacto) REFERENCES contactos(id),
     CONSTRAINT fk_id_compania FOREIGN KEY (id_compania) REFERENCES companias(id)
+);
+
+CREATE TABLE canales(
+	id INT NOT NULL AUTO_INCREMENT,
+	canal VARCHAR(30),
+	cuenta_usuario VARCHAR(30),
+	preferencia VARCHAR(30),
+	CONSTRAINT pk_id_canal PRIMARY KEY (id)
+);
+
+CREATE TABLE tienen_canales(
+	id_canal INT NOT NULL,
+	id_contacto INT NOT NULL,
+	CONSTRAINT pk_id_canal_id_contacto PRIMARY KEY (id_canal, id_contacto),
+	CONSTRAINT fk_id_canal FOREIGN KEY (id_canal) REFERENCES canales(id),
+	CONSTRAINT fk_id_contacto_canales FOREIGN KEY (id_contacto) REFERENCES contactos(id)
 );
