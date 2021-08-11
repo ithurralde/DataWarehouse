@@ -25,6 +25,7 @@ export class ContactosComponent implements OnInit {
   ocultar:boolean; // oculta un bug de los <i> de fontawesome cuando bajaba el despegable
   eliminarSeleccionados:boolean; // boolean para saber si hay que mostrar eliminar contactos seleccionados
   contactosSeleccionados: ContactoModule[] = [];
+  ordenAscendente:boolean = true; // orden en el click de las flechitas
 
   // los datos que necesito para saber por que ordenar o filtrar
   regionesPaises: any[] = [];
@@ -399,9 +400,9 @@ export class ContactosComponent implements OnInit {
           //   console.log("elemento: " + this.contactosSeleccionados[index].nombre);
           //   console.log("contacto: " + contacto.nombre);
           // }
-          if (this.contactos[index] == contacto){
+          if (this.filtroContactos[index] == contacto){
             let i = 0;
-            while (this.contactos[index] != this.contactosSeleccionados[i])
+            while (this.filtroContactos[index] != this.contactosSeleccionados[i])
               i++;
             this.contactosSeleccionados.splice(i, 1);
           }
@@ -440,7 +441,7 @@ export class ContactosComponent implements OnInit {
     if (checks)
       if (!this.eliminarSeleccionados){
       this.eliminarSeleccionados = true;
-      this.contactos.forEach(contacto => {
+      this.filtroContactos.forEach(contacto => {
         this.contactosSeleccionados.push(contacto);
       });
         checks.forEach(check => {
@@ -456,4 +457,139 @@ export class ContactosComponent implements OnInit {
       }
   }
 
+  ordenar(dato:string){
+    switch(dato){
+      case 'contactos':
+        this.ordenarContactos();
+        break;
+      case 'regionpais':
+        this.ordenarRegionPais();
+        break;
+      case 'compania':
+        this.ordenarCompania();
+        break;
+      case 'cargo':
+        this.ordenarCargo();
+        break;
+      case 'interes':
+        this.ordenarInteres();
+        break;
+      default:
+        console.log("No se pudo ordenar por " + dato);
+    }
+  }
+
+  cambiarOrden(){
+    return this.ordenAscendente ? false : true;
+  }
+
+  ordenarContactos(){
+    this.ordenAscendente = this.cambiarOrden();
+    for (let i = 0; i < this.filtroContactos.length; i++)
+      for (let j = i+1; j < this.filtroContactos.length; j++){
+        // debugger;
+        if (this.ordenAscendente){
+          if (this.filtroContactos[i].nombre > this.filtroContactos[j].nombre){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+        else{
+          if (this.filtroContactos[i].nombre < this.filtroContactos[j].nombre){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+      }
+  }
+
+  ordenarRegionPais(){
+    this.ordenAscendente = this.cambiarOrden();
+    for (let i = 0; i < this.filtroContactos.length; i++)
+      for (let j = i; j < this.filtroContactos.length; j++){
+        // debugger;
+        if (this.ordenAscendente){
+          if (this.filtroContactos[i].region > this.filtroContactos[j].region){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+        else{
+          if (this.filtroContactos[i].region < this.filtroContactos[j].region){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+      }
+  }
+
+  ordenarCompania(){
+    this.ordenAscendente = this.cambiarOrden();
+    for (let i = 0; i < this.filtroContactos.length; i++)
+      for (let j = i; j < this.filtroContactos.length; j++){
+        // debugger;
+        if (this.ordenAscendente){
+          if (this.filtroContactos[i].compania > this.filtroContactos[j].compania){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+        else{
+          if (this.filtroContactos[i].compania < this.filtroContactos[j].compania){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+      }
+  }
+
+  ordenarCargo(){
+    this.ordenAscendente = this.cambiarOrden();
+    for (let i = 0; i < this.filtroContactos.length; i++)
+      for (let j = i; j < this.filtroContactos.length; j++){
+        // debugger;
+        if (this.ordenAscendente){
+          if (this.filtroContactos[i].cargo > this.filtroContactos[j].cargo){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+          else{
+            if (this.filtroContactos[i].cargo < this.filtroContactos[j].cargo){
+              let contacto_auxiliar = this.filtroContactos[i];
+              this.filtroContactos[i] = this.filtroContactos[j];
+              this.filtroContactos[j] = contacto_auxiliar;
+            }
+          }
+      }
+  }
+
+  ordenarInteres(){
+    this.ordenAscendente = this.cambiarOrden();
+    for (let i = 0; i < this.filtroContactos.length; i++)
+      for (let j = i+1; j < this.filtroContactos.length; j++){
+        // debugger;
+        if (this.ordenAscendente){
+          if (this.filtroContactos[i].interes > this.filtroContactos[j].interes){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+        else{
+          if (this.filtroContactos[i].interes < this.filtroContactos[j].interes){
+            let contacto_auxiliar = this.filtroContactos[i];
+            this.filtroContactos[i] = this.filtroContactos[j];
+            this.filtroContactos[j] = contacto_auxiliar;
+          }
+        }
+      }
+  }
 }

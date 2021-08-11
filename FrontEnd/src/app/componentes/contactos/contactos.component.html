@@ -61,23 +61,23 @@
     </div>
     <section class="interno">
         <p>Contacto</p>
-        <i [ngClass]="{ocultar: desplegable == !ocultar}" class="fas fa-exchange-alt sort"></i>
+        <i [ngClass]="{ocultar: desplegable == !ocultar}" class="fas fa-exchange-alt sort" (click)="ordenar('contactos')"></i>
     </section>
     <section class="interno">
         <p>País/Región</p>
-        <i [ngClass]="{ocultar: desplegable == !ocultar}" class="fas fa-exchange-alt sort"></i>
+        <i [ngClass]="{ocultar: desplegable == !ocultar}" class="fas fa-exchange-alt sort" (click)="ordenar('regionpais')"></i>
     </section>
     <section class="interno">
         <p>Compañía</p>
-        <i class="fas fa-exchange-alt sort"></i>
+        <i class="fas fa-exchange-alt sort" (click)="ordenar('compania')"></i>
     </section>
     <section class="interno">
         <p>Cargo</p>
-        <i class="fas fa-exchange-alt sort"></i>
+        <i class="fas fa-exchange-alt sort" (click)="ordenar('cargo')"></i>
     </section>
     <section class="interno">
         <p>Interés</p>
-        <i class="fas fa-exchange-alt sort"></i>
+        <i class="fas fa-exchange-alt sort" (click)="ordenar('interes')"></i>
     </section>
     <section>
         <p>Acciones</p>
