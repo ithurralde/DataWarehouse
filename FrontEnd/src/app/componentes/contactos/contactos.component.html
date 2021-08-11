@@ -44,6 +44,10 @@
         </section>
     </section>
     <button class="btn btn-primary" (click)="agregar()">Agregar contacto</button>
+    <section class="eliminarSeleccionados" *ngIf="eliminarSeleccionados" (click)="eliminarContactos()">
+        <i class="fas fa-trash basura"></i>
+        <p>Eliminar contactos</p>
+    </section>
 </section>
 
 <app-crear-contacto *ngIf="crear" (cerrarVentana)="cerrarVentana($event)"></app-crear-contacto>
@@ -52,7 +56,7 @@
 <section class="contactos">
     <div class="form-check">
         <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+            <input type="checkbox" class="form-check-input globalCheck" name="" id="" value="checkedValue" (click)="seleccionarTodos()">
         </label>
     </div>
     <section class="interno">
@@ -81,5 +85,7 @@
 </section>
 <section>
     <app-contacto *ngFor="let contacto of filtroContactos"
-        [contacto]="contacto"></app-contacto>
+        [contacto]="contacto"
+        (eliminarSeleccionados)="cargarEliminarContactos($event)"
+        (eliminarContacto)="eliminarContacto($event)"></app-contacto>
 </section>

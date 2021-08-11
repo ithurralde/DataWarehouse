@@ -1,7 +1,7 @@
 <section class="container">
     <div class="form-check checkbox">
       <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+        <input type="checkbox" class="form-check-input check" name={{contacto.email}} id="" value="checkedValue" (click)="checkbox()">
       </label>
     </div>
     <section class="nombreApellidoEmail  elemento">
@@ -34,6 +34,10 @@
       </div>
     </section>
     <section class="elemento">
-      <i class="fas fa-ellipsis-h puntos"></i>
+      <i class="fas fa-ellipsis-h puntos" (click)="desplegarAcciones()"></i>
+      <div *ngIf="acciones" class="acciones">
+        <p class="accion">Editar</p>
+        <p class="accion" (click)="eliminar()">Eliminar</p>
+      </div>
     </section>
 </section>

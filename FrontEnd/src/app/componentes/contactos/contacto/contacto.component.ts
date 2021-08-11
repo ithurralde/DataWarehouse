@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ContactoModule } from 'src/app/model/contacto/contacto.module';
 import { ContactoService } from 'src/app/servicios/contacto.service';
 
@@ -9,21 +9,24 @@ import { ContactoService } from 'src/app/servicios/contacto.service';
 })
 export class ContactoComponent implements OnInit {
   @Input() contacto: ContactoModule;
+  @Output() eliminarSeleccionados = new EventEmitter();
+  @Output() eliminarContacto = new EventEmitter();
   pais:string;
   region:string;
   interes:number;
+  acciones:boolean;
   constructor(private contactoService: ContactoService) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.interes = this.contacto.interes;
-    (await this.contactoService.obtenerRegion(this.contacto.id_ciudad)).subscribe(
+    this.contactoService.obtenerRegion(this.contacto.id_ciudad).subscribe(
       (region:any) => {
         this.region = region[0].region;
         console.log("la region es: " + region[0].region);
         console.log(region[0].region);
       }
     );
-    (await this.contactoService.obtenerPais(this.contacto.id_ciudad)).subscribe(
+    this.contactoService.obtenerPais(this.contacto.id_ciudad).subscribe(
       (pais:any) => {
         this.pais = pais[0].nombre;
         console.log("el pais es: " + pais[0].nombre);
@@ -32,4 +35,18 @@ export class ContactoComponent implements OnInit {
     );
   }
 
+  checkbox(){
+    this.eliminarSeleccionados.emit(this.contacto);
+  }
+
+  desplegarAcciones(){
+    if (!this.acciones)
+      this.acciones = true;
+    else
+      this.acciones = false;
+  }
+
+  eliminar(){
+    this.eliminarContacto.emit(this.contacto);
+  }
 }

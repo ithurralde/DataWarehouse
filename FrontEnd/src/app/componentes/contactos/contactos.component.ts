@@ -1,5 +1,6 @@
 import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 import { Component, OnInit } from '@angular/core';
+import { CheckboxControlValueAccessor } from '@angular/forms';
 import { CanalModule } from 'src/app/model/canal/canal.module';
 import { ContactoModule } from 'src/app/model/contacto/contacto.module';
 import { FiltroCanalModule } from 'src/app/model/filtro/filtro-canal/filtro-canal.module';
@@ -22,6 +23,8 @@ export class ContactosComponent implements OnInit {
   selector:boolean;
   crear:boolean;
   ocultar:boolean; // oculta un bug de los <i> de fontawesome cuando bajaba el despegable
+  eliminarSeleccionados:boolean; // boolean para saber si hay que mostrar eliminar contactos seleccionados
+  contactosSeleccionados: ContactoModule[] = [];
 
   // los datos que necesito para saber por que ordenar o filtrar
   regionesPaises: any[] = [];
@@ -58,7 +61,7 @@ export class ContactosComponent implements OnInit {
                                   new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 15),
                                   new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 13),
                                   new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 19),
-                                  new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], "TuVieja", 19));
+                                  new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], "TuVieja", 19));
     
     this.contactos = this.filtroContactos;
     this.contactos.forEach(element => {
@@ -172,13 +175,6 @@ export class ContactosComponent implements OnInit {
     }
     else{
       this.desplegable = true;
-      let compania = document.querySelector<HTMLSelectElement>(".region");
-      if (compania){
-        compania.name = "fNombreApfNombreApfNombreAp";
-        console.log("compania");
-        console.log(compania.selectedIndex);
-        // console.log(compania.nodeName)
-      }
       this.nombreContacto /*= "Todos"*/;
       this.cargo/* = "Todos"*/;
       this.pais = "Todos";
@@ -218,7 +214,7 @@ export class ContactosComponent implements OnInit {
     console.log(this.contactos);
     this.filtroContactos = this.contactos;
 
-    // nombre apellido
+    // filtro nombre apellido
     let filtro = new FiltroNombreContactoModule(this.filtroContactos);
     console.log("filtro completo: ");
     console.log(this.filtroContactos);
@@ -230,7 +226,7 @@ export class ContactosComponent implements OnInit {
     console.log("contactos full antes de filtrar");
     console.log(this.contactoFull);
 
-    // region pais
+    // filtro region pais
     let filtro2 = new FiltroRegionPaisModule(this.filtroContactos, this.contactoFull);
 
     this.filtroContactos = filtro2.filtrar(this.pais);
@@ -239,14 +235,14 @@ export class ContactosComponent implements OnInit {
     console.log("contactos full despues de filtrar");
     console.log(this.contactoFull);
   
-    // cargo
+    // filtro cargo
     let filtro3 = new FiltroCargoModule(this.filtroContactos);
 
     this.filtroContactos = filtro3.filtrar(this.cargo);
     console.log("filtro por cargo: ");
     console.log(this.filtroContactos);
 
-    // companias
+    // filtro companias
     let filtro4 = new FiltroCompaniaModule(this.filtroContactos);
 
     this.filtroContactos = filtro4.filtrar(this.compania);
@@ -254,13 +250,13 @@ export class ContactosComponent implements OnInit {
     console.log(this.filtroContactos);
 
 
-    // intereses
+    // filtro intereses
     let filtro5 = new FiltroInteresModule(this.filtroContactos);
     this.filtroContactos = filtro5.filtrar(this.interes);
     console.log("filtro por interes: ");
     console.log(this.filtroContactos);
 
-    // canales
+    // filtro canales
     let filtro6 = new FiltroCanalModule(this.filtroContactos);
     this.filtroContactos = filtro6.filtrar(this.canal);
     console.log("filtro por canales: ");
@@ -335,6 +331,129 @@ export class ContactosComponent implements OnInit {
     }
     else
       this.selector=true;
+  }
+
+  // elimina un contacto a la vez
+  eliminarContacto(contacto: ContactoModule){
+    // aca tendria que pegarle a la BD para borrar los contactos de a uno
+    console.log("contacto a eliminar: ");
+    console.log(contacto);
+    this.contactos.forEach((element, index) => {
+      if (element == contacto)
+        this.contactos.splice(index,1);
+    });
+
+    // agrego este foreach por si elimina uno en los filtrados, 
+    // ya que los filtrados no tienen el mismo arreglo (si borra, pero no muestra que lo borra)
+    // para que lo muestre habria que actualizar la pagina, con este foreach no es necesario actualizar
+    this.filtroContactos.forEach((element, index) => {
+      if (element == contacto)
+        this.filtroContactos.splice(index,1);
+    })
+    this.eliminarSeleccionados = false;
+  }
+
+  // elimina todos los contactos seleccionados
+  eliminarContactos(){
+    let check = document.querySelector<HTMLInputElement>(".globalCheck");
+    if (check)
+      check.checked = false;
+    this.contactosSeleccionados.forEach(contacto => {
+      this.eliminarContacto(contacto);
+    });
+  }
+
+  // precarga los contactos seleccionados para eliminarlos
+  cargarEliminarContactos(contacto: ContactoModule){
+    this.eliminarSeleccionados = true;
+    // if (this.contactosSeleccionados.length == 0)
+    //   this.contactosSeleccionados.push(contacto)
+    // else{
+    //   // reviso si el contacto fue seleccionado o si quito el check
+    //   let borro = false;
+    //   let i:number = 0;
+    //   while (i < this.contactosSeleccionados.length){
+    //     if (this.contactosSeleccionados[i] == contacto){
+    //       this.contactosSeleccionados.splice(i, 1);
+    //       borro = true;
+    //     }
+    //     i++;
+    //   }
+    //   if (!borro)
+    //     this.contactosSeleccionados.push(contacto);
+    // }
+    // console.log(this.contactosSeleccionados);
+    // if (this.contactosSeleccionados.length == 0)
+    //   this.eliminarSeleccionados = false;
+    // this.contactos.forEach(elemento => {
+    //   this.contactosSeleccionados.push(elemento);
+    // });
+    let checks = document.querySelectorAll<HTMLInputElement>(".check");
+    // debugger;
+    // aca deberia agregar el check global (detalles pelotudos, capaz ni lo hago)
+    if (checks)
+      checks.forEach((check, index) => {
+        console.log(check.checked + ", " + check.name);
+        if (check.checked==false){
+          // if (this.contactosSeleccionados.length != 0){
+          //   console.log("elemento: " + this.contactosSeleccionados[index].nombre);
+          //   console.log("contacto: " + contacto.nombre);
+          // }
+          if (this.contactos[index] == contacto){
+            let i = 0;
+            while (this.contactos[index] != this.contactosSeleccionados[i])
+              i++;
+            this.contactosSeleccionados.splice(i, 1);
+          }
+          // console.log("muy bieeeen, estoy elimiando el dato! " + contacto.nombre);
+          // console.log(this.contactosSeleccionados);
+          // this.contactosSeleccionados.forEach((element, index) => {
+          //   if (element == contacto){
+          //     console.log("elemento: " + element.nombre);
+          //     console.log("contacto: " + contacto.nombre);
+          //     console.log("no entres aca si no te llaman la puta que te pario");
+          //     console.log(this.contactosSeleccionados[index])
+          //     this.contactosSeleccionados.splice(index, 1);
+          //   }
+          // });
+        }
+        else if (check.name == contacto.email){
+          if (!this.existe(this.contactosSeleccionados, contacto)){
+            this.contactosSeleccionados.push(contacto);
+          }
+          console.log(this.contactosSeleccionados);
+        }
+      });
+  }
+
+  existe(arreglo:ContactoModule[], dato:ContactoModule){
+    let resultado = false;
+    arreglo.forEach(elemento => {
+      if (dato == elemento)
+        resultado = true;
+    });
+    return resultado;
+  }
+
+  seleccionarTodos(){
+    let checks = document.querySelectorAll<HTMLInputElement>(".check");
+    if (checks)
+      if (!this.eliminarSeleccionados){
+      this.eliminarSeleccionados = true;
+      this.contactos.forEach(contacto => {
+        this.contactosSeleccionados.push(contacto);
+      });
+        checks.forEach(check => {
+          check.checked = true;
+        });
+      }
+      else{
+        this.eliminarSeleccionados = false;
+        checks.forEach(check => {
+          check.checked = false;
+        });
+        this.contactosSeleccionados = [];
+      }
   }
 
 }
