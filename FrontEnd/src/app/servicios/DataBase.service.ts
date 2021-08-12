@@ -141,6 +141,10 @@ export class DataBaseServices {
         return this.httpClient.get<CiudadModule[]>(this.url + "ciudad/?pais=" + pais.nombre, { headers: this.header});
     }
 
+    obtenerIdCiudad(ciudad: string){
+        return this.httpClient.get<string>(this.url + "id_ciudad/?get_ciudad=" + ciudad, {headers:this.header});
+    }
+
     agregarCiudad(ciudad: CiudadModule, pais: PaisModule, region: RegionModule){
         return this.httpClient.post(this.url + "ciudad", {ciudad, pais, region}, {headers: this.header})
     }
@@ -187,5 +191,9 @@ export class DataBaseServices {
 
     obtenerPais(id_ciudad:number){
         return this.httpClient.get<string>(this.url + "contactos/pais?id_ciudad=" + id_ciudad, {headers: this.header});
+    }
+
+    crearContacto(contacto: ContactoModule){
+        return this.httpClient.post(this.url + "contactos", contacto, {headers:this.header});
     }
 }

@@ -49,22 +49,22 @@ export class ContactosComponent implements OnInit {
   ngOnInit(): void {
     this.contactoService.obtenerContactos().subscribe(
       (contactos: ContactoModule[]) => {
-        // this.contactos = contactos;
-        // this.filtroContactos = contactos;
+        this.contactos = contactos;
+        this.filtroContactos = contactos;
         
         console.log("contactos");
         console.log(contactos);
       }
     );
-    this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 0.25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], 19),
-                                  new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 0.50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], 5),
-                                  new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 0.25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], 6),
-                                  new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 15),
-                                  new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 13),
-                                  new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 19),
-                                  new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], 19));
+    // this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 0.25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], 19),
+    //                               new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 0.50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], 5),
+    //                               new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 0.25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], 6),
+    //                               new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 15),
+    //                               new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 13),
+    //                               new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 19),
+    //                               new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], 19));
     
-    this.contactos = this.filtroContactos;
+    // this.contactos = this.filtroContactos;
     this.contactos.forEach(element => {
 
       // agrego paises y regiones
@@ -283,7 +283,11 @@ export class ContactosComponent implements OnInit {
   }
 
   crearContacto(contacto:ContactoModule){
-    this.contactos.push(contacto);
+    this.contactoService.crearContacto(contacto).subscribe(
+      () => {
+        this.contactos.push(contacto);
+      }
+    )
   }
 
   cerrarVentana(bool: boolean){

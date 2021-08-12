@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ContactoModule } from '../model/contacto/contacto.module';
 import { PaisModule } from '../model/pais/pais.module';
 import { RegionModule } from '../model/region/region.module';
 import { DataBaseServices } from './DataBase.service';
@@ -32,5 +33,17 @@ export class ContactoService {
 
   obtenerCiudades(pais:string){
   return this.dbServices.obtenerCiudades(new PaisModule(pais));
+  }
+
+  obtenerIdCiudad(ciudad:string){
+    return this.dbServices.obtenerIdCiudad(ciudad);
+  }
+
+  obtenerCompanias(){
+    return this.dbServices.obtenerCompanias();
+  }
+
+  crearContacto(contacto: ContactoModule){
+    return this.dbServices.crearContacto(contacto);
   }
 }

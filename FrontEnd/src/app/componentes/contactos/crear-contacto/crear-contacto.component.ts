@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CanalModule } from 'src/app/model/canal/canal.module';
+import { CompaniaModule } from 'src/app/model/compania/compania.module';
 import { ContactoModule } from 'src/app/model/contacto/contacto.module';
 import { RegionModule } from 'src/app/model/region/region.module';
 import { ContactoService } from 'src/app/servicios/contacto.service';
@@ -21,6 +22,9 @@ export class CrearContactoComponent implements OnInit {
   ciudades:string[] = [];
   ciudadElegida:string;
   // fin datos de regiones, paises y ciudades
+
+  companias: string[] = [];
+
   nombre:string;
   apellido:string;
   cargo:string;
@@ -45,6 +49,7 @@ export class CrearContactoComponent implements OnInit {
 
   ngOnInit(): void {
     this.canal = [];
+    // cargar: muestra las regiones y companias en los select correspondientes
     this.cargarRegiones();
     this.cargarCompanias();
   }
@@ -95,6 +100,13 @@ export class CrearContactoComponent implements OnInit {
     if (ciudad)
       this.ciudadElegida = ciudad.value;
     console.log("la ciudad elegida: " + this.ciudadElegida);
+    this.contactoService.obtenerIdCiudad(this.ciudadElegida).subscribe(
+      (ciudad: any) => {
+        console.log("HOLA");
+        console.log(ciudad);
+        this.id_ciudad = ciudad[0].id;
+      }
+    )
   }
 
   cargarCiudades(){
@@ -105,33 +117,45 @@ export class CrearContactoComponent implements OnInit {
           ciudades.forEach(ciudad => {
             console.log(ciudad);
             this.ciudades.push(ciudad.nombre);
-            this.id_ciudad = ciudad.id;
           });
       })
     );
   }
 
   cargarCompanias(){
-    let aux:ContactoModule[] = [];
-    this.contactos.forEach(contacto => {
-      let existe = false;
-      aux.forEach(elemento => {
-        if (elemento.compania == contacto.compania)
-          existe = true;
-      });
-      if (!existe)
-        aux.push(contacto);
-    });
-    this.contactos = aux;
+    this.contactoService.obtenerCompanias().subscribe(
+      (companias: any) => {
+        console.log(companias);
+        console.log(companias.companias);
+        for (let i = 0 ; i < companias.companias.length; i++)
+          this.companias.push(companias.companias[i].nombre);
+          // console.log(companias.companias[i].nombre);
+        // if (companias != null){
+        //   companias.forEach(compania => {
+        //     this.companias.push(compania.nombre);
+        //   });
+        // }
+      }
+    );
+
+    // let aux:ContactoModule[] = [];
+    // this.contactos.forEach(contacto => {
+    //   let existe = false;
+    //   aux.forEach(elemento => {
+    //     if (elemento.compania == contacto.compania)
+    //       existe = true;
+    //   });
+    //   if (!existe)
+    //     aux.push(contacto);
+    // });
+    // this.contactos = aux;
   }
   
   crear(){
-    console.log(this.interes);
-    console.log(this.id_ciudad);
-    console.log(this.compania);
-    let compania = document.querySelector<HTMLSelectElement>(".selectCompania");
-    if (compania)
-      this.compania = compania.value
+    this.inicializarCompania();
+    console.log("id ciudad: " + this.id_ciudad);
+    console.log("compania: " + this.compania);
+    console.log(this.canal);
     this.crearContacto.emit(new ContactoModule( this.nombre, 
                                                 this.apellido,
                                                 this.cargo,
@@ -141,6 +165,12 @@ export class CrearContactoComponent implements OnInit {
                                                 this.interes,
                                                 this.canal,
                                                 this.id_ciudad))
+  }
+
+  inicializarCompania(){
+    let compania = document.querySelector<HTMLSelectElement>(".selectCompania");
+    if (compania)
+      this.compania = compania.value
   }
 
   agregarCanal(){

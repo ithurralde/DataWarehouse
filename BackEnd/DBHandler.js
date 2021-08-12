@@ -222,6 +222,13 @@ async function crearUsuario(usuario) {
 
   }
 
+  async function getIdCiudad(ciudad){
+    return await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+      replacements: [ciudad],
+      type: QueryTypes.SELECT
+    });
+  }
+
   async function addCiudad(ciudad, region, pais){
     // consulto por region y pais para los casos en que hayan paises con el mismo nombre (dudo que pase)
     let idPais = await myDataBase.query('SELECT id FROM paises WHERE region = ? AND nombre = ?', {
@@ -426,6 +433,62 @@ async function crearUsuario(usuario) {
     });
   }
 
+  async function addContacto(contacto){
+    // si existe ciudad
+    let existe = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?', {
+      replacements: [contacto.id_ciudad],
+      type: QueryTypes.SELECT
+    });
+
+    if (existe.length == 0)
+      return status(404);
+    
+    // si existe la compania
+    existe = await myDataBase.query('SELECT id FROM companias WHERE nombre = ?', {
+      replacements: [contacto.compania],
+      type: QueryTypes.SELECT
+    });
+
+    if (existe.length == 0)
+      return status(404);
+     
+    // inserto los canales del contacto
+    contacto.canal.forEach(async elemento => {
+      await myDataBase.query('INSERT INTO canales (canal, cuenta_usuario, preferencia) VALUES (?, ?, ?)', {
+        replacements: [elemento.canal, elemento.cuentaUsuario, elemento.preferencia],
+        type: QueryTypes.INSERT
+      })
+    });
+
+    // inserto el contacto
+    await myDataBase.query('INSERT INTO contactos (nombre, apellido, cargo, email, compania, direccion, interes, id_ciudad) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', {
+      replacements: [contacto.nombre, contacto.apellido, contacto.cargo, contacto.email, contacto.compania, contacto.direccion, contacto.interes, contacto.id_ciudad],
+      type: QueryTypes.INSERT
+    })
+
+    let id_contacto = await myDataBase.query('SELECT id FROM contactos WHERE email = ?', {
+      replacements: [contacto.email],
+      type: QueryTypes.SELECT
+    })
+
+    // inserto las relaciones de contactos y canales
+    contacto.canal.forEach( async elemento => {
+      let id_canal = await myDataBase.query('SELECT id FROM canales WHERE canal = ? AND cuenta_usuario = ?', {
+        replacements: [elemento.canal, elemento.cuentaUsuario],
+        type: QueryTypes.SELECT
+      });
+      console.log("el id papurroooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+      console.log(id_canal[0].id);
+      await myDataBase.query('INSERT INTO tienen_canales (id_canal, id_contacto) VALUES(?, ?)', {
+        replacements: [id_canal[0].id, id_contacto[0].id],
+        type: QueryTypes.INSERT
+      });
+    });
+
+    
+    
+  }
+
 
 
   
@@ -433,7 +496,7 @@ async function crearUsuario(usuario) {
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
-                      getContactos, getRegion, getPais, 
+                      getContactos, getRegion, getPais, addContacto, getIdCiudad, 
                     };
 
 

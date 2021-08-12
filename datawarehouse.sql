@@ -27,14 +27,13 @@ CREATE TABLE ciudades(
 
 CREATE TABLE contactos(
 	id INT NOT NULL AUTO_INCREMENT,
-    nombre INT NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
     apellido VARCHAR(30) NOT NULL,
     cargo VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL UNIQUE,
     compania VARCHAR(30) NOT NULL,
     direccion VARCHAR(30) NOT NULL,
-    interes INT NOT NULL,
-    canal_contacto INT NOT NULL,
+    interes FLOAT NOT NULL,
     id_ciudad INT NOT NULL,
     CONSTRAINT pk_contactos PRIMARY KEY (id),
     CONSTRAINT fk_id_ciudad_contactos FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)

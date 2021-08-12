@@ -24,7 +24,7 @@
             <p>Companía<span>*</span></p>
             <select name="datos" class="selectCompania">
                 <!-- *ngFor="let contacto of contactos" {{contacto.compania}} -->
-                <option value={{contacto.compania}} *ngFor="let contacto of contactos">{{contacto.compania}}</option>
+                <option value={{compania}} *ngFor="let compania of companias">{{compania}}</option>
             </select>
         </section>
     </section>
@@ -50,7 +50,7 @@
     </section>
     <section class="direccion">
         <p>Dirección</p>
-        <input name="datos" placeholder="Ingresa una dirección">
+        <input name="datos" placeholder="Ingresa una dirección" [(ngModel)]="direccion">
     </section>
     <section class="interes">
         <p>Interés</p>

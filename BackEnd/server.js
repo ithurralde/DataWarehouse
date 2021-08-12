@@ -267,6 +267,14 @@ server.get('/ciudad', autenticarUsuario, (request, response) => {
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
 })
 
+server.get('/id_ciudad', autenticarUsuario, (request, response) => {
+  let ciudad= request.query.get_ciudad;
+  console.log(ciudad);
+  transactionHandler.getIdCiudad(ciudad)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
+})
+
 server.post('/ciudad', autenticarUsuario, (request, response) => {
   let ciudad = request.body;
   transactionHandler.addCiudad(ciudad.ciudad, ciudad.region, ciudad.pais)
@@ -364,7 +372,10 @@ server.get('/contactos/:tipo', autenticarUsuario, (request, response) => {
 });
 
 server.post('/contactos', autenticarUsuario, (request, response) => {
-  
+  let contacto = request.body;
+  transactionHandler.addContacto(contacto)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
 });
 
 server.put('/contactos', autenticarUsuario, (request, response) => {
