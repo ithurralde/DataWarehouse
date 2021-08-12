@@ -35,7 +35,7 @@ export class ContactosComponent implements OnInit {
   contactoFull:any[] = [] // tiene datos importantes de cada contacto y el nombre de pais y de region. Lo necesito
                           // para filtrar por region o pais (para no volver a llamar a la base de datos, teniendo
                           // los datos en memoria)
-
+  
   // los datos que obtengo del filtro desplegable
   nombreContacto:string;
   cargo:string;
@@ -56,13 +56,13 @@ export class ContactosComponent implements OnInit {
         console.log(contactos);
       }
     );
-    this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 0.25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], "Sin preferencia", 19),
-                                  new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 0.50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], "LinkedIn", 5),
-                                  new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 0.25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], "Twitter", 6),
-                                  new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 15),
-                                  new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 13),
-                                  new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], "LinkedIn", 19),
-                                  new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], "TuVieja", 19));
+    this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 0.25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], 19),
+                                  new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 0.50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], 5),
+                                  new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 0.25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], 6),
+                                  new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 15),
+                                  new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 13),
+                                  new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 19),
+                                  new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], 19));
     
     this.contactos = this.filtroContactos;
     this.contactos.forEach(element => {
@@ -90,8 +90,9 @@ export class ContactosComponent implements OnInit {
           if (regionPais == region[0].region)
             existe = true;
         });
-        if (!existe)
+        if (!existe){
           this.regionesPaises.push(region[0].region);
+        }
         this.contactoFull.push({
           "contacto": {
             "nombre": element.nombre,
@@ -116,8 +117,9 @@ export class ContactosComponent implements OnInit {
           if (regionPais == pais[0].nombre)
             existe = true;
         });
-        if (!existe)
+        if (!existe){
           this.regionesPaises.push(pais[0].nombre); 
+        }
         this.contactoFull.forEach(full => {
           if (full.contacto.nombre == element.nombre &&
               full.contacto.apellido == element.apellido &&
@@ -264,6 +266,7 @@ export class ContactosComponent implements OnInit {
     console.log(this.filtroContactos);
   }
 
+  // vista de agregar contacto
   agregar(){
     let html = document.querySelector<HTMLElement>(".body");
     if (this.crear && html){
@@ -277,6 +280,10 @@ export class ContactosComponent implements OnInit {
       html.style.backgroundColor = "gray";
       // html.style.opacity = "0.4";
     }
+  }
+
+  crearContacto(contacto:ContactoModule){
+    this.contactos.push(contacto);
   }
 
   cerrarVentana(bool: boolean){
@@ -367,56 +374,17 @@ export class ContactosComponent implements OnInit {
   // precarga los contactos seleccionados para eliminarlos
   cargarEliminarContactos(contacto: ContactoModule){
     this.eliminarSeleccionados = true;
-    // if (this.contactosSeleccionados.length == 0)
-    //   this.contactosSeleccionados.push(contacto)
-    // else{
-    //   // reviso si el contacto fue seleccionado o si quito el check
-    //   let borro = false;
-    //   let i:number = 0;
-    //   while (i < this.contactosSeleccionados.length){
-    //     if (this.contactosSeleccionados[i] == contacto){
-    //       this.contactosSeleccionados.splice(i, 1);
-    //       borro = true;
-    //     }
-    //     i++;
-    //   }
-    //   if (!borro)
-    //     this.contactosSeleccionados.push(contacto);
-    // }
-    // console.log(this.contactosSeleccionados);
-    // if (this.contactosSeleccionados.length == 0)
-    //   this.eliminarSeleccionados = false;
-    // this.contactos.forEach(elemento => {
-    //   this.contactosSeleccionados.push(elemento);
-    // });
     let checks = document.querySelectorAll<HTMLInputElement>(".check");
-    // debugger;
-    // aca deberia agregar el check global (detalles pelotudos, capaz ni lo hago)
     if (checks)
       checks.forEach((check, index) => {
         console.log(check.checked + ", " + check.name);
         if (check.checked==false){
-          // if (this.contactosSeleccionados.length != 0){
-          //   console.log("elemento: " + this.contactosSeleccionados[index].nombre);
-          //   console.log("contacto: " + contacto.nombre);
-          // }
           if (this.filtroContactos[index] == contacto){
             let i = 0;
             while (this.filtroContactos[index] != this.contactosSeleccionados[i])
               i++;
             this.contactosSeleccionados.splice(i, 1);
           }
-          // console.log("muy bieeeen, estoy elimiando el dato! " + contacto.nombre);
-          // console.log(this.contactosSeleccionados);
-          // this.contactosSeleccionados.forEach((element, index) => {
-          //   if (element == contacto){
-          //     console.log("elemento: " + element.nombre);
-          //     console.log("contacto: " + contacto.nombre);
-          //     console.log("no entres aca si no te llaman la puta que te pario");
-          //     console.log(this.contactosSeleccionados[index])
-          //     this.contactosSeleccionados.splice(index, 1);
-          //   }
-          // });
         }
         else if (check.name == contacto.email){
           if (!this.existe(this.contactosSeleccionados, contacto)){
@@ -511,14 +479,14 @@ export class ContactosComponent implements OnInit {
       for (let j = i; j < this.filtroContactos.length; j++){
         // debugger;
         if (this.ordenAscendente){
-          if (this.filtroContactos[i].region > this.filtroContactos[j].region){
+          if (this.filtroContactos[i].id_ciudad > this.filtroContactos[j].id_ciudad){
             let contacto_auxiliar = this.filtroContactos[i];
             this.filtroContactos[i] = this.filtroContactos[j];
             this.filtroContactos[j] = contacto_auxiliar;
           }
         }
         else{
-          if (this.filtroContactos[i].region < this.filtroContactos[j].region){
+          if (this.filtroContactos[i].id_ciudad < this.filtroContactos[j].id_ciudad){
             let contacto_auxiliar = this.filtroContactos[i];
             this.filtroContactos[i] = this.filtroContactos[j];
             this.filtroContactos[j] = contacto_auxiliar;

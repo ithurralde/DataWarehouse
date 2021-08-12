@@ -151,3 +151,18 @@ select{
     padding: 0;
     width: 200px;
 }
+
+.habilitar:enabled{
+    color: white;
+}
+
+.canales{
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    width: 65%;
+    margin-left: 18%;
+    padding-top: 33px;
+    padding-left: 18px;
+    border: 1px solid #E8E8E8;
+}

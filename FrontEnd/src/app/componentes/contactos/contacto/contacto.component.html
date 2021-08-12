@@ -26,18 +26,28 @@
       <div class="interes">
         <p>{{contacto.interes | percent}}</p>
         <div class="interesFondo"></div>
-        <div [ngClass]="{barraInteres0: interes === 0,
-                          barraInteres25: interes === 0.25,
-                          barraInteres50: interes === 0.50,
-                          barraInteres75: interes === 0.75,
-                          barraInteres100: interes === 1}"></div>
+        <div [ngClass]="{barraInteres0: contacto.interes === 0,
+                          barraInteres25: contacto.interes === 0.25,
+                          barraInteres50: contacto.interes === 0.50,
+                          barraInteres75: contacto.interes === 0.75,
+                          barraInteres100: contacto.interes === 1}"></div>
       </div>
     </section>
     <section class="elemento">
       <i class="fas fa-ellipsis-h puntos" (click)="desplegarAcciones()"></i>
       <div *ngIf="acciones" class="acciones">
-        <p class="accion">Editar</p>
+        <p class="accion" (click)="editar()">Editar</p>
         <p class="accion" (click)="eliminar()">Eliminar</p>
       </div>
     </section>
 </section>
+<!-- [contactosFull]="contactosFull"
+[regiones]="[region]"
+[paises]="[pais]" -->
+<app-crear-contacto class="editarContacto" 
+                    *ngIf="edit" 
+                    (cerrarVentana)="cerrarVentana($event)"
+                    [contactos]="contactos"
+                    
+                    
+                    ></app-crear-contacto>

@@ -26,7 +26,9 @@ export class FiltroRegionPaisModule extends FiltroModule{
       this.contactofull.forEach(contacto => {
         if (this.contactos[i].nombre == contacto.contacto.nombre &&
             this.contactos[i].apellido == contacto.contacto.apellido){
-              if (this.contactofull[i].pais == element || this.contactofull[i].region == element)
+              if (this.contactofull[i].pais == element /*|| this.contactofull[i].region == element*/)
+                resultado.push(this.contactos[i]);
+              else if (this.contactofull[i].region == element)
                 resultado.push(this.contactos[i]);
               
         }

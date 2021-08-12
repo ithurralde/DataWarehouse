@@ -22,8 +22,9 @@
         </section>
         <section>
             <p>Companía<span>*</span></p>
-            <select name="datos" class="region">
-                <option value="dato">Youtube</option>
+            <select name="datos" class="selectCompania">
+                <!-- *ngFor="let contacto of contactos" {{contacto.compania}} -->
+                <option value={{contacto.compania}} *ngFor="let contacto of contactos">{{contacto.compania}}</option>
             </select>
         </section>
     </section>
@@ -31,20 +32,20 @@
 <form class="parte2">
     <section class="region">
         <p>Región</p>
-        <select name="datos">
-            <option value="dato">America</option>
+        <select class="selectRegion" name="datos" (click)="getRegionSeleccionada()">
+            <option value={{region}} *ngFor="let region of regiones">{{region}}</option>
          </select>
     </section>
     <section class="pais">
         <p>País</p>
-        <select name="datos">
-            <option value="dato">Argentina</option>
+        <select class="selectPais" name="datos" (click)="getPaisSeleccionado()">
+            <option value={{pais}} *ngFor="let pais of paises">{{pais}}</option>
          </select>
     </section>
     <section class="ciudad">
         <p>Ciudad</p>
-        <select name="datos">
-            <option value="dato">Balcarce</option>
+        <select class="selectCiudad" name="datos" (click)="getCiudadSeleccionada()">
+            <option value={{ciudad}} *ngFor="let ciudad of ciudades">{{ciudad}}</option>
          </select>
     </section>
     <section class="direccion">
@@ -55,12 +56,12 @@
         <p>Interés</p>
         <section>
             <!-- la barra de carga de interes -->
-            <select name="datos" class="selectInteres">
-                <option value="dato">{{0 |percent}}</option>
-                <option value="dato">{{0.25 | percent}}</option>
-                <option value="dato">{{0.50 | percent}}</option>
-                <option value="dato">{{0.75 | percent}}</option>
-                <option value="dato">{{1 | percent}}</option>
+            <select name="datos" class="selectInteres" [(ngModel)]="interes">
+                <option value=0 >{{0 |percent}}</option>
+                <option value=0.25>{{0.25 | percent}}</option>
+                <option value=0.5>{{0.50 | percent}}</option>
+                <option value=0.75>{{0.75 | percent}}</option>
+                <option value=1>{{1 | percent}}</option>
             </select>
         </section>
     </section>
@@ -68,37 +69,39 @@
 <form class="parte3">
     <section class="canal">
         <p>Canal de contacto</p>
-        <select name="datos" class="selectCanal">
-            <option value="dato">Teléfono</option>
-            <option value="dato">Whatsapp</option>
-            <option value="dato">Instagram</option>
-            <option value="dato">Facebook</option>
-            <option value="dato">Linkedin</option>
+        <select name="datos" class="selectCanal" [(ngModel)]="nombreCanal">
+            <option value="Teléfono">Teléfono</option>
+            <option value="Whatsapp">Whatsapp</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Facebook">Facebook</option>
+            <option value="LinkedIn">LinkedIn</option>
          </select>
     </section>
     <section class="cuenta">
         <p>Cuenta de usuario</p>
-        <select name="datos" class="selectCuenta">
-            <option value="dato">Red social (red social)</option>
-            <option value="dato">Telefono (numero de telefono)</option>
-         </select>
+        <input name="datos" class="selectCuenta" placeholder="@Ejemplo" [ngClass]="{habilitar: paso1 == true}" [(ngModel)]="cuentaUsuario">
     </section>
     <section class="preferencias">
         <p>Preferencias</p>
-        <select name="datos" class="selectCuenta">
-            <option value="dato">Sin preferencia</option>
-            <option value="dato">Canal favorito</option>
-            <option value="dato">No molestar</option>
+        <select name="datos" class="selectCuenta" [ngClass]="{habilitar: paso2 == true}" [(ngModel)]="preferencia">
+            <option value="Sin preferencia">Sin preferencia</option>
+            <option value="Canal favorito">Canal favorito</option>
+            <option value="No molestar">No molestar</option>
          </select>
     </section>
     <section class="sectionAgregarCanal">
-        <button class="btnAgregar">
+        <button class="btnAgregar" [ngClass]="{habilitar: paso3 == true}" >
             <i class="fas fa-plus plus"></i>
-            <p class="pAgregarCanal">Agregar Canal</p>
+            <p class="pAgregarCanal" (click)="agregarCanal()">Agregar Canal</p>
         </button>
     </section>
 </form>
+<section class="canales" *ngFor="let singleCanal of canal">
+<p>{{singleCanal.canal}}</p>
+<p>{{singleCanal.cuentaUsuario}}</p>
+<p>{{singleCanal.preferencia}}</p>
+</section>
 <section class="botones">
-    <button class="btn btn-outline-secondary btn-lg">Cancelar</button>
-    <button class="btn btn-secondary btn-lg" (click)="crear()">Guardar contacto</button>
+    <button class="btn btn-outline-secondary btn-lg" (click)="cerrar()">Cancelar</button>
+    <button class="btn btn-secondary btn-lg" (click)="crear()" >Guardar contacto</button>
 </section>

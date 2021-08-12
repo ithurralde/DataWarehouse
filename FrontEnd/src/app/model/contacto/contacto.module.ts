@@ -20,7 +20,6 @@ export class ContactoModule {
               public direccion:string,
               public interes:number,
               public canal:CanalModule[],
-              public preferencias:string,
               public id_ciudad:number){
 
   }

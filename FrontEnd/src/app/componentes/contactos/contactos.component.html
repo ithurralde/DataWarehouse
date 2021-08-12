@@ -3,7 +3,7 @@
 </section>
 <section class="nav subTitulo">
     <section class="input">
-        <input class="inpt" type="text" placeholder="Buscar contacto" disabled>
+        <button class="inpt" type="text" placeholder="Buscar contacto" (click)="desplegarInput()">Buscar contacto</button>
         <i class="fas fa-sort-down flechaBaja" (click)="desplegarInput()"></i>
         <i class="fas fa-search lupa" (click)="cargarInput()"></i>
         <section *ngIf="desplegable" class="desplegable">
@@ -49,8 +49,13 @@
         <p>Eliminar contactos</p>
     </section>
 </section>
-
-<app-crear-contacto *ngIf="crear" (cerrarVentana)="cerrarVentana($event)"></app-crear-contacto>
+<!-- [hidden]="!crear" -->
+<!-- [contactosFull]="contactoFull" -->
+<app-crear-contacto *ngIf="crear"
+                    (cerrarVentana)="cerrarVentana($event)"
+                    (crearContacto)="crearContacto($event)"
+                    [contactos]="contactos"
+                    ></app-crear-contacto>
 
 
 <section class="contactos">
@@ -87,5 +92,6 @@
     <app-contacto *ngFor="let contacto of filtroContactos"
         [contacto]="contacto"
         (eliminarSeleccionados)="cargarEliminarContactos($event)"
-        (eliminarContacto)="eliminarContacto($event)"></app-contacto>
+        (eliminarContacto)="eliminarContacto($event)"
+        [contactos]="contactos"></app-contacto>
 </section>

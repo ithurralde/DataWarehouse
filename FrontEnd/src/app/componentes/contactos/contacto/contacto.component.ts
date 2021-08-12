@@ -9,12 +9,14 @@ import { ContactoService } from 'src/app/servicios/contacto.service';
 })
 export class ContactoComponent implements OnInit {
   @Input() contacto: ContactoModule;
+  @Input() contactos: ContactoModule[]; // los necesito para editar el contacto, necesito conocer todas las companias
   @Output() eliminarSeleccionados = new EventEmitter();
   @Output() eliminarContacto = new EventEmitter();
   pais:string;
   region:string;
   interes:number;
   acciones:boolean;
+  edit:boolean;
   constructor(private contactoService: ContactoService) { }
 
   ngOnInit() {
@@ -48,5 +50,19 @@ export class ContactoComponent implements OnInit {
 
   eliminar(){
     this.eliminarContacto.emit(this.contacto);
+  }
+
+  editar(){
+    if (!this.edit){
+      this.edit = true;
+      this.acciones = false;
+    }
+  }
+
+  cerrarVentana(bool: boolean){
+    let html = document.querySelector<HTMLElement>(".body");
+     this.edit = bool;
+    if (html)
+      html.style.backgroundColor = "transparent";
   }
 }

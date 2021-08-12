@@ -35,7 +35,6 @@ CREATE TABLE contactos(
     direccion VARCHAR(30) NOT NULL,
     interes INT NOT NULL,
     canal_contacto INT NOT NULL,
-    preferencias VARCHAR(30) NOT NULL,
     id_ciudad INT NOT NULL,
     CONSTRAINT pk_contactos PRIMARY KEY (id),
     CONSTRAINT fk_id_ciudad_contactos FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)
