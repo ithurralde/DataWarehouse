@@ -12,6 +12,7 @@ import { CompaniaModule } from "../model/compania/compania.module";
 import { CiudadAnteriorModule } from "../model/ciudad/ciudad-anterior.module";
 import { CompaniaAnteriorModule } from "../model/compania/compania-anterior.module";
 import { ContactoModule } from "../model/contacto/contacto.module";
+import { CanalModule } from "../model/canal/canal.module";
 
 @Injectable()
 export class DataBaseServices {
@@ -195,6 +196,10 @@ export class DataBaseServices {
 
     crearContacto(contacto: ContactoModule){
         return this.httpClient.post(this.url + "contactos", contacto, {headers:this.header});
+    }
+
+    getCanalesContacto(contacto: ContactoModule){
+        return this.httpClient.get<CanalModule[]>(this.url + "contactosCanales/?contacto=" + JSON.stringify(contacto), { headers:this.header });
     }
 
     // borrarContactosCompania(compania: CompaniaModule){

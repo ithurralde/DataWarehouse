@@ -47,4 +47,8 @@ export class ContactoService {
   crearContacto(contacto: ContactoModule){
     return this.dbServices.crearContacto(contacto);
   }
+
+  getCanales(contacto: ContactoModule){
+    return this.dbServices.getCanalesContacto(contacto);
+  }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CompaniaAnteriorModule } from 'src/app/model/compania/compania-anterior.module';
 import { CompaniaModule } from 'src/app/model/compania/compania.module';
 import { CompaniaService } from 'src/app/servicios/compania.service';
-import { ContactoService } from 'src/app/servicios/contacto.service';
 
 @Component({
   selector: 'app-companias',
@@ -18,7 +17,7 @@ export class CompaniasComponent implements OnInit {
   ciudad:string;
   editable:boolean;
   btnAgregar:string = "Agregar";
-  constructor(private companiaService: CompaniaService, private contactoService: ContactoService) { }
+  constructor(private companiaService: CompaniaService) { }
 
   ngOnInit(): void {
     this.companiaService.obtenerCompanias().subscribe(
@@ -70,14 +69,6 @@ export class CompaniasComponent implements OnInit {
           () => {
             console.log("Compañia " + compania + " borrada con exito.");
             this.companias.splice(i, 1);
-            // this.contactoService.borrarContactosCompania(compania).subscribe(
-            //   () => {
-            //     console.log("Los contactos relacionados a la compania: " + compania.nombre + " fueron eliminados.");
-            //   },
-            //   (error) => {
-            //     console.error("No se pudieron eliminar los contactos relacionados a la compañia: " + compania.nombre + ". " + error);
-            //   }
-            // )
           }
         );
     }

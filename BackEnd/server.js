@@ -372,6 +372,14 @@ server.get('/contactos/:tipo', autenticarUsuario, (request, response) => {
     .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
 });
 
+server.get('/contactosCanales', autenticarUsuario, (request, response) => {
+  let contacto = request.query.contacto;
+  contacto = JSON.parse(contacto);
+  transactionHandler.getCanales(contacto)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No existen contactos. " + error}));
+})
+
 server.post('/contactos', autenticarUsuario, (request, response) => {
   let contacto = request.body;
   transactionHandler.addContacto(contacto)
@@ -412,10 +420,4 @@ server.delete('/contactos/:tipo', autenticarUsuario, (request, response) => {
       break;
 
   }
-  // if (tipo == "pais")
-  //   transactionHandler.borrarContactosPais(dato);
-  // else if (tipo)
-  // else if (tipo == "compania")
-  //   transactionHandler.borrarContactoCompania(dato);
-
 })

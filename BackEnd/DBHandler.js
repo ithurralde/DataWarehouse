@@ -424,6 +424,51 @@ async function crearUsuario(usuario) {
     return;
   }
 
+  async function getCanales(contacto){
+    let id_contacto = await myDataBase.query('SELECT id FROM contactos WHERE email = ?', {
+      replacements: [contacto.email],
+      type: QueryTypes.SELECT
+    });
+    
+    let id_canal =  await myDataBase.query('SELECT id_canal FROM tienen_canales WHERE id_contacto = ?', {
+      replacements: [id_contacto[0].id],
+      type: QueryTypes.SELECT
+    });
+
+    let resultado = [];
+    console.log(id_canal);
+    for (let i = 0; i < id_canal.length; i++){
+      resultado.push(await myDataBase.query('SELECT * FROM canales WHERE id = ?', {
+                        replacements: [id_canal[i].id_canal],
+                        type: QueryTypes.SELECT
+                      })
+      );
+    }
+
+    // console.log(" fuera if : el resulTADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooo")
+    // console.log(resultado);
+    if (resultado.length != 0){
+      console.log("el resulTADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooo")
+      console.log(resultado);
+      return resultado;
+    }
+    return [];
+    // id_canal.forEach(async (id) => {
+    //     resultado.push(await myDataBase.query('SELECT * FROM canales WHERE id = ?', {
+    //       replacements: [id.id_canal],
+    //       type: QueryTypes.SELECT
+    //     })
+    //   )
+
+    //   if (resultado.length != 0){
+    //       console.log("el resulTADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooo")
+    //       console.log(resultado);
+    //       return resultado;
+    //   }
+    //     return status(404);
+    //   });
+  }
+
   async function getRegion(id_ciudad){
     let id_pais = await myDataBase.query('SELECT id_pais FROM ciudades WHERE id = ?', {
       replacements: [id_ciudad],
@@ -546,7 +591,7 @@ async function crearUsuario(usuario) {
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
-                      getContactos, getRegion, getPais, addContacto, getIdCiudad, borrarContactosPais, 
+                      getContactos, getCanales, getRegion, getPais, addContacto, getIdCiudad, borrarContactosPais, 
                       borrarContactoCiudad, borrarContactoCompania, 
                     };
 

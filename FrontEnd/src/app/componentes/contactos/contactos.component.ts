@@ -49,8 +49,25 @@ export class ContactosComponent implements OnInit {
   ngOnInit(): void {
     this.contactoService.obtenerContactos().subscribe(
       (contactos: ContactoModule[]) => {
+
         this.contactos = contactos;
         this.filtroContactos = contactos;
+        // this.contactos = this.filtroContactos;
+        this.contactos.forEach(async element=> {
+
+          // agrego paises y regiones
+          this.obtenerRegion(element);
+          // this.obtenerPais(element);
+    
+          // agrego companias
+          this.agregarCompanias(element);
+    
+          // agrego canales
+          this.agregarCanales(element);
+    
+          // agrego intereses
+          this.agregarIntereses(element);
+        }); 
         
         console.log("contactos");
         console.log(contactos);
@@ -63,23 +80,6 @@ export class ContactosComponent implements OnInit {
     //                               new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 13),
     //                               new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 19),
     //                               new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], 19));
-    
-    // this.contactos = this.filtroContactos;
-    this.contactos.forEach(element => {
-
-      // agrego paises y regiones
-      this.obtenerRegion(element);
-      // this.obtenerPais(element);
-
-      // agrego companias
-      this.agregarCompanias(element);
-
-      // agrego canales
-      this.agregarCanales(element);
-
-      // agrego intereses
-      this.agregarIntereses(element);
-    }); 
   }
 
   obtenerRegion(element: ContactoModule){
@@ -144,11 +144,24 @@ export class ContactosComponent implements OnInit {
     }
   }
 
+  // contacto viene de la BD y tiene el id. element es el contacto de la BD tambien, pero al ser de tipo ContactoModule
+  // no tengo el id
   agregarCanales(element: ContactoModule){
-    element.canal.forEach(canalElement => {
-        this.canales.push(canalElement.canal);
-      });
+    this.contactoService.getCanales(element).subscribe(
+      (canales: any[]) => {
+        element.canal = [];
+        if (canales.length != 0){
+          canales.forEach(canal => {
+            console.log(canal);
+            element.canal.push(new CanalModule(canal[0].canal, canal[0].cuenta_usuario, canal[0].preferencia));
+          });
+        }
+        console.log("el canal %o tiene %o canales", element, element.canal);
+      }
+    );
 
+      
+  
     // elimina los repetidos
     this.canales = this.canales.filter((item, index) => {
       return this.canales.indexOf(item) == index;
