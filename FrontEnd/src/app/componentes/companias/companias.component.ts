@@ -17,6 +17,7 @@ export class CompaniasComponent implements OnInit {
   telefono:string;
   ciudad:string;
   editable:boolean;
+  btnAgregar:string = "Agregar";
   constructor(private companiaService: CompaniaService, private contactoService: ContactoService) { }
 
   ngOnInit(): void {
@@ -40,10 +41,14 @@ export class CompaniasComponent implements OnInit {
   }
 
   cargar(){
-    if (this.editable)
+    if (this.editable){
       this.editable = false;
-    else
+      this.btnAgregar = "Agregar";
+    }
+    else{
       this.editable = true;
+      this.btnAgregar = "Cancelar";
+    }
   }
 
   agregar(){

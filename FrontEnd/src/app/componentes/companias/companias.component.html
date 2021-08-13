@@ -1,7 +1,7 @@
 <section class="container">
     <section class="header">
         <h1>Compañias</h1>
-        <button class="btn btn-primary" (click)="cargar()">Agregar</button>
+        <button class="btn btn-primary" (click)="cargar()" [(ngModel)]="btnAgregar" ngDefaultControl>{{btnAgregar}}</button>
     </section>
     <section class="containerAgregar" *ngIf="editable">
         <section class="agregar">
