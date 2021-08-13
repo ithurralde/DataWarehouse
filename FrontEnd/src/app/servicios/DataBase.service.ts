@@ -196,4 +196,16 @@ export class DataBaseServices {
     crearContacto(contacto: ContactoModule){
         return this.httpClient.post(this.url + "contactos", contacto, {headers:this.header});
     }
+
+    // borrarContactosCompania(compania: CompaniaModule){
+    //     return this.httpClient.delete(this.url + "contactos/compania?dato=" + compania, {headers:this.header});
+    // }
+
+    // borrarContactosPais(pais:string){
+    //     return this.httpClient.delete(this.url + "contactos/pais?dato=" + pais, {headers:this.header});
+    // }
+
+    // borrarContactosCiudad(ciudad:string){
+    //     return this.httpClient.delete(this.url + "contactos/ciudad?dato=" + ciudad, { headers:this.header });
+    // }
 }

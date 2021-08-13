@@ -63,7 +63,6 @@ export class RegionComponent implements OnInit {
               }
             );
           });
-        // this.paises.splice(i,1);
       }
     }
   }

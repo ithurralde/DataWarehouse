@@ -357,6 +357,7 @@ server.get('/contactos', autenticarUsuario, (request, response) => {
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
 });
 
+// tipo puede ser: region o pais
 server.get('/contactos/:tipo', autenticarUsuario, (request, response) => {
   let tipo = request.params.tipo;
   console.log(tipo);
@@ -375,7 +376,7 @@ server.post('/contactos', autenticarUsuario, (request, response) => {
   let contacto = request.body;
   transactionHandler.addContacto(contacto)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+  .catch(error => response.status(404).send({ message: "No existe la ciudad o la compañia. " + error}));
 });
 
 server.put('/contactos', autenticarUsuario, (request, response) => {
@@ -385,3 +386,36 @@ server.put('/contactos', autenticarUsuario, (request, response) => {
 server.delete('/contactos', autenticarUsuario, (request, response) => {
   
 });
+
+// tipo puede ser: region/pais/ciudad o compañia
+server.delete('/contactos/:tipo', autenticarUsuario, (request, response) => {
+  let tipo = request.params.tipo;
+  let dato = request.query.dato;
+  switch(tipo){
+    case 'pais':
+      transactionHandler.borrarContactosPais(dato)
+      .then(respuesta => response.status(200).send(respuesta))
+      .catch(error => response.status(404).send({ message: "No existen contactos para el pais " + dato +". " + error}));
+      break;
+    case 'ciudad':
+      transactionHandler.borrarContactoCiudad(dato)
+      .then(respuesta => response.status(200).send(respuesta))
+      .catch(error => response.status(404).send({ message: "No existen contactos para la ciudad " + dato +". " + error}));
+      break;
+    case 'compania':
+      transactionHandler.borrarContactoCompania(dato)
+      .then(respuesta => response.status(200).send(respuesta))
+      .catch(error => response.status(404).send({ message: "No existen contactos para la compañia " + dato +". " + error}));
+      break;
+    default:
+      console.error("No se pudo/pudieron borrar el/los contacto/s con referencia en: " + tipo);
+      break;
+
+  }
+  // if (tipo == "pais")
+  //   transactionHandler.borrarContactosPais(dato);
+  // else if (tipo)
+  // else if (tipo == "compania")
+  //   transactionHandler.borrarContactoCompania(dato);
+
+})

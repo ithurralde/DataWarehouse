@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CompaniaModule } from '../model/compania/compania.module';
 import { ContactoModule } from '../model/contacto/contacto.module';
 import { PaisModule } from '../model/pais/pais.module';
 import { RegionModule } from '../model/region/region.module';

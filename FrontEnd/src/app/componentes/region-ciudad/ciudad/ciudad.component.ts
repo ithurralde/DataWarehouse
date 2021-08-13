@@ -30,6 +30,7 @@ export class CiudadComponent implements OnInit {
   }
 
   borrar(){
+    // primero borro los contactos y despues elimino la ciudad
     this.borrarCiudad.emit(this.ciudad);
   }
   

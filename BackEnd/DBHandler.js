@@ -357,39 +357,59 @@ async function crearUsuario(usuario) {
       type: QueryTypes.SELECT
     });
 
-    let resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
-      replacements: [idCiudad[0].id],
-      type: QueryTypes.DELETE
-    });
+    // let existe = await myDataBase.query('SELECT * FROM companias WHERE id_ciudad = ?', {
+    //   replacements: [idCiudad[0].id],
+    //   type: QueryTypes.SELECT
+    // });
 
-    await borrarCiudad(nombreCiudad);
+    // console.log("existe: ");
+    // console.log(existe);
+    let resultado;
+    // if (existe.length != 0){
+      // console.log("what man?");
+      resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
+        replacements: [idCiudad[0].id],
+        type: QueryTypes.DELETE
+      });
+    // }
+
+    // if (existe.length != 0){
+      // await borrarCiudad(nombreCiudad);
+    // }
+
+    await borrarContactoCiudad(idCiudad);
+    
 
     return resultado;
   }
 
   
   async function borrarCompaniaRegion(pais){
+
     let idPais = await myDataBase.query('SELECT id FROM paises WHERE nombre = ?', {
       replacements: [pais],
       type: QueryTypes.SELECT
     });
+
+    await borrarContactosPais(idPais[0].id);
 
     let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE id_pais = ?', {
       replacements: [idPais[0].id],
       type: QueryTypes.SELECT
     });
 
-    let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?',{
-      replacements: [idCiudad[0].id],
-      type: QueryTypes.SELECT
-    })
+    // let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?',{
+    //   replacements: [idCiudad[0].id],
+    //   type: QueryTypes.SELECT
+    // })
 
     let resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
       replacements: [idCiudad[0].id],
       type: QueryTypes.DELETE
     });
 
-    await borrarCiudad(nombreCiudad[0].nombre);
+    // await borrarCiudad(nombreCiudad[0].nombre);
+
 
     return resultado;
   }
@@ -484,11 +504,41 @@ async function crearUsuario(usuario) {
         type: QueryTypes.INSERT
       });
     });
-
-    
-    
   }
 
+  async function borrarContactosPais(pais){
+    console.log("holi: pais");
+    console.log(pais);
+    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE id_pais = ?', {
+      replacements: [pais],
+      type: QueryTypes.SELECT
+    });
+
+    if (idCiudad.length != 0){
+      idCiudad.forEach(async ciudad => {
+        await myDataBase.query('DELETE FROM contactos WHERE id_ciudad = ?', {
+          replacements: [ciudad.id],
+          type: QueryTypes.DELETE
+        });
+      })
+    }
+  }
+
+  async function borrarContactoCiudad(id_ciudad){
+    console.log(id_ciudad);
+    return await myDataBase.query('DELETE FROM contactos WHERE id_ciudad = ?', {
+      replacements: [id_ciudad[0].id],
+      type: QueryTypes.DELETE
+    });
+  }
+
+  async function borrarContactoCompania(compania){
+    //DELETE FROM companias WHERE id_ciudad = ?'
+    return await myDataBase.query('DELETE FROM contactos WHERE compania = ?', {
+      replacements: [compania.nombre],
+      type: QueryTypes.DELETE
+    });
+  }
 
 
   
@@ -496,7 +546,8 @@ async function crearUsuario(usuario) {
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
-                      getContactos, getRegion, getPais, addContacto, getIdCiudad, 
+                      getContactos, getRegion, getPais, addContacto, getIdCiudad, borrarContactosPais, 
+                      borrarContactoCiudad, borrarContactoCompania, 
                     };
 
 

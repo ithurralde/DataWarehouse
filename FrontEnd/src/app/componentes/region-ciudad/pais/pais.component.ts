@@ -108,7 +108,18 @@ export class PaisComponent implements OnInit {
 
   deletePais(){
     // le mando la region para los casos en que haya paises con el mismo nombre
+    // primero borro los contactos y despues el pais (con sus ciudades)
     this.borrarPais.emit(this.pais);
+    // this.contactoService.borrarContactosPais(this.pais.nombre).subscribe(
+    //   () => {
+    //     console.log("Los contactos relacionados al pais: " + this.pais.nombre + " fueron eliminados");
+    //     this.borrarPais.emit(this.pais);
+    //   },
+    //   (error) => {
+    //     console.error("No se pudieron eliminar los contactos relacionados al pais: " + this.pais.nombre + ". " + error);
+    //   }
+    // )
+
   }
 
 }
