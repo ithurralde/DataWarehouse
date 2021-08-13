@@ -154,20 +154,22 @@ export class ContactosComponent implements OnInit {
           canales.forEach(canal => {
             console.log(canal);
             element.canal.push(new CanalModule(canal[0].canal, canal[0].cuenta_usuario, canal[0].preferencia));
+            // agrego los canales a este arreglo de canales para los filtros en el desplegable
+            // que muestre solos los elementos que existen como canal de usuarios
+            this.canales.push(canal[0].canal);
+            // elimina los repetidos
+            this.canales = this.canales.filter((item, index) => {
+              return this.canales.indexOf(item) == index;
+            });
+        
+            this.canales = this.canales.sort();
           });
         }
         console.log("el canal %o tiene %o canales", element, element.canal);
       }
     );
 
-      
-  
-    // elimina los repetidos
-    this.canales = this.canales.filter((item, index) => {
-      return this.canales.indexOf(item) == index;
-    });
-
-    this.canales = this.canales.sort();
+    
   }
 
   agregarIntereses(element: ContactoModule){
@@ -246,9 +248,9 @@ export class ContactosComponent implements OnInit {
     let filtro2 = new FiltroRegionPaisModule(this.filtroContactos, this.contactoFull);
 
     this.filtroContactos = filtro2.filtrar(this.pais);
-    console.log("filtro por region pais: ");
+    console.log("filtro por region pais: ", this.pais);
     console.log(this.filtroContactos);
-    console.log("contactos full despues de filtrar");
+    console.log("contactos full despues de filtrar: ", this.contactoFull);
     console.log(this.contactoFull);
   
     // filtro cargo

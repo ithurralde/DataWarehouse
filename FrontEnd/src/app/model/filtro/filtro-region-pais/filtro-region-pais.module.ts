@@ -24,13 +24,16 @@ export class FiltroRegionPaisModule extends FiltroModule{
     
     for (let i=0; i < this.contactos.length; i++){
       this.contactofull.forEach(contacto => {
+        console.log("cada contactoFull: ", contacto);
+        console.log("cada contacto: ", this.contactos[i]);
         if (this.contactos[i].nombre == contacto.contacto.nombre &&
             this.contactos[i].apellido == contacto.contacto.apellido){
-              if (this.contactofull[i].pais == element /*|| this.contactofull[i].region == element*/)
+              if (contacto.pais == element /*|| this.contactofull[i].region == element*/){
                 resultado.push(this.contactos[i]);
-              else if (this.contactofull[i].region == element)
+              }
+              else if (contacto.region == element){
                 resultado.push(this.contactos[i]);
-              
+              }
         }
       });
     }
