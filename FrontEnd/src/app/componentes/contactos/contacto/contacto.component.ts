@@ -20,6 +20,7 @@ export class ContactoComponent implements OnInit {
   constructor(private contactoService: ContactoService) { }
 
   ngOnInit() {
+    console.log("la direccion del contacto ?? ", this.contacto.direccion);
     this.interes = this.contacto.interes;
     this.contactoService.obtenerRegion(this.contacto.id_ciudad).subscribe(
       (region:any) => {

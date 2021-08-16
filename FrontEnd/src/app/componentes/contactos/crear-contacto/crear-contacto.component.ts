@@ -50,6 +50,7 @@ export class CrearContactoComponent implements OnInit {
   ngOnInit(): void {
     // this.canal = [];
     // cargar: muestra las regiones y companias en los select correspondientes
+    console.log("direccion en crear contacto: ", this.direccion)
     this.cargarRegiones();
     this.cargarCompanias();
   }

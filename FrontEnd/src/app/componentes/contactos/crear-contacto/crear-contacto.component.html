@@ -50,7 +50,7 @@
     </section>
     <section class="direccion">
         <p>Dirección</p>
-        <input name="datos" placeholder="Ingresa una dirección" [(ngModel)]="direccion">
+        <input type="text" placeholder="Ingresa una dirección" [(ngModel)]="direccion" name="direccion">
     </section>
     <section class="interes">
         <p>Interés</p>
@@ -79,7 +79,7 @@
     </section>
     <section class="cuenta">
         <p>Cuenta de usuario</p>
-        <input name="datos" class="selectCuenta" placeholder="@Ejemplo" [ngClass]="{habilitar: paso1 == true}" [(ngModel)]="cuentaUsuario">
+        <input type="text" name="datos" class="selectCuenta" placeholder="@Ejemplo" [ngClass]="{habilitar: paso1 == true}" [(ngModel)]="cuentaUsuario">
     </section>
     <section class="preferencias">
         <p>Preferencias</p>
@@ -97,9 +97,9 @@
     </section>
 </form>
 <section class="canales" *ngFor="let singleCanal of canal">
-<p>{{singleCanal.canal}}</p>
-<p>{{singleCanal.cuentaUsuario}}</p>
-<p>{{singleCanal.preferencia}}</p>
+    <p>{{singleCanal.canal}}</p>
+    <p>{{singleCanal.cuentaUsuario}}</p>
+    <p>{{singleCanal.preferencia}}</p>
 </section>
 <section class="botones">
     <button class="btn btn-outline-secondary btn-lg" (click)="cerrar()">Cancelar</button>
