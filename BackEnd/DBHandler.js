@@ -437,6 +437,12 @@ async function crearUsuario(usuario) {
       });
     }
 
+    // borro el contacto de la compania
+    await myDataBase.query('DELETE FROM contactos_trabajan_en_companias WHERE id_contacto = ?', {
+      replacements: [id_contacto[0].id],
+      type: QueryTypes.DELETE
+    });
+
     return await myDataBase.query('DELETE FROM contactos WHERE id = ?', {
       replacements: [id_contacto[0].id],
       type: QueryTypes.DELETE
