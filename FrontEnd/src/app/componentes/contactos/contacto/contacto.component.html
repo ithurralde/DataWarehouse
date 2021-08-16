@@ -47,6 +47,7 @@
 <app-crear-contacto class="editarContacto" 
                     *ngIf="edit" 
                     (cerrarVentana)="cerrarVentana($event)"
+                    (crearContacto)="actualizarContacto($event)"
                     [contactos]="contactos"
                     
                     

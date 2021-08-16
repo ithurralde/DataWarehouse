@@ -59,6 +59,17 @@ export class ContactoComponent implements OnInit {
     }
   }
 
+  actualizarContacto(contacto: ContactoModule){
+    this.contactoService.actualizarContacto(this.contacto, contacto).subscribe(
+      (response) => {
+        console.log("Contacto creado %o.", response);
+      },
+      (error) => {
+        console.error("No se pudo crear el contacto. Error: ", error)
+      }
+    )
+  }
+
   cerrarVentana(bool: boolean){
     let html = document.querySelector<HTMLElement>(".body");
      this.edit = bool;

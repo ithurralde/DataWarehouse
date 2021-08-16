@@ -388,11 +388,18 @@ server.post('/contactos', autenticarUsuario, (request, response) => {
 });
 
 server.put('/contactos', autenticarUsuario, (request, response) => {
-  
+  let contacto = request.body;
+  transactionHandler.actualizarContacto(contacto)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No se pudo actualizar el contacto : %o. Error: ", contacto, error}));
 });
 
 server.delete('/contactos', autenticarUsuario, (request, response) => {
-  
+  let contacto = request.query.contacto;
+  contacto = JSON.parse(contacto);
+  transactionHandler.borrarContacto(contacto)
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(404).send({ message: "No se pudo eliminar el contaco " + contacto +". Error: " + error}));
 });
 
 // tipo puede ser: region/pais/ciudad o compañia

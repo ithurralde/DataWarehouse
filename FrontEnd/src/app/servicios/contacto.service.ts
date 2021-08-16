@@ -48,6 +48,14 @@ export class ContactoService {
     return this.dbServices.crearContacto(contacto);
   }
 
+  actualizarContacto(contacto_anterior: ContactoModule, contacto_nuevo: ContactoModule){
+    return this.dbServices.actualizarContacto(contacto_anterior, contacto_nuevo);
+  }
+
+  eliminarContacto(contacto: ContactoModule){
+    return this.dbServices.eliminarContacto(contacto);
+  }
+
   getCanales(contacto: ContactoModule){
     return this.dbServices.getCanalesContacto(contacto);
   }

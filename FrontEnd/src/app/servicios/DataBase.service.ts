@@ -198,6 +198,14 @@ export class DataBaseServices {
         return this.httpClient.post(this.url + "contactos", contacto, {headers:this.header});
     }
 
+    actualizarContacto(contacto_anterior: ContactoModule, contacto_nuevo: ContactoModule){
+        return this.httpClient.put(this.url + "contactos", {contacto_anterior, contacto_nuevo}, {headers: this.header});
+    }
+
+    eliminarContacto(contacto: ContactoModule){
+        return this.httpClient.delete(this.url + "contactos/?contacto=" + JSON.stringify(contacto), {headers: this.header});
+    }
+
     getCanalesContacto(contacto: ContactoModule){
         return this.httpClient.get<CanalModule[]>(this.url + "contactosCanales/?contacto=" + JSON.stringify(contacto), { headers:this.header });
     }

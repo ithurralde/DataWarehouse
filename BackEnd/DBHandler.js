@@ -414,6 +414,79 @@ async function crearUsuario(usuario) {
     return resultado;
   }
 
+  async function borrarContacto(contacto){
+    console.log("contaco en la BD: " , contacto);
+    console.log("y entonces ? " , contacto.nombre);
+    let id_contacto = await myDataBase.query('SELECT id FROM contactos WHERE nombre = ? AND apellido = ? AND email = ?', {
+      replacements: [contacto.nombre, contacto.apellido, contacto.email],
+      type: QueryTypes.SELECT
+    });
+    let id_canal = await myDataBase.query('SELECT id_canal FROM tienen_canales WHERE id_contacto = ?', {
+      replacements: [id_contacto[0].id],
+      type: QueryTypes.SELECT
+    });
+    await myDataBase.query('DELETE FROM tienen_canales WHERE id_contacto = ?', {
+      replacements: [id_contacto[0].id],
+      type: QueryTypes.DELETE
+    })
+
+    for (let i = 0; i < id_canal.length; i++){
+      await myDataBase.query('DELETE FROM canales WHERE id = ?', {
+        replacements: [id_canal[i].id_canal],
+        type: QueryTypes.DELETE
+      });
+    }
+
+    return await myDataBase.query('DELETE FROM contactos WHERE id = ?', {
+      replacements: [id_contacto[0].id],
+      type: QueryTypes.DELETE
+    });
+  }
+
+  async function actualizarContacto(contacto){
+    console.log("hola ?? ", contacto);
+    // let id_contacto = await myDataBase.query('SELECT id FROM contactos WHERE nombre = ?, apellido = ?, email = ?', {
+    //   replacements: [contacto.contacto_anterior.nombre, contacto.contacto_anterior.apellido, contacto.contacto_anterior.email],
+    //   type: QueryTypes.SELECT
+    // });
+    console.log("el contacto en actualizar: ", contacto);
+    console.log("canales en actualizar: ", contacto.contacto_nuevo.canal);
+    console.log("tamaño de canales en actualizar: ", contacto.contacto_nuevo.canal.length);
+    // por si agrega canales nuevos en la edicion del contacto
+    if (contacto.contacto_nuevo.canal.length != 0){
+      for (let i = 0; i < contacto.contacto_nuevo.canal.length; i++){
+        await myDataBase.query('INSERT INTO canales (canal, cuenta_usuario, preferencia) VALUES (?, ?, ?)', {
+          replacements: [contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia],
+          type: QueryTypes.INSERT
+        });
+        let id_canal = await myDataBase.query('SELECT id FROM canales WHERE canal = ? AND cuenta_usuario = ? AND preferencia = ?', {
+          replacements: [contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia],
+          type: QueryTypes.SELECT
+        })
+        await myDataBase.query('INSERT INTO tienen_canales (id_canal, id_contacto) VALUES (?, ?)', {
+          replacements: [id_canal[0].id, contacto.contacto_anterior.id],
+          type: QueryTypes.INSERT
+        });
+      }
+    }
+    // actualizo tambien en la relacion con compañia
+    let id_compania = await myDataBase.query('SELECT id FROM companias WHERE nombre = ?', {
+      replacements: [contacto.contacto_nuevo.compania],
+      type: QueryTypes.SELECT
+    });
+    console.log("y aca no? id_compania: ", id_compania[0]);
+    await myDataBase.query('UPDATE contactos_trabajan_en_companias SET id_compania = ? WHERE id_contacto = ?', {
+      replacements: [id_compania[0].id, contacto.contacto_anterior.id],
+      type: QueryTypes.UPDATE
+    });
+
+    return await myDataBase.query('UPDATE contactos SET nombre = ?, apellido = ?, cargo = ?, email = ?, compania = ?, direccion = ?, interes = ?, id_ciudad = ? WHERE id = ?',{
+      replacements: [contacto.contacto_nuevo.nombre, contacto.contacto_nuevo.apellido, contacto.contacto_nuevo.cargo, contacto.contacto_nuevo.email, 
+                    contacto.contacto_nuevo.compania, contacto.contacto_nuevo.direccion, contacto.contacto_nuevo.interes, contacto.contacto_nuevo.id_ciudad, contacto.contacto_anterior.id],
+      type: QueryTypes.UPDATE
+    });
+  }
+
   async function getContactos(){
     let resultado = await myDataBase.query('SELECT * FROM contactos', {
       type: QueryTypes.SELECT
@@ -445,28 +518,12 @@ async function crearUsuario(usuario) {
       );
     }
 
-    // console.log(" fuera if : el resulTADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooo")
-    // console.log(resultado);
     if (resultado.length != 0){
       console.log("el resulTADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooo")
       console.log(resultado);
       return resultado;
     }
     return [];
-    // id_canal.forEach(async (id) => {
-    //     resultado.push(await myDataBase.query('SELECT * FROM canales WHERE id = ?', {
-    //       replacements: [id.id_canal],
-    //       type: QueryTypes.SELECT
-    //     })
-    //   )
-
-    //   if (resultado.length != 0){
-    //       console.log("el resulTADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooooooooooooo")
-    //       console.log(resultado);
-    //       return resultado;
-    //   }
-    //     return status(404);
-    //   });
   }
 
   async function getRegion(id_ciudad){
@@ -549,6 +606,17 @@ async function crearUsuario(usuario) {
         type: QueryTypes.INSERT
       });
     });
+
+    let id_compania = await myDataBase.query('SELECT id FROM companias WHERE nombre = ?', {
+      replacements: [contacto.compania],
+      type: QueryTypes.SELECT
+    });
+
+    // agrego el contacto en la compañia
+    await myDataBase.query('INSERT INTO contactos_trabajan_en_companias (id_contacto, id_compania) VALUES (?, ?)', {
+      replacements: [id_contacto[0].id, id_compania[0].id],
+      type: QueryTypes.INSERT
+    });
   }
 
   async function borrarContactosPais(pais){
@@ -591,8 +659,8 @@ async function crearUsuario(usuario) {
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
                       actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
-                      getContactos, getCanales, getRegion, getPais, addContacto, getIdCiudad, borrarContactosPais, 
-                      borrarContactoCiudad, borrarContactoCompania, 
+                      borrarContacto, actualizarContacto, getContactos, getCanales, getRegion, getPais, addContacto, 
+                      getIdCiudad, borrarContactosPais, borrarContactoCiudad, borrarContactoCompania, 
                     };
 
 

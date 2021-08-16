@@ -301,6 +301,10 @@ export class ContactosComponent implements OnInit {
     this.contactoService.crearContacto(contacto).subscribe(
       () => {
         this.contactos.push(contacto);
+        let html = document.querySelector<HTMLElement>(".body");
+        this.crear = false;
+        if (html)
+          html.style.backgroundColor = "transparent";
       }
     )
   }
@@ -363,20 +367,30 @@ export class ContactosComponent implements OnInit {
   // elimina un contacto a la vez
   eliminarContacto(contacto: ContactoModule){
     // aca tendria que pegarle a la BD para borrar los contactos de a uno
-    console.log("contacto a eliminar: ");
-    console.log(contacto);
+    console.log("contacto a eliminar: ", contacto);
+    // console.log(contacto);
     this.contactos.forEach((element, index) => {
-      if (element == contacto)
+      if (element == contacto){
         this.contactos.splice(index,1);
+        this.contactoService.eliminarContacto(contacto).subscribe(
+          () => {
+            console.log("Contacto: " + contacto +" eliminado");
+          },
+          (error) => {
+            console.error("No se pudo eliminar el contacto : " + contacto + ". Error: " + error);
+          }
+        )
+      }
     });
 
     // agrego este foreach por si elimina uno en los filtrados, 
     // ya que los filtrados no tienen el mismo arreglo (si borra, pero no muestra que lo borra)
     // para que lo muestre habria que actualizar la pagina, con este foreach no es necesario actualizar
     this.filtroContactos.forEach((element, index) => {
-      if (element == contacto)
+      if (element == contacto){
         this.filtroContactos.splice(index,1);
-    })
+      }
+    });
     this.eliminarSeleccionados = false;
   }
 
