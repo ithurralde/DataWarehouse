@@ -25,14 +25,14 @@ export class CrearContactoComponent implements OnInit {
 
   companias: string[] = [];
 
-  nombre:string;
-  apellido:string;
-  cargo:string;
-  email:string;
-  compania:string;
-  direccion:string;
-  interes:number;  
-  canal:CanalModule[];
+  @Input() nombre:string;
+  @Input() apellido:string;
+  @Input() cargo:string;
+  @Input() email:string;
+  @Input() compania:string;
+  @Input() direccion:string;
+  @Input() interes:number;  
+  @Input() canal:CanalModule[] = [];
   // datos particulares para cada canal
   nombreCanal:string;
   cuentaUsuario:string;
@@ -48,7 +48,7 @@ export class CrearContactoComponent implements OnInit {
   constructor(private contactoService: ContactoService) { }
 
   ngOnInit(): void {
-    this.canal = [];
+    // this.canal = [];
     // cargar: muestra las regiones y companias en los select correspondientes
     this.cargarRegiones();
     this.cargarCompanias();

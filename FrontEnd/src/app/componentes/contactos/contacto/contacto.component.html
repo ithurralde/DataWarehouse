@@ -49,6 +49,12 @@
                     (cerrarVentana)="cerrarVentana($event)"
                     (crearContacto)="actualizarContacto($event)"
                     [contactos]="contactos"
-                    
-                    
+                    [nombre]="contacto.nombre"
+                    [apellido]="contacto.apellido"
+                    [cargo]="contacto.cargo"
+                    [email]="contacto.email"
+                    [compania]="contacto.compania"
+                    [direccion]="contacto.direccion"
+                    [interes]="contacto.interes"
+                    [canal]="contacto.canal"
                     ></app-crear-contacto>
