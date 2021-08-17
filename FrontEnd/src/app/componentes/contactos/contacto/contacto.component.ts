@@ -61,6 +61,8 @@ export class ContactoComponent implements OnInit {
   }
 
   actualizarContacto(contacto: ContactoModule){
+    console.log("Contacto anterior: ", this.contacto);
+    console.log("Contacto nuevo: ", contacto);
     this.contactoService.actualizarContacto(this.contacto, contacto).subscribe(
       (response) => {
         console.log("Contacto creado %o.", response);

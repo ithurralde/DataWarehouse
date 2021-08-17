@@ -464,21 +464,40 @@ async function crearUsuario(usuario) {
     console.log("el contacto en actualizar: ", contacto);
     console.log("canales en actualizar: ", contacto.contacto_nuevo.canal);
     console.log("tamaño de canales en actualizar: ", contacto.contacto_nuevo.canal.length);
-    // por si agrega canales nuevos en la edicion del contacto
-    if (contacto.contacto_nuevo.canal.length != 0){
-      for (let i = 0; i < contacto.contacto_nuevo.canal.length; i++){
-        await myDataBase.query('INSERT INTO canales (canal, cuenta_usuario, preferencia) VALUES (?, ?, ?)', {
-          replacements: [contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia],
-          type: QueryTypes.INSERT
-        });
-        let id_canal = await myDataBase.query('SELECT id FROM canales WHERE canal = ? AND cuenta_usuario = ? AND preferencia = ?', {
-          replacements: [contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia],
+    let id_canales_anteriores = await myDataBase.query('SELECT * FROM tienen_canales WHERE id_contacto = ?',{
+      replacements: [contacto.contacto_anterior.id],
+      type: QueryTypes.SELECT
+    });
+
+    console.log("los id de los canales anteriores: ", id_canales_anteriores);
+
+    let canales_anteriores = [];
+    for (let i = 0; i < id_canales_anteriores.length; i++)
+      canales_anteriores.push(await myDataBase.query('SELECT * FROM canales WHERE id = ?', {
+          replacements: [id_canales_anteriores[i].id_canal],
           type: QueryTypes.SELECT
         })
-        await myDataBase.query('INSERT INTO tienen_canales (id_canal, id_contacto) VALUES (?, ?)', {
-          replacements: [id_canal[0].id, contacto.contacto_anterior.id],
-          type: QueryTypes.INSERT
-        });
+      );
+      console.log("CANALES ANTERIORES MAN POR FAVOR: ", canales_anteriores);
+      console.log("tamaño CANALES ANTERIORES MAN POR FAVOR: ", canales_anteriores.length);
+      // por si agrega canales nuevos en la edicion del contacto
+    if (canales_anteriores.length != contacto.contacto_nuevo.canal.length){
+      for (let i = canales_anteriores.length; i < contacto.contacto_nuevo.canal.length; i++){
+        console.log("tamaño de la i: %o, posicion en contacto nuevo: %o", i, contacto.contacto_nuevo.canal[i])
+        // console.log("contacto_anterior => canal: %o, cuenta_usuario: %o, preferencia: %o", canales_anteriores[i][0].canal, canales_anteriores[i][0].cuenta_usuario, canales_anteriores[i][0].preferencia);
+        console.log("contacto_nuevo => canal: %o, cuenta_usuario: %o, preferencia: %o", contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia);
+                await myDataBase.query('INSERT INTO canales (canal, cuenta_usuario, preferencia) VALUES (?, ?, ?)', {
+                  replacements: [contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia],
+                  type: QueryTypes.INSERT
+                });
+                let id_canal = await myDataBase.query('SELECT id FROM canales WHERE canal = ? AND cuenta_usuario = ? AND preferencia = ?', {
+                  replacements: [contacto.contacto_nuevo.canal[i].canal, contacto.contacto_nuevo.canal[i].cuentaUsuario, contacto.contacto_nuevo.canal[i].preferencia],
+                  type: QueryTypes.SELECT
+                })
+                await myDataBase.query('INSERT INTO tienen_canales (id_canal, id_contacto) VALUES (?, ?)', {
+                  replacements: [id_canal[0].id, contacto.contacto_anterior.id],
+                  type: QueryTypes.INSERT
+                });
       }
     }
     // actualizo tambien en la relacion con compañia
