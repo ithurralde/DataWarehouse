@@ -22,7 +22,7 @@
         </section>
         <section>
             <p>Companía<span>*</span></p>
-            <select name="datos" class="selectCompania">
+            <select name="compania" [(ngModel)]="compania" class="selectCompania">
                 <!-- *ngFor="let contacto of contactos" {{contacto.compania}} -->
                 <option value={{compania}} *ngFor="let compania of companias">{{compania}}</option>
             </select>
