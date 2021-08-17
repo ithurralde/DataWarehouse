@@ -53,21 +53,25 @@ export class ContactosComponent implements OnInit {
         this.contactos = contactos;
         this.filtroContactos = contactos;
         // this.contactos = this.filtroContactos;
-        this.contactos.forEach(async element=> {
-
-          // agrego paises y regiones
-          this.obtenerRegion(element);
-          // this.obtenerPais(element);
-    
-          // agrego companias
-          this.agregarCompanias(element);
-    
-          // agrego canales
-          this.agregarCanales(element);
-    
-          // agrego intereses
-          this.agregarIntereses(element);
-        }); 
+        if (this.contactos != null){
+          this.contactos.forEach(async element=> {
+  
+            // agrego paises y regiones
+            this.obtenerRegion(element);
+            // this.obtenerPais(element);
+      
+            // agrego companias
+            this.agregarCompanias(element);
+      
+            // agrego canales
+            this.agregarCanales(element);
+      
+            // agrego intereses
+            this.agregarIntereses(element);
+          }); 
+        }
+        else 
+          this.contactos = [];
         
         console.log("contactos");
         console.log(contactos);
@@ -406,9 +410,18 @@ export class ContactosComponent implements OnInit {
 
   // precarga los contactos seleccionados para eliminarlos
   cargarEliminarContactos(contacto: ContactoModule){
-    this.eliminarSeleccionados = true;
     let checks = document.querySelectorAll<HTMLInputElement>(".check");
-    if (checks)
+    console.log("que concha es el checks? ", checks);
+    if (checks){
+      this.eliminarSeleccionados = true;
+      // para saber si desmarco todos los checks o no (para mostrar el mensaje de eliminar seleccionados)
+      let isCheck = false;
+      checks.forEach(check => {
+        if (check.checked)
+          isCheck = true;
+      });
+      if (!isCheck)
+        this.eliminarSeleccionados = false;
       checks.forEach((check, index) => {
         console.log(check.checked + ", " + check.name);
         if (check.checked==false){
@@ -426,6 +439,7 @@ export class ContactosComponent implements OnInit {
           console.log(this.contactosSeleccionados);
         }
       });
+    }
   }
 
   existe(arreglo:ContactoModule[], dato:ContactoModule){

@@ -18,15 +18,18 @@ export class FiltroCanalModule extends FiltroModule{
   }
 
   public filtrar(element: string) {
+    if (element == "Todos")
+      return this.contactos;
     let resultado: ContactoModule[] = [];
     this.contactos.forEach(contacto => {
       contacto.canal.forEach(canal => {
-        if (canal.canal == element)
+        // console.log("datos de cada canal: ", canal)
+        if (canal.canal == element && canal.preferencia == 'Canal favorito'){
+          console.log("Estoy entrando?");
           resultado.push(contacto);
+        }
       })
     });
-    if (resultado.length === 0)
-      return this.contactos;
     return resultado;
   } 
 
