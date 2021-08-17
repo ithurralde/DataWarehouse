@@ -1,0 +1,14 @@
+h1{
+    position: relative;
+    left: 5%;
+}
+
+.usuarios{
+    display: flex;
+    justify-content: space-evenly;
+    width: 85%;
+    position: relative;
+    left: 5%;
+    border: 1px solid black;
+    padding: 15px 0;
+}

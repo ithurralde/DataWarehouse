@@ -1,23 +1,27 @@
-<section *ngIf="!editable">
-    <p>usuario: {{user.usuario}}</p>
-    <p>nombre: {{user.nombre}}</p>
-    <p>apellido: {{user.apellido}}</p>
-    <p>email: {{user.email}}</p>
-    <p>perfil: {{user.perfil}}</p>
-    <p>admin: {{user.admin}}</p>
-    <p>contraseña: {{user.contrasenia}}</p>
-    <button (click)="editar()" class="boton btn btn-primary">Editar</button>
-    <button (click)="borrar()" class="boton btn btn-primary">Borrar</button>
+<section class="usuarioContenedor">
+    <section *ngIf="!editable" class="usuario">
+        <p>{{user.usuario}}</p>
+        <p>{{user.nombre}}</p>
+        <p>{{user.apellido}}</p>
+        <p class="email">{{user.email}}</p>
+        <p>{{user.perfil}}</p>
+        <p>{{user.admin}}</p>
+        <p>{{user.contrasenia}}</p>
+
+    </section>
+    <section class="botones">
+        <button (click)="preEditar()" class="boton btn btn-primary" [(ngModel)]="edit" ngDefaultControl>{{edit}}</button>
+        <button (click)="borrar()" class="boton btn btn-primary">Borrar</button>
+    </section>
 </section>
 
 
-
 <section *ngIf="editable" class="userInput">
-    <p>Nombre: <input [(ngModel)]="user.nombre" placeholder="nombre">{{user.nombre}} </p>
-    <p>Apellido: <input [(ngModel)]="user.apellido" placeholder="apellido">apellido: {{user.apellido}}</p>
-    <p>Email: <input [(ngModel)]="user.email" placeholder="email">email: {{user.email}}</p>
-    <p>Perfil: <input [(ngModel)]="user.perfil" placeholder="perfil">perfil: {{user.perfil}}</p>
-    <p>Admin: <input [(ngModel)]="user.admin" placeholder="admin">admin: {{user.admin}}</p>
-    <p>Contraseña:<input [(ngModel)]="user.contrasenia" placeholder="contraseña">contraseña: {{user.contrasenia}}</p>
+    <p class="pUserInput">Nombre: <input [(ngModel)]="user.nombre" placeholder="nombre"></p>
+    <p class="pUserInput">Apellido: <input [(ngModel)]="user.apellido" placeholder="apellido"></p>
+    <p class="pUserInput">Email: <input [(ngModel)]="user.email" placeholder="email"></p>
+    <p class="pUserInput">Perfil: <input [(ngModel)]="user.perfil" placeholder="perfil"></p>
+    <p class="pUserInput">Admin: <input [(ngModel)]="user.admin" placeholder="admin"></p>
+    <p class="pUserInput">Contraseña:<input [(ngModel)]="user.contrasenia" placeholder="contraseña"></p>
     <button (click)="editar()" class="btn btn-primary"> OK!</button>
 </section>

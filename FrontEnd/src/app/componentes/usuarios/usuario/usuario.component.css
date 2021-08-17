@@ -1,10 +1,5 @@
-section {
-    display: flex;
-    flex-direction: column;
-}
-
 p{
-    padding-right: 5px;
+    width: 40px;
 }
 
 input{
@@ -13,9 +8,51 @@ input{
 }
 
 .userInput{
-    width: 300px;
+    border: 1px solid black;
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    left: 40%;
+}
+
+.pUserInput{
+    width: auto;
+    padding-top: 10px;
 }
 
 .boton {
     width: 70px;
+    height: 30px;
+    padding: 0px;
+    margin-top: 2px;
+}
+
+.usuarioContenedor{
+    position: relative;
+}
+
+.usuario{
+    display: flex;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    width: 85%;
+    position: relative;
+    left: 5%;
+    padding: 15px 0;
+}
+
+.email{
+    position: relative;
+    right: 50px;
+}
+
+.botones{
+    position: absolute;
+    top: -3%;
+    left: 83%;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
 }

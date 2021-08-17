@@ -1,5 +1,14 @@
 <app-crear-usuario></app-crear-usuario>
 <h1>Lista de usuarios:</h1>
+<section class="usuarios">
+    <p>Usuario</p>
+    <p>Nombre</p>
+    <p>Apellido</p>
+    <p>Email</p>
+    <p>Perfil</p>
+    <p>Admin</p>
+    <p>Contraseña</p>
+</section>
 <app-usuario *ngFor="let usuario of usuarios" 
 [user]="usuario"
 (borrarUsuario)=borrar($event)>
