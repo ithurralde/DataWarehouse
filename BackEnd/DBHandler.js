@@ -337,6 +337,25 @@ async function crearUsuario(usuario) {
       type: QueryTypes.SELECT
     });
 
+    // actualizo los contactos que tenian relacion con esta compania (por si cambia de nombre)
+    let contactos = await myDataBase.query('SELECT * FROM contactos WHERE compania = ?', {
+      replacements: [compania.nombre_ant],
+      tpye: QueryTypes.SELECT
+    });
+
+    console.log("Nombre de la compania anterior: %o, nombre de la nueva compania: %o", compania.nombre_ant, compania.nombre);
+    for (let i = 0; i < contactos.length; i++){
+      console.log("el nombre de la compania antes de cambiar: ", contactos[i][0])
+      console.log("el nombre de la compania antes de cambiar: ", contactos[i][0].compania)
+      if (contactos[i][0].compania == compania.nombre_ant){
+        console.log("estoy cambiando: ", contactos[i].compania)
+        await myDataBase.query('UPDATE contactos SET compania = ? WHERE compania = ?', {
+          replacements: [compania.nombre, compania.nombre_ant],
+          tpye: QueryTypes.UPDATE
+        })
+      }
+    }
+
     return await myDataBase.query('UPDATE companias SET nombre=?, direccion=?, email=?, telefono=?, id_ciudad=? WHERE  id = ?', {
       replacements: [compania.nombre, compania.direccion, compania.email, compania.telefono, idCiudad[0].id, idCompania[0].id],
       type: QueryTypes.UPDATE
