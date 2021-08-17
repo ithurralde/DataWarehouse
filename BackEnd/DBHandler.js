@@ -222,6 +222,12 @@ async function crearUsuario(usuario) {
 
   }
 
+  async function getTodasCiudades(){
+    return await myDataBase.query('SELECT nombre FROM ciudades', {
+      type: QueryTypes.SELECT
+    });
+  }
+
   async function getIdCiudad(ciudad){
     return await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
       replacements: [ciudad],
@@ -663,7 +669,7 @@ async function crearUsuario(usuario) {
   
   module.exports = {  crearUsuario, loginUsuario, isAdmin, getUsuario, getUsuarios, getId, updateUsuarios, 
                       deleteUsuarios, setPassword, getRegiones, addRegion, getPaises, addPais, borrarPais, 
-                      actualizarPais, getCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
+                      actualizarPais, getCiudades, getTodasCiudades, addCiudad, borrarCiudad, actualizarCiudad, getCompanias,
                       addCompania, actualizarCompania, borrarCompania, borrarCompaniaPais, borrarCompaniaRegion, 
                       borrarContacto, actualizarContacto, getContactos, getCanales, getRegion, getPais, addContacto, 
                       getIdCiudad, borrarContactosPais, borrarContactoCiudad, borrarContactoCompania, 

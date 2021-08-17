@@ -142,6 +142,10 @@ export class DataBaseServices {
         return this.httpClient.get<CiudadModule[]>(this.url + "ciudad/?pais=" + pais.nombre, { headers: this.header});
     }
 
+    obtenerTodasCiudades(){
+        return this.httpClient.get<string[]>(this.url + "ciudades", {headers : this.header});
+    }
+
     obtenerIdCiudad(ciudad: string){
         return this.httpClient.get<string>(this.url + "id_ciudad/?get_ciudad=" + ciudad, {headers:this.header});
     }

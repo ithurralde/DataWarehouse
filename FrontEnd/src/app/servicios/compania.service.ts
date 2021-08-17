@@ -34,4 +34,8 @@ export class CompaniaService {
   editarCompania(compania_ant: CompaniaAnteriorModule){
     return this.dbService.editarCompania(compania_ant);
   }
+
+  obtenerCiudades(){
+    return this.dbService.obtenerTodasCiudades();
+  }
 }

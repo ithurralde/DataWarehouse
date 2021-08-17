@@ -10,7 +10,10 @@
             <input type="text"  placeholder="Direccion" [(ngModel)]="direccion">
             <input type="text"  placeholder="Email" [(ngModel)]="email"> 
             <input type="text"  placeholder="Telefono" [(ngModel)]="telefono"> 
-            <input type="text"  placeholder="Ciudad" [(ngModel)]="ciudad">
+            <!-- <input type="text"  placeholder="Ciudad" [(ngModel)]="ciudad"> -->
+            <select class="ciudades" name="datos">
+                <option value={{ciudads}} *ngFor="let ciudads of companias_ciudad">{{ciudads}}</option>
+             </select>
             <button (click)="agregar()" class="btn btn-primary btnAgregar">Agregar compañia</button>
         </section>
     </section>
@@ -34,6 +37,7 @@
         </ul>
         <app-compania *ngFor="let compania of companias"
             [compania]="compania"
+            [ciudades]="companias_ciudad"
             (borrarCompania)=delete($event)
             (editarCompania)=update($event)>
         </app-compania>

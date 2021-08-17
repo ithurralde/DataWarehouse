@@ -10,25 +10,41 @@ p{
     text-align: center;
 }
 
+.editar{
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 5%;
+}
+
 .email{
     position: relative;
-    left: 3%;
+    left: 1%;
+    width: 155px;
 }
 
 
 .nombre{
     position: relative;
-    left: 5%;
+    left: 0%;
+    width: 155px;
 }
 
 .telefono{
     position: relative;
     left: 1%;
+    width: 155px;
 }
 
 .ciudad{
     position: relative;
     left: -1%;
+    width: 155px;
+
+}
+
+.ciudades{
+    position: relative;
+    right: 0%;
 }
 
 button{

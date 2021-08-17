@@ -10,6 +10,7 @@ import { CompaniaService } from 'src/app/servicios/compania.service';
 })
 export class CompaniasComponent implements OnInit {
   companias: CompaniaModule[] = [];
+  companias_ciudad: string[] = [];
   nombre:string;
   direccion:string;
   email:string;
@@ -34,6 +35,13 @@ export class CompaniasComponent implements OnInit {
           console.log(companias.ciudades[i][0].nombre);
           console.log("el tamaño del i cajeta este es de: " + i);
         }
+        this.companiaService.obtenerCiudades().subscribe(
+          (ciudad: any[]) => {
+            ciudad.forEach(city => {
+              this.companias_ciudad.push(city.nombre);
+            })
+          }
+        )
         // this.companias = companias;
       }
     );

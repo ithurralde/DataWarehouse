@@ -267,6 +267,12 @@ server.get('/ciudad', autenticarUsuario, (request, response) => {
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
 })
 
+server.get('/ciudades', autenticarUsuario, (request, response) => {
+  transactionHandler.getTodasCiudades()
+  .then(respuesta => response.status(200).send(respuesta))
+  .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
+})
+
 server.get('/id_ciudad', autenticarUsuario, (request, response) => {
   let ciudad= request.query.get_ciudad;
   console.log(ciudad);

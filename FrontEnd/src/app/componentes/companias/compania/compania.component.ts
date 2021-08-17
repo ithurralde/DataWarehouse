@@ -10,6 +10,7 @@ import { CompaniaModule } from 'src/app/model/compania/compania.module';
 })
 export class CompaniaComponent implements OnInit {
   @Input() compania: CompaniaModule;
+  @Input() ciudades: string[] = [];
   @Output() editarCompania = new EventEmitter();
   @Output() borrarCompania = new EventEmitter();
   compania_ant: CompaniaAnteriorModule;
