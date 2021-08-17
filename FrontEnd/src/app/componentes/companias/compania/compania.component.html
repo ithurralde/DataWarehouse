@@ -4,7 +4,7 @@
     <p class="email">{{compania.email}}</p>
     <p class="telefono">{{compania.telefono}}</p>
     <p class="ciudad">{{compania.ciudad}}</p>
-    <button class="btn btn-primary" (click)="preEditar()">Edit</button>
+    <button class="btn btn-primary" (click)="preEditar()" [(ngModel)]="edit" ngDefaultControl>{{edit}}</button>
     <button class="btn btn-primary" (click)="borrar()">Borrar</button>
 </section>
 

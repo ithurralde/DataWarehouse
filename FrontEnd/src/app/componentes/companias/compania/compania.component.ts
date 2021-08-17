@@ -15,15 +15,24 @@ export class CompaniaComponent implements OnInit {
   @Output() borrarCompania = new EventEmitter();
   compania_ant: CompaniaAnteriorModule;
   editable: boolean;
+  edit:string;
   constructor() { }
 
   ngOnInit(): void {
+    this.edit = "Edit";
   }
 
   preEditar(){
-    this.editable = true;
-    this.compania_ant = new CompaniaAnteriorModule("null", "null", "null", "null", "null", 
-                              this.compania.nombre, this.compania.direccion, this.compania.email, this.compania.telefono, this.compania.ciudad);
+    if (!this.editable){
+      this.edit = "Cancelar";
+      this.editable = true;
+      this.compania_ant = new CompaniaAnteriorModule("null", "null", "null", "null", "null", 
+                                this.compania.nombre, this.compania.direccion, this.compania.email, this.compania.telefono, this.compania.ciudad);
+    }
+    else  {
+      this.edit = "Edit";
+      this.editable = false;
+    }
   }
   
   editar(){
