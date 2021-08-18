@@ -390,7 +390,7 @@ server.post('/contactos', autenticarUsuario, (request, response) => {
   let contacto = request.body;
   transactionHandler.addContacto(contacto)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad o la compañia. " + error}));
+  .catch(error => response.status(404).send({ message: "No existe la ciudad, la compañia o ya existe un usuario con ese mail. " + error}));
 });
 
 server.put('/contactos', autenticarUsuario, (request, response) => {

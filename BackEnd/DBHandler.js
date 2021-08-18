@@ -300,6 +300,7 @@ async function crearUsuario(usuario) {
   }
 
   async function addCompania(compania){
+    console.log("que carajo es compania ahora: %o, y la ciudad: %o ", compania, compania.ciudad);
     let existeCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
       replacements: [compania.ciudad],
       type: QueryTypes.SELECT
@@ -365,11 +366,27 @@ async function crearUsuario(usuario) {
   async function borrarCompania(compania){
     console.log("me estas imprimiendo esto?");
     console.log(compania.nombre);
-    let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE nombre = ?', {
+    console.log(compania.ciudad);
+    let idCiudad = await myDataBase.query('SELECT * FROM ciudades WHERE nombre = ?', {
       replacements: [compania.ciudad],
       type: QueryTypes.SELECT
     });
 
+    console.log("id ciudad termino con: ", idCiudad[0].id);
+    
+    let contactos = await myDataBase.query('SELECT * FROM contactos WHERE compania = ?', {
+      replacements: [compania.nombre],
+      type: QueryTypes.SELECT
+    })
+
+    
+    // eliminar de contactos
+    for (let i = 0; i < contactos.length; i++){
+      // console.log("los contactos que levante: ", contactos[i])
+     await borrarContacto(contactos[i]);
+    }
+
+    console.log("termino bien con el for?");
     return await myDataBase.query('DELETE FROM companias WHERE nombre = ? AND direccion = ? AND id_ciudad = ?', {
       replacements: [compania.nombre, compania.direccion, idCiudad[0].id],
       type: QueryTypes.DELETE
@@ -392,20 +409,48 @@ async function crearUsuario(usuario) {
     let resultado;
     // if (existe.length != 0){
       // console.log("what man?");
-      resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
-        replacements: [idCiudad[0].id],
-        type: QueryTypes.DELETE
-      });
+    let companias = await myDataBase.query('SELECT nombre, direccion, email, telefono, id_ciudad ciudad FROM companias WHERE id_ciudad = ?', {
+      replacements: [idCiudad[0].id],
+      tpye: QueryTypes.SELECT
+    });
+
+    // console.log("ni el for pasa?");
+    console.log("companias: ", companias)
+    console.log("companias 0: ", companias[0])
+    console.log("companias 0,0: ", companias[0][0])
+    console.log("companias 0,1: ", companias[0][1])
+    console.log("companias 1,0: ", companias[1][0])
+    console.log("companias 1,1: ", companias[1][1])
+
+    for (let i = 0; i < companias.length; i++){
+      console.log("Pero que carajo estoy imprimiendo papurron: ", companias[i][i]);
+      console.log("Pero que carajo estoy imprimiendo papurron: ", companias[0][i]);
+      companias[i][i].ciudad = nombreCiudad;
+    }
+
+    console.log("companias despues de modificar: ", companias);
+    // console.log("no, ni el for pasa........");
+
+    // console.log("Las companias enteras antes de borrar: ", companias[0]);
+    for (let i = 0; i < companias.length; i++){
+      // console.log("imprime cada compania: ", companias[0][i]);
+      console.log("por borrar la compania: ", companias[i][i]);
+      await borrarCompania(companias[i][i]);
+    }
+    // resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
+    //   replacements: [idCiudad[0].id],
+    //   type: QueryTypes.DELETE
+    // });
     // }
 
     // if (existe.length != 0){
       // await borrarCiudad(nombreCiudad);
     // }
-
-    await borrarContactoCiudad(idCiudad);
+    console.log("por aca todo correct?");
+    // await borrarContactoCiudad(idCiudad);
     
 
-    return resultado;
+    return;
   }
 
   
@@ -416,22 +461,49 @@ async function crearUsuario(usuario) {
       type: QueryTypes.SELECT
     });
 
-    await borrarContactosPais(idPais[0].id);
-
+    // await borrarContactosPais(idPais[0].id);
+    console.log("paso el anterior?");
     let idCiudad = await myDataBase.query('SELECT id FROM ciudades WHERE id_pais = ?', {
       replacements: [idPais[0].id],
       type: QueryTypes.SELECT
     });
 
+    console.log("paso este?")
     // let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?',{
     //   replacements: [idCiudad[0].id],
     //   type: QueryTypes.SELECT
     // })
-
-    let resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
+    let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?', {
       replacements: [idCiudad[0].id],
-      type: QueryTypes.DELETE
+      tpye: QueryTypes.SELECT
     });
+
+    console.log("pero me esta agarrando como el orto el nombre de la ciudad: ", nombreCiudad[0][0].nombre);
+
+    await borrarCompaniaPais(nombreCiudad[0][0].nombre);
+    // ****************************************************************************************************************************************************
+    // let companias = await myDataBase.query('SELECT nombre, direccion, email, telefono, id_ciudad ciudad FROM companias WHERE id_ciudad = ?', {
+    //   replacements: [idCiudad[0].id],
+    //   tpye: QueryTypes.SELECT
+    // });
+
+    // for (let i = 0; i < companias.length; i++){
+    //   console.log("Pero que carajo estoy imprimiendo papurron: ", companias[i][0]);
+    //   companias[i][0].ciudad = nombreCiudad;
+    // }
+
+    // for (let i = 0; i < companias.length; i++){
+    //   // console.log("imprime cada compania: ", companias[0][i]);
+    //   await borrarCompania(companias[i][0]);
+    // }
+
+
+    // let resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
+    //   replacements: [idCiudad[0].id],
+    //   type: QueryTypes.DELETE
+    // });
+
+    console.log("entonces estoy rompiendo en este")
 
     // await borrarCiudad(nombreCiudad[0].nombre);
 
@@ -461,6 +533,11 @@ async function crearUsuario(usuario) {
         type: QueryTypes.DELETE
       });
     }
+
+    await myDataBase.query('DELETE FROM contactos_trabajan_en_companias WHERE id_contacto = ?', {
+        replacements: [id_contacto[0].id],
+        type: QueryTypes.DELETE
+    });
 
     // borro el contacto de la compania
     await myDataBase.query('DELETE FROM contactos_trabajan_en_companias WHERE id_contacto = ?', {
@@ -638,6 +715,7 @@ async function crearUsuario(usuario) {
       type: QueryTypes.INSERT
     })
 
+    console.log("paso esto?");
     let id_contacto = await myDataBase.query('SELECT id FROM contactos WHERE email = ?', {
       replacements: [contacto.email],
       type: QueryTypes.SELECT
@@ -678,29 +756,57 @@ async function crearUsuario(usuario) {
     });
 
     if (idCiudad.length != 0){
-      idCiudad.forEach(async ciudad => {
-        await myDataBase.query('DELETE FROM contactos WHERE id_ciudad = ?', {
-          replacements: [ciudad.id],
-          type: QueryTypes.DELETE
+      // idCiudad.forEach(async ciudad => {
+        console.log("y el idCiudad meeeen: ", idCiudad);
+        console.log("y el idCiudad meeeen[0]: ", idCiudad[0]);
+        for (let i = 0; i < idCiudad.length; i++){
+        // await myDataBase.query('DELETE FROM contactos WHERE id_ciudad = ?', {
+        //   replacements: [ciudad.id],
+        //   type: QueryTypes.DELETE
+        // });
+        console.log("por cargar contactos: ");
+        let contactos = await myDataBase.query('SELECT * FROM contactos WHERE id_ciudad = ?', {
+          replacements: [idCiudad[i].id],
+          type: QueryTypes.SELECT
         });
-      })
+        console.log("a ver el contacto papurron: ", contactos)
+        console.log("a ver el contacto papurron: ", contactos[0])
+        for (let i = 0; i < contactos.length; i++){
+          await borrarContacto(contactos[i]);
+        }
+        
+      }
+      // });
     }
   }
 
   async function borrarContactoCiudad(id_ciudad){
-    console.log(id_ciudad);
-    return await myDataBase.query('DELETE FROM contactos WHERE id_ciudad = ?', {
+    console.log("el id de la ciudad en borrar contacto ciudad: ", id_ciudad);
+    let contactos = await myDataBase.query('SELECT * FROM contactos WHERE id_ciudad = ?', {
       replacements: [id_ciudad[0].id],
-      type: QueryTypes.DELETE
-    });
+      type: QueryTypes.SELECT
+    })
+    for (let i = 0; i < contactos.length; i++){
+      await borrarContacto(contactos[i]);
+    }
+    // return await myDataBase.query('DELETE FROM contactos WHERE id_ciudad = ?', {
+    //   replacements: [id_ciudad[0].id],
+    //   type: QueryTypes.DELETE
+    // });
   }
 
   async function borrarContactoCompania(compania){
     //DELETE FROM companias WHERE id_ciudad = ?'
-    return await myDataBase.query('DELETE FROM contactos WHERE compania = ?', {
+    // return await myDataBase.query('DELETE FROM contactos WHERE compania = ?', {
+    //   replacements: [compania.nombre],
+    //   type: QueryTypes.DELETE
+    // });
+    let contactos = await myDataBase.query('SELECT * FROM contactos WHERE compania = ?', {
       replacements: [compania.nombre],
-      type: QueryTypes.DELETE
+      type: QueryTypes.SELECT
     });
+    for (let i = 0; i < contactos.length; i++)
+      await borrarContacto(contacto[i]);
   }
 
 

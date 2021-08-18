@@ -11,7 +11,7 @@
             <input type="text"  placeholder="Email" [(ngModel)]="email"> 
             <input type="text"  placeholder="Telefono" [(ngModel)]="telefono"> 
             <!-- <input type="text"  placeholder="Ciudad" [(ngModel)]="ciudad"> -->
-            <select class="ciudades" name="datos">
+            <select class="ciudades" name="datos" [(ngModel)]="ciudad">
                 <option value={{ciudads}} *ngFor="let ciudads of companias_ciudad">{{ciudads}}</option>
              </select>
             <button (click)="agregar()" class="btn btn-primary btnAgregar">Agregar compañia</button>
