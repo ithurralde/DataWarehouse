@@ -478,6 +478,8 @@ async function crearUsuario(usuario) {
     });
 
     console.log("paso este?")
+    console.log("el idCiudad con los ids de las ciudades: ", idCiudad);
+    console.log("el length de idCiudad: ", idCiudad.length);
     // let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?',{
     //   replacements: [idCiudad[0].id],
     //   type: QueryTypes.SELECT
@@ -490,13 +492,13 @@ async function crearUsuario(usuario) {
       });
 
       console.log("nombre de la ciudad objeto entero: ", nombreCiudad);
-      console.log("pero me esta agarrando como el orto el nombre de la ciudad: ", nombreCiudad[0][i].nombre);
+      console.log("pero me esta agarrando como el orto el nombre de la ciudad: ", nombreCiudad[0][0].nombre);
 
-      await borrarCompaniaPais(nombreCiudad[0][i].nombre);
+      await borrarCompaniaPais(nombreCiudad[0][0].nombre);
       
       console.log("entonces estoy rompiendo en este")
 
-      await borrarCiudad(nombreCiudad[0][i].nombre);
+      await borrarCiudad(nombreCiudad[0][0].nombre);
     }
 
     // return await myDataBase.query('DELETE FROM paises WHERE nombre = ?', {
