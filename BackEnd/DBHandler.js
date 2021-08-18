@@ -416,26 +416,35 @@ async function crearUsuario(usuario) {
 
     // console.log("ni el for pasa?");
     console.log("companias: ", companias)
+    console.log("el length de companias[0]: ", companias[0].length);
     console.log("companias 0: ", companias[0])
     console.log("companias 0,0: ", companias[0][0])
     console.log("companias 0,1: ", companias[0][1])
+    console.log("companias 2,0: ", companias[0][2])
     console.log("companias 1,0: ", companias[1][0])
     console.log("companias 1,1: ", companias[1][1])
+    console.log("companias 2,1: ", companias[1][2])
+    
 
-    for (let i = 0; i < companias.length; i++){
-      console.log("Pero que carajo estoy imprimiendo papurron: ", companias[i][i]);
+    for (let i = 0; i < companias[0].length; i++){
       console.log("Pero que carajo estoy imprimiendo papurron: ", companias[0][i]);
-      companias[i][i].ciudad = nombreCiudad;
+      console.log("Pero que carajo estoy imprimiendo papurron: ", companias[0][i]);
+      if (companias[0][i] != undefined){
+        companias[0][i].ciudad = nombreCiudad;
+      }
     }
 
     console.log("companias despues de modificar: ", companias);
     // console.log("no, ni el for pasa........");
 
     // console.log("Las companias enteras antes de borrar: ", companias[0]);
-    for (let i = 0; i < companias.length; i++){
+    for (let i = 0; i < companias[0].length; i++){
       // console.log("imprime cada compania: ", companias[0][i]);
-      console.log("por borrar la compania: ", companias[i][i]);
-      await borrarCompania(companias[i][i]);
+      console.log("por borrar la compania: ", companias[0][i]);
+      if (companias[0][i] != undefined){
+        console.log("pero me esta entrando con undefined esta poronga?? ", companias[0][i]);
+        await borrarCompania(companias[0][i]);
+      }
     }
     // resultado = await myDataBase.query('DELETE FROM companias WHERE id_ciudad = ?', {
     //   replacements: [idCiudad[0].id],
@@ -473,14 +482,27 @@ async function crearUsuario(usuario) {
     //   replacements: [idCiudad[0].id],
     //   type: QueryTypes.SELECT
     // })
-    let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?', {
-      replacements: [idCiudad[0].id],
-      tpye: QueryTypes.SELECT
-    });
+    
+    for (let i = 0; i < idCiudad.length; i++){
+      let nombreCiudad = await myDataBase.query('SELECT nombre FROM ciudades WHERE id = ?', {
+        replacements: [idCiudad[i].id],
+        tpye: QueryTypes.SELECT
+      });
 
-    console.log("pero me esta agarrando como el orto el nombre de la ciudad: ", nombreCiudad[0][0].nombre);
+      console.log("nombre de la ciudad objeto entero: ", nombreCiudad);
+      console.log("pero me esta agarrando como el orto el nombre de la ciudad: ", nombreCiudad[0][i].nombre);
 
-    await borrarCompaniaPais(nombreCiudad[0][0].nombre);
+      await borrarCompaniaPais(nombreCiudad[0][i].nombre);
+      
+      console.log("entonces estoy rompiendo en este")
+
+      await borrarCiudad(nombreCiudad[0][i].nombre);
+    }
+
+    // return await myDataBase.query('DELETE FROM paises WHERE nombre = ?', {
+    //   replacements: [pais],
+    //   type: QueryTypes.DELETE
+    // });
     // ****************************************************************************************************************************************************
     // let companias = await myDataBase.query('SELECT nombre, direccion, email, telefono, id_ciudad ciudad FROM companias WHERE id_ciudad = ?', {
     //   replacements: [idCiudad[0].id],
@@ -503,12 +525,10 @@ async function crearUsuario(usuario) {
     //   type: QueryTypes.DELETE
     // });
 
-    console.log("entonces estoy rompiendo en este")
-
-    // await borrarCiudad(nombreCiudad[0].nombre);
+    
 
 
-    return resultado;
+    // return resultado;
   }
 
   async function borrarContacto(contacto){
