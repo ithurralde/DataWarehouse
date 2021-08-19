@@ -67,10 +67,17 @@ async function crearUsuario(usuario) {
   }
 
   async function updateUsuarios(usuario, id){
-      await myDataBase.query('UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, perfil = ?, admin = ?, contrasenia = ? WHERE id = ?', {
+    await myDataBase.query('UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, perfil = ?, admin = ?, contrasenia = ? WHERE id = ?', {
       replacements: [usuario.nombre, usuario.apellido, usuario.email, usuario.perfil, usuario.admin, usuario.contrasenia, id],
       type: QueryTypes.UPDATE
-    })
+    });
+
+    let resultado =  await myDataBase.query('SELECT * FROM usuarios WHERE id = ?', {
+      replacements: [id],
+      tpye: QueryTypes.SELECT
+    });
+
+    return resultado[0][0];
   }
 
   async function deleteUsuarios(id){

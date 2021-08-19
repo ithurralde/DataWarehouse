@@ -57,6 +57,7 @@
     border-radius: 5px;
     padding: 26px 0px 2px 22px;
     background: white;
+    z-index: 1;
 }
 
 .pInput{

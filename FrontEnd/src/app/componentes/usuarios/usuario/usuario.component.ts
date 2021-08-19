@@ -13,7 +13,7 @@ export class UsuarioComponent implements OnInit {
   // utilizo una copia para la parte de editar contactos, que no haya error de null
   // cuando justo se quiere cambiar de datos y hay que esperar a que se haga en la BD tiraba error
   // con la variable original
-  user_ant: Usuario;
+  // user_ant: Usuario;
   editable:boolean = false;
   edit:string;
   @Output() borrarUsuario = new EventEmitter<Usuario>();
@@ -22,7 +22,7 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.edit = "Editar";
-    this.user_ant = this.user;
+    // this.user_ant = this.user;
   }
 
   preEditar(){
@@ -40,7 +40,8 @@ export class UsuarioComponent implements OnInit {
       this.editable = false;
       this.edit = "Editar";
       this.usuarioService.updateUsuario(this.user).subscribe(
-        (respuesta:Usuario )=> {
+        (respuesta:Usuario)=> {
+          console.log("el usuario que me viene es: ", respuesta);
           this.user = respuesta;
         }
       );
