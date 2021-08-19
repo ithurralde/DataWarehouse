@@ -14,8 +14,8 @@
     <input class="email" placeholder="Email" [(ngModel)]="compania.email"><!-- {{compania.email}}-->
     <input class="telefono" placeholder="Telefono" [(ngModel)]="compania.telefono"><!-- {{compania.telefono}}-->
     <!-- <input class="ciudad" placeholder="Ciudad" [(ngModel)]="compania.ciudad">{{compania.ciudad}} -->
-    <select class="ciudades" name="datos">
-        <option class="ciudad" value={{ciudad}} *ngFor="let ciudad of ciudades">{{ciudad}}</option>
+    <select class="ciudades" name="datos" [(ngModel)]="compania.ciudad" ngDefaultControl>
+        <option class="ciudad" value={{ciudad}} *ngFor="let ciudad of ciudades" >{{ciudad}}</option>
      </select>
     <button class="btn btn-primary" (click)="editar()">Ok!</button>
 </section>

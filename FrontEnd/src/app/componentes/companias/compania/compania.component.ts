@@ -42,6 +42,8 @@ export class CompaniaComponent implements OnInit {
     this.compania_ant.email = this.compania.email;
     this.compania_ant.telefono = this.compania.telefono;
     this.compania_ant.ciudad = this.compania.ciudad;
+    console.log("wepa wepa wepa weeeepaaaaa: ", this.compania.ciudad);
+    console.log("wepa wepa wepa weeeepaaaaa el ant!!!: ", this.compania_ant.ciudad);
     this.editarCompania.emit(this.compania_ant);
   }
 
