@@ -15,6 +15,7 @@ export class RegionComponent implements OnInit {
   nombrePais: string;
   paises: PaisModule[] = [];
   puedeAgregar = false;
+  boton: string = "Add country";
   constructor(private paisService: PaisService, private companiaService: CompaniaService) { }
 
   ngOnInit(): void {
@@ -37,11 +38,19 @@ export class RegionComponent implements OnInit {
   }
 
   preAgregarPais(){
-    this.puedeAgregar = true;
+    if (!this.puedeAgregar){
+      this.puedeAgregar = true;
+      this.boton = "Cancelar";
+    }
+    else{
+      this.puedeAgregar = false;
+      this.boton = "Add country"
+    }
   }
 
   agregarPais(){
     this.puedeAgregar = false;
+    this.boton = "Add country"
     let pais = new PaisModule(this.nombrePais);
     console.log(pais.nombre);
     console.log(this.region);

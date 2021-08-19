@@ -27,3 +27,37 @@
 button{
     margin-right: 10px;
 }
+
+.agregarCiudad{
+    text-align: center;
+    border: 1px solid black;
+    width: 350px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    left: 28%;
+    top: 45px;
+    margin: 40px;
+}
+
+.modelEditar{
+    text-align: center;
+    border: 1px solid black;
+    width: 350px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    left: 235%;
+    z-index: 1;
+    background: white;
+}
+
+.botones{
+    display: flex;
+}

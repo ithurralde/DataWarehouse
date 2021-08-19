@@ -17,3 +17,21 @@
 button{
     margin-right: 10px;
 }
+
+.modelEditar{
+    text-align: center;
+    border: 1px solid black;
+    width: 350px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    top: 30px;
+    left: 36%;
+}
+
+.botones{
+    display: flex;
+}

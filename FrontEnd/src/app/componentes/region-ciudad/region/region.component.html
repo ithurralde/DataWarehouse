@@ -1,13 +1,13 @@
 <section class="contenedor">
     <h1 [(ngModel)]="region" name="fieldName" ngDefaultControl>{{ region.nombre }}</h1>
     <button (click)=preAgregarPais() class="btn btn-primary btnCountry">
-        <p>Add country</p>
+        <p [(ngModel)]="boton" ngDefaultControl>{{boton}}</p>
     </button>
 
-    <div *ngIf="puedeAgregar">
+    <div *ngIf="puedeAgregar" class="agregarPais">
         <p>Nombre del pais:</p>
         <input type="text" placeholder="Nombre del pais" [(ngModel)]=nombrePais name="fieldName" ngDefaultControl>
-        <button (click)=agregarPais()>Agregar</button>
+        <button class="btn btn-primary" (click)=agregarPais()>Agregar</button>
     </div>
 
     <app-pais *ngFor="let pais of paises"

@@ -22,6 +22,10 @@ export class CiudadComponent implements OnInit {
     this.ciudad_ant = new CiudadAnteriorModule("null", this.ciudad.nombre);
     this.puedeEditar = true;
   }
+
+  cancelar(){
+    this.puedeEditar = false;
+  }
   
   editar(){
     this.puedeEditar = false;

@@ -8,3 +8,16 @@ p {
     margin: 0;
     padding: 10px;
 }
+
+.agregarRegion{
+    text-align: center;
+    border: 1px solid black;
+    width: 350px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    left: 38%;
+}

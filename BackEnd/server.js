@@ -41,9 +41,6 @@ server.use((error, request, response, next) => {
 
 const autenticarUsuario = (request, response, next) => {
   try {
-      // console.log(request.headers);
-      // console.log(request.headers.authorization);
-      // token = request.headers.authorization.split(' ')[1];
       token = request.headers.authorization;
       console.log(token);
       const verificarToken = jwt.verify(token, jwtClave);
@@ -75,9 +72,6 @@ async function isAdmin(request, response, next){
 
 server.post('/login', (request, response) => {
   let usuario = request.body;
-  console.log(usuario.user);
-  console.log(usuario.contrasenia);
-  console.log(usuario.id);
   transactionHandler.loginUsuario(usuario.user, usuario.contrasenia)
   .then(respuesta => { 
     // el objeto {expiresIn: 15} hace que el token expira en 15 segundos.
@@ -109,8 +103,6 @@ server.post('/', (request, response) => {
 
 server.post('/usuarios/crear', autenticarUsuario, (request, response) => {
   let usuario = request.body;
-  console.log("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-  console.log(usuario);
   transactionHandler.crearUsuario(usuario)
   .then(respuesta =>
     response.status(201).send(respuesta)
@@ -131,14 +123,10 @@ server.get('/usuarios', isAdmin, autenticarUsuario, (request, response) => {
 
 server.put('/usuarios', isAdmin, autenticarUsuario, async (request, response) => {
   let user = request.body;
-  console.log(user);
   let id;
   await transactionHandler.getId(user.usuario)
   .then(respuesta => id = respuesta)
   .catch(error => response.status(404).send({ message: "Error al obtener el id del usuario: " + error}));
-  
-  console.log("el id antes de updatear: ");
-  console.log(id);
 
   await transactionHandler.updateUsuarios(user, id)
   .then(respuesta => response.status(200).send(respuesta))
@@ -148,18 +136,10 @@ server.put('/usuarios', isAdmin, autenticarUsuario, async (request, response) =>
 
 server.delete('/usuarios', isAdmin, autenticarUsuario, async (request, response) => {
   let userParam = request.query.user;
-  console.log("********************************************************************************************************");
-  console.log(userParam);
-  console.log("********************************************************************************************************");
   let id;
   await transactionHandler.getId(userParam)
   .then(respuesta => id = respuesta)
   .catch(error => response.status(404).send({ message: "Error al obtener el id del usuario: " + error}));
-
-  console.log("********************************************************************************************************");
-  console.log(id);
-  console.log("********************************************************************************************************");
-
   
   await transactionHandler.deleteUsuarios(id)
   .then(respuesta => response.status(200).send(respuesta))
@@ -178,8 +158,6 @@ server.get('/usuario', (request, response) => {
 // verifica que sea admin (para crear usuarios desde el front)
 server.post('/isAdmin', (request, response) => {
   let usuario = request.body;
-  console.log("el supuesto usuario: " + usuario);
-  console.log(usuario);
   transactionHandler.isAdmin(usuario)
   .then(resultado => response.status(200).send(resultado))
   .catch(error => response.status(404).send({message: "Hubo un error: " + error}));
@@ -197,8 +175,6 @@ server.get('/usuarios_log', (request, response) => {
 
 server.get('/usuarios/:id', (request, response) => {
   let idParam = request.query.id;
-  console.log("voy a entrar aca (el posta)");
-  console.log(idParam);
   transactionHandler.getUsuario(idParam)
   .then( respuesta => {
     response.status(200).send(respuesta);
@@ -208,8 +184,6 @@ server.get('/usuarios/:id', (request, response) => {
 })
 
 server.get('/regiones', autenticarUsuario, (request, response) => {
-  console.log("El token: ");
-  console.log(token);
   transactionHandler.getRegiones()
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos."}));
@@ -217,16 +191,12 @@ server.get('/regiones', autenticarUsuario, (request, response) => {
 
 server.post('/regiones', autenticarUsuario, (request, response) => {
   let region = request.body;
-  console.log(region);
-  console.log(region.nombre);
   transactionHandler.addRegion(region)
   .then( respuesta => response.status(200).send(respuesta))
   .catch( error => response.status(404).send( { message: "Error al agregar region: " + error} ));
 })
 
 server.get('/paises', autenticarUsuario, (request, response) => {
-  console.log("El token: ");
-  console.log(token);
   let regionParam = request.query.region;
   transactionHandler.getPaises(regionParam)
   .then(respuesta => response.status(200).send(respuesta))
@@ -242,8 +212,6 @@ server.put('/paises', autenticarUsuario, (request, response) => {
 
 server.post('/paises', autenticarUsuario, (request, response) => {
   let pais = request.body;
-  console.log("[server.paises] pais: ");
-  console.log(pais);
   transactionHandler.addPais(pais)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos " + error + "."}));
@@ -251,8 +219,6 @@ server.post('/paises', autenticarUsuario, (request, response) => {
 
 server.delete('/paises', autenticarUsuario, (request, response) => {
   let paisToDelete = request.query.pais;
-  console.log("[Server.Delete.Paises] pais a borrar : ");
-  console.log(paisToDelete);
   transactionHandler.borrarPais(paisToDelete)
   .then( respuesta => response.status(200).send(respuesta))
   .catch( error => response.status(404).send(error));
@@ -260,8 +226,6 @@ server.delete('/paises', autenticarUsuario, (request, response) => {
 
 server.get('/ciudad', autenticarUsuario, (request, response) => {
   let paisParam = request.query.pais;
-  console.log("ciudad param: ");
-  console.log(paisParam);
   transactionHandler.getCiudades(paisParam)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
@@ -275,7 +239,6 @@ server.get('/ciudades', autenticarUsuario, (request, response) => {
 
 server.get('/id_ciudad', autenticarUsuario, (request, response) => {
   let ciudad= request.query.get_ciudad;
-  console.log(ciudad);
   transactionHandler.getIdCiudad(ciudad)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
@@ -290,8 +253,6 @@ server.post('/ciudad', autenticarUsuario, (request, response) => {
 
 server.put('/ciudad', autenticarUsuario, (request, response) => {
   let nombre = request.body;
-  console.log("el nombre de ciudad, ciudad ant y pais: ");
-  console.log(nombre);
   transactionHandler.actualizarCiudad(nombre)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(400).send({message: "No se pudo conectar con la base de datos: " + error + "."}));
@@ -299,8 +260,6 @@ server.put('/ciudad', autenticarUsuario, (request, response) => {
 
 server.delete('/ciudad', autenticarUsuario, (request, response) => {
   let ciudadToDelete = request.query.ciudad;
-  console.log("[Server.Delete.Paises] pais a borrar : ");
-  console.log(ciudadToDelete);
   transactionHandler.borrarCiudad(ciudadToDelete)
   .then( respuesta => response.status(200).send(respuesta))
   .catch( error => response.status(404).send(error));
@@ -329,9 +288,6 @@ server.put('/companias', autenticarUsuario, (request, response) => {
 server.delete('/companias', autenticarUsuario, (request, response) => {
   let compania = request.query.compania;
   compania = JSON.parse(compania);
-  console.log("aca la compania para eliminar: ");
-  console.log(compania);
-  console.log(compania.compania);
   transactionHandler.borrarCompania(compania)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
@@ -339,9 +295,6 @@ server.delete('/companias', autenticarUsuario, (request, response) => {
 
 server.delete('/companiasPais', autenticarUsuario, (request, response) => {
   let nombre = request.query.ciudad;
-  console.log("************************************************************************************************************************************************");
-  console.log(nombre);
-  console.log("************************************************************************************************************************************************");
   transactionHandler.borrarCompaniaPais(nombre)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
@@ -349,9 +302,6 @@ server.delete('/companiasPais', autenticarUsuario, (request, response) => {
 
 server.delete('/companiasRegion', autenticarUsuario, (request, response) => {
   let pais = request.query.pais;
-  console.log("************************************************************************************************************************************************");
-  console.log(pais);
-  console.log("************************************************************************************************************************************************");
   transactionHandler.borrarCompaniaRegion(pais)
   .then(respuesta => response.status(200).send(respuesta))
   .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
@@ -366,7 +316,6 @@ server.get('/contactos', autenticarUsuario, (request, response) => {
 // tipo puede ser: region o pais
 server.get('/contactos/:tipo', autenticarUsuario, (request, response) => {
   let tipo = request.params.tipo;
-  console.log(tipo);
   let id_ciudad = request.query.id_ciudad;
   if (tipo == "region")
     transactionHandler.getRegion(id_ciudad)

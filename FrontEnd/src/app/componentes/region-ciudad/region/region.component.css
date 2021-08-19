@@ -7,3 +7,16 @@
     left: 82%;
     margin-top: -60px
 }
+
+.agregarPais{
+    text-align: center;
+    border: 1px solid black;
+    width: 350px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    left: 36%;
+}

@@ -21,6 +21,7 @@ export class PaisComponent implements OnInit {
   ciudad_ant: CiudadModule;
   prePais: actPaisModule;
   editable: boolean;
+  boton:string = "Add city";
   ciudades: CiudadModule[] = [];
   ciudad: string;
   puedoAgregar = false;
@@ -43,7 +44,18 @@ export class PaisComponent implements OnInit {
   }
 
   preAgregarCiudad(){
-    this.puedoAgregar = true;
+    if (!this.puedoAgregar){
+      this.puedoAgregar = true;
+      this.boton = "Cancelar";
+    }
+    else{
+      this.puedoAgregar = false;
+      this.boton = "Add city";
+    }
+  }
+
+  cancelar(){
+    this.editable = false;
   }
 
   agregarCiudad(){

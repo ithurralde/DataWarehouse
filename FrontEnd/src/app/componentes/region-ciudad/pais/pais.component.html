@@ -11,18 +11,22 @@
         </section>
         
 
-        <section>
+        <section *ngIf="editable" class="modelEditar">
+            <h4>Editar nombre del pais:</h4>
             <input type="text" [(ngModel)]="pais.nombre" name="fieldName" ngDefaultControl *ngIf="editable">
-            <button (click)="EditPais()" *ngIf="editable" class="btn btn-primary">OK!</button>
+            <section class="botones">
+                <button (click)="EditPais()" *ngIf="editable" class="btn btn-primary">OK!</button>
+                <button (click)="cancelar()" class="btn btn-primary">Cancelar</button>
+            </section>
         </section>
         <section class="btnAdd">
             <button (click)=preAgregarCiudad() class="btn btn-primary">
-                <p>Add city</p>
+                <p [(ngModel)]="boton" ngDefaultControl>{{boton}}</p>
             </button>
         </section>
     </section>
 
-    <div *ngIf="puedoAgregar">
+    <div *ngIf="puedoAgregar" class="agregarCiudad">
         <p>Nombre de la ciudad:</p>
         <input type="text" placeholder="Nombre de la ciudad" [(ngModel)]="ciudad" name="fieldName" ngDefaultControl>
         <button (click)=agregarCiudad() class="btn btn-primary">Agregar</button>
