@@ -114,16 +114,28 @@ select{
 
 .eliminarSeleccionados{
     color: #0683F9;
-    position: absolute;
-    left: 85%;
-    top: 280px;
     display: flex;
-    cursor: pointer;
     align-items: baseline;
-    width: 11%;
-    justify-content: space-evenly;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0px 135px 0px 95px;
+    position: absolute;
+    top: 270px;
 }
 
 .basura{
-    
+    display: flex;
+    align-items: baseline;
+    cursor: pointer;
+}
+
+.icono {
+    padding: 0 15px 0 0;
+}
+
+.seleccion{
+    background: #c8e1f8;
+    border-radius: 5px;
+    width: 12%;
+    text-align: center;
 }

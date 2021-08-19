@@ -214,6 +214,7 @@ export class ContactosComponent implements OnInit {
 
 
   cargarInput(){
+    this.desplegable = false;
     // ejecuta el input, bd
     console.log("Ejecutando...");
     console.log("Nombre del contacto: " + this.nombreContacto);

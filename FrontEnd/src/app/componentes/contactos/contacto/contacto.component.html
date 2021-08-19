@@ -1,5 +1,5 @@
 <section class="preContainer">
-  <section class="contactoContainer">
+  <section class="contactoContainer" [ngClass]="{seleccion: seleccionado == true}">
       <div class="form-check checkbox">
         <label class="form-check-label">
           <input type="checkbox" class="form-check-input check" name={{contacto.email}} id="" value="checkedValue" (click)="checkbox()">

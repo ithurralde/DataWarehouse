@@ -18,6 +18,7 @@ export class ContactoComponent implements OnInit {
   acciones:boolean;
   edit:boolean;
   modalEliminarContacto:boolean;
+  seleccionado:boolean;
   constructor(private contactoService: ContactoService) { }
 
   ngOnInit() {
@@ -40,6 +41,10 @@ export class ContactoComponent implements OnInit {
   }
 
   checkbox(){
+    if (!this.seleccionado)
+      this.seleccionado = true;
+    else
+      this.seleccionado = false;
     this.eliminarSeleccionados.emit(this.contacto);
   }
 
