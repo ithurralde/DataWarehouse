@@ -17,6 +17,7 @@ export class ContactoComponent implements OnInit {
   interes:number;
   acciones:boolean;
   edit:boolean;
+  modalEliminarContacto:boolean;
   constructor(private contactoService: ContactoService) { }
 
   ngOnInit() {
@@ -49,7 +50,17 @@ export class ContactoComponent implements OnInit {
       this.acciones = false;
   }
 
+  preEliminar(){
+    this.modalEliminarContacto = true;
+    this.acciones = false;
+  }
+
+  cancelarEliminar(){
+    this.modalEliminarContacto = false;
+  }
+
   eliminar(){
+    this.modalEliminarContacto = false;
     this.eliminarContacto.emit(this.contacto);
   }
 

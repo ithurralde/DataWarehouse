@@ -60,6 +60,7 @@ export class CompaniasComponent implements OnInit {
 
   agregar(){
     this.editable = false;
+    this.btnAgregar = "Agregar";
     let compania = new CompaniaModule(this.nombre, this.direccion, this.email, this.telefono, this.ciudad)
     console.log(this.ciudad);
     this.companiaService.agregar(compania).subscribe(
