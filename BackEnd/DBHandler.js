@@ -4,8 +4,8 @@ const { QueryTypes } = require('sequelize');
 const myDataBase = require('./conectionDB');
 
 async function crearUsuario(usuario) {
-    let existe = await myDataBase.query('SELECT nombre FROM usuarios WHERE nombre = ?', {
-      replacements: [usuario.nombre],
+    let existe = await myDataBase.query('SELECT nombre FROM usuarios WHERE usuario = ?', {
+      replacements: [usuario.usuario],
       type: QueryTypes.SELECT
     });
     if (existe.length == 0 && usuario.contrasenia === usuario.repcontrasenia){
