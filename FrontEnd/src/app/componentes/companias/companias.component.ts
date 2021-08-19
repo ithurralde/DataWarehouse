@@ -24,16 +24,10 @@ export class CompaniasComponent implements OnInit {
     this.companiaService.obtenerCompanias().subscribe(
       (companias: any) => {
         let i = 0;
-        console.log("companias tamaño");
-        console.log(companias.ciudades.length);
         for (let i = 0; i < companias.ciudades.length /*&& companias.ciudades.length === companias.companias.length*/; i++){
           this.companias.push(new CompaniaModule(companias.companias[i].nombre, companias.companias[i].direccion,
                                                 companias.companias[i].email, companias.companias[i].telefono,
                                                 companias.ciudades[i][0].nombre));
-
-          console.log(companias.companias[i].nombre);
-          console.log(companias.ciudades[i][0].nombre);
-          console.log("el tamaño del i cajeta este es de: " + i);
         }
         this.companiaService.obtenerCiudades().subscribe(
           (ciudad: any[]) => {
@@ -42,7 +36,6 @@ export class CompaniasComponent implements OnInit {
             })
           }
         )
-        // this.companias = companias;
       }
     );
   }
@@ -62,7 +55,6 @@ export class CompaniasComponent implements OnInit {
     this.editable = false;
     this.btnAgregar = "Agregar";
     let compania = new CompaniaModule(this.nombre, this.direccion, this.email, this.telefono, this.ciudad)
-    console.log(this.ciudad);
     this.companiaService.agregar(compania).subscribe(
       () => {
         console.log("Compañia " + compania.nombre + " agregada.")
