@@ -45,6 +45,7 @@
     </section>
     <button class="btn btn-primary" (click)="agregar()">Agregar contacto</button>
     <section class="eliminarSeleccionados" *ngIf="eliminarSeleccionados" (click)="eliminarContactos()">
+        <p>{{seleccionados}} seleccionados</p>
         <i class="fas fa-trash basura"></i>
         <p>Eliminar contactos</p>
     </section>

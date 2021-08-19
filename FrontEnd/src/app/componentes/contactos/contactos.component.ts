@@ -26,6 +26,7 @@ export class ContactosComponent implements OnInit {
   eliminarSeleccionados:boolean; // boolean para saber si hay que mostrar eliminar contactos seleccionados
   contactosSeleccionados: ContactoModule[] = [];
   ordenAscendente:boolean = true; // orden en el click de las flechitas
+  seleccionados:number = 0;
 
   // los datos que necesito para saber por que ordenar o filtrar
   regionesPaises: any[] = [];
@@ -385,8 +386,10 @@ export class ContactosComponent implements OnInit {
   // elimina todos los contactos seleccionados
   eliminarContactos(){
     let check = document.querySelector<HTMLInputElement>(".globalCheck");
-    if (check)
+    if (check){
       check.checked = false;
+    }
+    this.seleccionados = this.contactosSeleccionados.length;
     this.contactosSeleccionados.forEach(contacto => {
       this.eliminarContacto(contacto);
     });
@@ -399,9 +402,15 @@ export class ContactosComponent implements OnInit {
       this.eliminarSeleccionados = true;
       // para saber si desmarco todos los checks o no (para mostrar el mensaje de eliminar seleccionados)
       let isCheck = false;
+      this.seleccionados = 0;
       checks.forEach(check => {
-        if (check.checked)
+        if (check.checked){
           isCheck = true;
+          this.seleccionados++;
+        }
+        else{
+          // this.seleccionados--;
+        }
       });
       if (!isCheck)
         this.eliminarSeleccionados = false;
@@ -434,7 +443,8 @@ export class ContactosComponent implements OnInit {
 
   seleccionarTodos(){
     let checks = document.querySelectorAll<HTMLInputElement>(".check");
-    if (checks)
+    if (checks){
+      this.seleccionados = checks.length;
       if (!this.eliminarSeleccionados){
       this.eliminarSeleccionados = true;
       this.filtroContactos.forEach(contacto => {
@@ -451,6 +461,7 @@ export class ContactosComponent implements OnInit {
         });
         this.contactosSeleccionados = [];
       }
+    }
   }
 
   ordenar(dato:string){

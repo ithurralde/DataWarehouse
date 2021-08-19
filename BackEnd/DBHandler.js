@@ -342,10 +342,21 @@ async function crearUsuario(usuario) {
         companias[0][i].ciudad = nombreCiudad;
       }
     }
-
-    for (let i = 0; i < companias[0].length; i++){
-      if (companias[0][i] != undefined){
-        await borrarCompania(companias[0][i]);
+    if (companias[0].length != 0){
+      for (let i = 0; i < companias[0].length; i++){
+        if (companias[0][i] != undefined){
+          await borrarCompania(companias[0][i]);
+        }
+      }
+    }
+    else{
+      let contactos = await myDataBase.query('SELECT * FROM contactos WHERE id_ciudad = ?', {
+        replacements: [idCiudad[0].id],
+        tpye: QueryTypes.SELECT
+      });
+      for (let i = 0; i < contactos[0].length; i++){
+        console.log("estoy queriendo borrar el contaco: ", contactos[0][i])
+        await borrarContacto(contactos[0][i]);
       }
     }
 
