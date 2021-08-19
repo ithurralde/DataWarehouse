@@ -1,8 +1,8 @@
 .conteiner{
     display: flex;
-    justify-content: space-around;
-    justify-content: flex-end;
     padding: 3px 0;
+    justify-content: space-evenly;
+    margin-left: 10%;
 }
 
 p{

@@ -48,17 +48,14 @@ export class CrearContactoComponent implements OnInit {
   constructor(private contactoService: ContactoService) { }
 
   ngOnInit(): void {
-    // this.canal = [];
-    // cargar: muestra las regiones y companias en los select correspondientes
-    console.log("direccion en crear contacto: ", this.direccion)
     this.cargarRegiones();
     this.cargarCompanias();
   }
 
   getRegionSeleccionada(){
-    let region = document.querySelector<HTMLSelectElement>(".selectRegion");
-    if (region)
-      this.regionElegida = region.value;
+    // let region = document.querySelector<HTMLSelectElement>(".selectRegion");
+    // if (region)
+    //   this.regionElegida = region.value;
     console.log("la region elegida: " + this.regionElegida);
     this.cargarPaises();
   }
@@ -75,9 +72,9 @@ export class CrearContactoComponent implements OnInit {
   }
 
   getPaisSeleccionado(){
-    let pais = document.querySelector<HTMLSelectElement>(".selectPais");
-    if (pais)
-      this.paisElegido = pais.value;
+    // let pais = document.querySelector<HTMLSelectElement>(".selectPais");
+    // if (pais)
+    //   this.paisElegido = pais.value;
     console.log("la pais elegido: " + this.paisElegido);
     this.cargarCiudades();
   }
@@ -97,14 +94,12 @@ export class CrearContactoComponent implements OnInit {
   }
 
   getCiudadSeleccionada(){
-    let ciudad = document.querySelector<HTMLSelectElement>(".selectCiudad");
-    if (ciudad)
-      this.ciudadElegida = ciudad.value;
+    // let ciudad = document.querySelector<HTMLSelectElement>(".selectCiudad");
+    // if (ciudad)
+    //   this.ciudadElegida = ciudad.value;
     console.log("la ciudad elegida: " + this.ciudadElegida);
     this.contactoService.obtenerIdCiudad(this.ciudadElegida).subscribe(
       (ciudad: any) => {
-        console.log("HOLA");
-        console.log(ciudad);
         this.id_ciudad = ciudad[0].id;
       }
     )
@@ -130,26 +125,8 @@ export class CrearContactoComponent implements OnInit {
         console.log(companias.companias);
         for (let i = 0 ; i < companias.companias.length; i++)
           this.companias.push(companias.companias[i].nombre);
-          // console.log(companias.companias[i].nombre);
-        // if (companias != null){
-        //   companias.forEach(compania => {
-        //     this.companias.push(compania.nombre);
-        //   });
-        // }
       }
     );
-
-    // let aux:ContactoModule[] = [];
-    // this.contactos.forEach(contacto => {
-    //   let existe = false;
-    //   aux.forEach(elemento => {
-    //     if (elemento.compania == contacto.compania)
-    //       existe = true;
-    //   });
-    //   if (!existe)
-    //     aux.push(contacto);
-    // });
-    // this.contactos = aux;
   }
   
   crear(){

@@ -32,19 +32,19 @@
 <form class="parte2">
     <section class="region">
         <p>Región</p>
-        <select class="selectRegion" name="datos" (click)="getRegionSeleccionada()">
+        <select class="selectRegion" name="datos" (click)="getRegionSeleccionada()" [(ngModel)]="regionElegida">
             <option value={{region}} *ngFor="let region of regiones">{{region}}</option>
          </select>
     </section>
     <section class="pais">
         <p>País</p>
-        <select class="selectPais" name="datos" (click)="getPaisSeleccionado()">
+        <select class="selectPais" name="datos" (click)="getPaisSeleccionado()"  [(ngModel)]="paisElegido">
             <option value={{pais}} *ngFor="let pais of paises">{{pais}}</option>
          </select>
     </section>
     <section class="ciudad">
         <p>Ciudad</p>
-        <select class="selectCiudad" name="datos" (click)="getCiudadSeleccionada()">
+        <select class="selectCiudad" name="datos" (click)="getCiudadSeleccionada()" [(ngModel)]="ciudadElegida">
             <option value={{ciudad}} *ngFor="let ciudad of ciudades">{{ciudad}}</option>
          </select>
     </section>

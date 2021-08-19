@@ -20,6 +20,8 @@ export class FiltroCanalModule extends FiltroModule{
   public filtrar(element: string) {
     if (element == "Todos")
       return this.contactos;
+    if (element == undefined)
+      return this.contactos;
     let resultado: ContactoModule[] = [];
     this.contactos.forEach(contacto => {
       contacto.canal.forEach(canal => {
