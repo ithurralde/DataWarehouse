@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { Usuario } from 'src/app/model/Usuario.model';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
@@ -10,25 +10,19 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 })
 export class UsuarioComponent implements OnInit {
   @Input() user: Usuario;
+  // utilizo una copia para la parte de editar contactos, que no haya error de null
+  // cuando justo se quiere cambiar de datos y hay que esperar a que se haga en la BD tiraba error
+  // con la variable original
+  user_ant: Usuario;
   editable:boolean = false;
   edit:string;
   @Output() borrarUsuario = new EventEmitter<Usuario>();
+
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    this.edit = "Editar"
-    // creo que no necesito el get usuario, ya que no es necesario entrar a un usuario. Eso es para compañias
-    // this.usuarioService.obtenerUsuario().subscribe(
-    //   (usuario: Usuario) =>{
-    //     console.log("hola soy el supuesto usuario o id: " + usuario);
-    //     console.log(usuario.apellido);
-    //     this.user = usuario;
-    //   }
-    // ,
-    // error => { 
-    //   console.log(error);
-    //   console.error("Error: " + error.error.message)}
-    // );
+    this.edit = "Editar";
+    this.user_ant = this.user;
   }
 
   preEditar(){
@@ -44,6 +38,7 @@ export class UsuarioComponent implements OnInit {
 
   editar(){
       this.editable = false;
+      this.edit = "Editar";
       this.usuarioService.updateUsuario(this.user).subscribe(
         (respuesta:Usuario )=> {
           this.user = respuesta;
