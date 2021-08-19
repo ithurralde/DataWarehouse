@@ -19,17 +19,9 @@ export class DataBaseServices {
     url: string = "http://localhost:3000/";
     header = new HttpHeaders({
         'content-type': 'application/json',
-        //  'Authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc",
-        //  'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc'
     });
     tokenJWT:Object;
     id:String;
-
-
-    
-    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.pPblodGgwKxB3YDA5LHdYsx3LYiGjUUEjTkeIHUKKsU delilah
-    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyZW4iLCJpYXQiOjE1MTYyMzkwMjJ9.WSyqCRiTEDWEshWnkyLOqC2zqzN8irFQFdLnGhUnApc google
-    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiYWFhcyIsImlhdCI6MTYxOTMwMDcyNX0.Edn7ZsCQl8RpNTQsY6VM19HQ2u5myuA6e5zi-EFasfw postman
 
     constructor(private httpClient: HttpClient, private route:ActivatedRoute){
     }
@@ -43,25 +35,17 @@ export class DataBaseServices {
                                                     this.tokenJWT = String(this.tokenJWT).split("\"")[1];
                                                     this.header = new HttpHeaders({
                                                         'content-type': 'application/json',
-                                                        // 'Authorization': jwt,
                                                         'Authorization': String(this.tokenJWT),
                                                     });
 
                                                 },
                                     error =>  {
-                                                console.log("rompi por todos lados");
-                                                console.log(error)
+                                                console.error("Hubo un error: ", error)
                                             });
         return resultado;
     }
 
     crearUsuario(user: Usuario){
-        console.log("[DataBaseService] nombre: " + user.nombre);
-        console.log("[DataBaseService] apellido: " + user.apellido);
-        console.log("[DataBaseService] email: " + user.email);
-        // no funciona con json, le tengo que mandar el objeto (con json me llega un body vacio)
-        // let json = JSON.stringify(user);
-        // console.log("[DataBaseService] soy el json: " + json);
         return this.httpClient.post( this.url + "usuarios/crear", user, {headers: this.header});
     }
 
@@ -74,26 +58,6 @@ export class DataBaseServices {
     }
 
     obtenerUsuario(){
-        // no funciona nada de esto
-        // let param = new HttpParams();
-        // let id = param.get("id");
-        // console.log("quien concha soy");
-        // console.log(id);
-        // this.httpClient.get<Usuario>(this.url + "usuarios/:id").subscribe(
-        //     (user: Usuario) => {
-        //     console.log("pero quien poronga me mando a hacer esto?");
-        //     console.log(user);
-        //     console.log(id);
-        //     }
-        // );
-         
-        // return this.httpClient.get<Usuario>(this.url + "usuarios/:id");
-        // this.id = this.route.snapshot.paramMap.get('id');
-
-
-
-        // console.log("HOLANDAAAAAAAAAAAAAAAAAAAAAA");
-        // console.log(this.route.snapshot.paramMap.get('id'));
         return this.httpClient.get<Usuario>(this.url + "usuario");
     }
     
@@ -107,8 +71,6 @@ export class DataBaseServices {
     }
 
     isAdmin(usuario:string){
-        console.log("el username desde el front antes de ir al back: " + usuario);
-        console.log(usuario);
         return this.httpClient.post<Usuario>(this.url + "isAdmin", {usuario});
     }
 
@@ -121,8 +83,6 @@ export class DataBaseServices {
     }
 
     agregarRegion(region: RegionModule){
-        console.log("la region que estoy por agregar: ");
-        console.log(region);
         return this.httpClient.post<RegionModule>(this.url + "regiones", region, {headers: this.header});
     }
 

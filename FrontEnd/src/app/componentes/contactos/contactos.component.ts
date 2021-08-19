@@ -73,17 +73,9 @@ export class ContactosComponent implements OnInit {
         else 
           this.contactos = [];
         
-        console.log("contactos");
-        console.log(contactos);
+
       }
     );
-    // this.filtroContactos.push(new ContactoModule("Bren", "Wayne", "Senior", "andatealaremierda1994@gmail.com", "TeraCode", "Alberdi 1008", 0.25, [new CanalModule("Facebook", "www.facebook.com/bren", "Sin preferencia"), new CanalModule("Bobita", "www.whatsapp.com/aagus", "TuVieja")], 19),
-    //                               new ContactoModule("Alicia", "Maravilla", "UX Designer","as@gmail.com", "Grupo Assa", "Paz 451", 0.50, [new CanalModule("LinkedIn", "www.LinkedIn.com/alicia", "LinkedIn")], 5),
-    //                               new ContactoModule("Agus", "Ggrz", "UI Designer", "afNombreAp@gmail.com", "Sony", "Alberdi 1008", 0.25, [new CanalModule("Twitter", "www.twitter.com/aagus", "Twitter")], 6),
-    //                               new ContactoModule("Dark", "Souls", "Product","ads@gmail.com", "TeraCode", "Alberdi 1008", 0, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 15),
-    //                               new ContactoModule("Argentum", "Onlain", "Developer", "afd@gmail.com", "TeraCode", "9 de julio 52", 1, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 13),
-    //                               new ContactoModule("Devil", "MayCry",  "Developer","agg@gmail.com", "Sony", "Locura automatica 1545", 0.75, [new CanalModule("Whatsapp", "www.whatsapp.com/aagus", "LinkedIn")], 19),
-    //                               new ContactoModule("AgeOf", "Empires",  "Sales","ahg@gmail.com", "Globant", "High 956", 0.5, [new CanalModule("TuVieja", "www.whatsapp.com/aagus", "TuVieja")], 19));
   }
 
   obtenerRegion(element: ContactoModule){
@@ -156,7 +148,6 @@ export class ContactosComponent implements OnInit {
         element.canal = [];
         if (canales.length != 0){
           canales.forEach(canal => {
-            console.log(canal);
             element.canal.push(new CanalModule(canal[0].canal, canal[0].cuenta_usuario, canal[0].preferencia));
             // agrego los canales a este arreglo de canales para los filtros en el desplegable
             // que muestre solos los elementos que existen como canal de usuarios
@@ -193,7 +184,6 @@ export class ContactosComponent implements OnInit {
   desplegarInput(){
     if (this.desplegable){
       this.desplegable = false;
-      console.log("que paso con pais? " + this.pais);
     }
     else{
       this.desplegable = true;
@@ -233,7 +223,6 @@ export class ContactosComponent implements OnInit {
     console.log("Interes: " + this.interes);
 
     
-    console.log(this.contactos);
     this.filtroContactos = this.contactos;
 
     // filtro nombre apellido
@@ -291,13 +280,11 @@ export class ContactosComponent implements OnInit {
     if (this.crear && html){
       this.crear = false;
       html.style.backgroundColor = "transparent";
-      // html.style.opacity = "1";
     }
     else if (html){
       this.crear = true;
       this.desplegable = false;
       html.style.backgroundColor = "gray";
-      // html.style.opacity = "0.4";
     }
   }
 
@@ -370,9 +357,6 @@ export class ContactosComponent implements OnInit {
 
   // elimina un contacto a la vez
   eliminarContacto(contacto: ContactoModule){
-    // aca tendria que pegarle a la BD para borrar los contactos de a uno
-    console.log("contacto a eliminar: ", contacto);
-    // console.log(contacto);
     this.contactos.forEach((element, index) => {
       if (element == contacto){
         this.contactos.splice(index,1);
@@ -411,7 +395,6 @@ export class ContactosComponent implements OnInit {
   // precarga los contactos seleccionados para eliminarlos
   cargarEliminarContactos(contacto: ContactoModule){
     let checks = document.querySelectorAll<HTMLInputElement>(".check");
-    console.log("que concha es el checks? ", checks);
     if (checks){
       this.eliminarSeleccionados = true;
       // para saber si desmarco todos los checks o no (para mostrar el mensaje de eliminar seleccionados)
@@ -423,7 +406,6 @@ export class ContactosComponent implements OnInit {
       if (!isCheck)
         this.eliminarSeleccionados = false;
       checks.forEach((check, index) => {
-        console.log(check.checked + ", " + check.name);
         if (check.checked==false){
           if (this.filtroContactos[index] == contacto){
             let i = 0;
@@ -436,7 +418,6 @@ export class ContactosComponent implements OnInit {
           if (!this.existe(this.contactosSeleccionados, contacto)){
             this.contactosSeleccionados.push(contacto);
           }
-          console.log(this.contactosSeleccionados);
         }
       });
     }
@@ -502,7 +483,6 @@ export class ContactosComponent implements OnInit {
     this.ordenAscendente = this.cambiarOrden();
     for (let i = 0; i < this.filtroContactos.length; i++)
       for (let j = i+1; j < this.filtroContactos.length; j++){
-        // debugger;
         if (this.ordenAscendente){
           if (this.filtroContactos[i].nombre > this.filtroContactos[j].nombre){
             let contacto_auxiliar = this.filtroContactos[i];
@@ -524,7 +504,6 @@ export class ContactosComponent implements OnInit {
     this.ordenAscendente = this.cambiarOrden();
     for (let i = 0; i < this.filtroContactos.length; i++)
       for (let j = i; j < this.filtroContactos.length; j++){
-        // debugger;
         if (this.ordenAscendente){
           if (this.filtroContactos[i].id_ciudad > this.filtroContactos[j].id_ciudad){
             let contacto_auxiliar = this.filtroContactos[i];
@@ -546,7 +525,6 @@ export class ContactosComponent implements OnInit {
     this.ordenAscendente = this.cambiarOrden();
     for (let i = 0; i < this.filtroContactos.length; i++)
       for (let j = i; j < this.filtroContactos.length; j++){
-        // debugger;
         if (this.ordenAscendente){
           if (this.filtroContactos[i].compania > this.filtroContactos[j].compania){
             let contacto_auxiliar = this.filtroContactos[i];
@@ -568,7 +546,6 @@ export class ContactosComponent implements OnInit {
     this.ordenAscendente = this.cambiarOrden();
     for (let i = 0; i < this.filtroContactos.length; i++)
       for (let j = i; j < this.filtroContactos.length; j++){
-        // debugger;
         if (this.ordenAscendente){
           if (this.filtroContactos[i].cargo > this.filtroContactos[j].cargo){
             let contacto_auxiliar = this.filtroContactos[i];
@@ -590,7 +567,6 @@ export class ContactosComponent implements OnInit {
     this.ordenAscendente = this.cambiarOrden();
     for (let i = 0; i < this.filtroContactos.length; i++)
       for (let j = i+1; j < this.filtroContactos.length; j++){
-        // debugger;
         if (this.ordenAscendente){
           if (this.filtroContactos[i].interes > this.filtroContactos[j].interes){
             let contacto_auxiliar = this.filtroContactos[i];

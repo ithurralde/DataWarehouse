@@ -31,7 +31,6 @@ export class UsuarioService {
                 if (user.usuario == usuario && user.contrasenia == contraseña)
                     retorno = true;
                 });
-        console.log(retorno);
         return retorno;
     }
 
