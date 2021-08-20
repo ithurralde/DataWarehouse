@@ -50,7 +50,10 @@ export class RegionCiudadComponent implements OnInit {
     let region = new RegionModule(this.region);
     this.regiones.push(region);
     this.regionService.agregarRegion(region).subscribe(
-      ()=> { console.log("Agregada la region " + region.nombre + " a la BD.")}
+      ()=> { console.log("Agregada la region " + region.nombre + " a la BD.")},
+      (error) => {
+        console.error("Hubo un error: ", error)
+      }
     );
   }
 

@@ -30,7 +30,10 @@ export class UsuariosComponent implements OnInit {
       if (this.usuarios[i].usuario === usuario.usuario){
         this.usuarios.splice(i,1);
         this.usuarioService.borrarUsuario(usuario).subscribe(
-         () => console.log("Usuario eliminado: " + usuario.usuario)
+         () => console.log("Usuario eliminado: " + usuario.usuario),
+         (error) => {
+           console.error("Hubo un error: ", error)
+         }
         );
       }
     }

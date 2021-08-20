@@ -43,6 +43,9 @@ export class UsuarioComponent implements OnInit {
         (respuesta:Usuario)=> {
           console.log("el usuario que me viene es: ", respuesta);
           this.user = respuesta;
+        },
+        (error) => {
+          console.error("Hubo un error: ", error)
         }
       );
   }

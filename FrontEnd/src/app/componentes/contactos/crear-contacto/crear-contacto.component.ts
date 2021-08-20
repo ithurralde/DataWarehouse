@@ -67,6 +67,9 @@ export class CrearContactoComponent implements OnInit {
           regiones.forEach(region => {
             this.regiones.push(region.region);
           });
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -89,6 +92,9 @@ export class CrearContactoComponent implements OnInit {
               this.paises.push(pais.nombre);
           });
         console.log(this.paises);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -101,6 +107,9 @@ export class CrearContactoComponent implements OnInit {
     this.contactoService.obtenerIdCiudad(this.ciudadElegida).subscribe(
       (ciudad: any) => {
         this.id_ciudad = ciudad[0].id;
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     )
   }
@@ -114,7 +123,10 @@ export class CrearContactoComponent implements OnInit {
             console.log(ciudad);
             this.ciudades.push(ciudad.nombre);
           });
-      })
+      }),
+      (error) => {
+        console.error("Hubo un error: ", error)
+      }
     );
   }
 
@@ -125,6 +137,9 @@ export class CrearContactoComponent implements OnInit {
         console.log(companias.companias);
         for (let i = 0 ; i < companias.companias.length; i++)
           this.companias.push(companias.companias[i].nombre);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }

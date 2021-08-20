@@ -76,6 +76,9 @@ export class ContactosComponent implements OnInit {
           this.contactos = [];
         
 
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -103,6 +106,9 @@ export class ContactosComponent implements OnInit {
         
         this.regionesPaises = this.regionesPaises.sort();  
         this.obtenerPais(element);    
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -126,6 +132,9 @@ export class ContactosComponent implements OnInit {
               }
         })
         this.regionesPaises = this.regionesPaises.sort();
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -163,6 +172,9 @@ export class ContactosComponent implements OnInit {
           });
         }
         console.log("el canal %o tiene %o canales", element, element.canal);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
 
@@ -298,8 +310,11 @@ export class ContactosComponent implements OnInit {
         this.crear = false;
         if (html)
           html.style.backgroundColor = "transparent";
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
-    )
+    );
   }
 
   cerrarVentana(bool: boolean){

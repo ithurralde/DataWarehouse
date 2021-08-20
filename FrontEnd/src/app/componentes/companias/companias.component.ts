@@ -34,8 +34,14 @@ export class CompaniasComponent implements OnInit {
             ciudad.forEach(city => {
               this.companias_ciudad.push(city.nombre);
             })
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
           }
         )
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -59,6 +65,9 @@ export class CompaniasComponent implements OnInit {
       () => {
         console.log("Compañia " + compania.nombre + " agregada.")
         this.companias.push(compania);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -70,6 +79,9 @@ export class CompaniasComponent implements OnInit {
           () => {
             console.log("Compañia " + compania + " borrada con exito.");
             this.companias.splice(i, 1);
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
           }
         );
     }
@@ -87,6 +99,9 @@ export class CompaniasComponent implements OnInit {
                   console.log("Compañia " + compania_ant + " editada con exito.");
                   this.companias[i] = new CompaniaModule(compania_ant.nombre, compania_ant.direccion, 
                                                         compania_ant.email, compania_ant.telefono, compania_ant.ciudad);
+                },
+                (error) => {
+                  console.error("Hubo un error: ", error)
                 }
               );
             }

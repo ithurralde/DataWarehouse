@@ -68,6 +68,9 @@ export class PaisComponent implements OnInit {
       () => {
         console.log("Ciudad " + ciudad + " agregada correctamente.");
         this.ciudades.push(ciudad);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
@@ -84,9 +87,16 @@ export class PaisComponent implements OnInit {
               () => {
                 console.log("Ciudad " + this.ciudades[i] + " eliminada correctamente.");
                 this.ciudades.splice(i,1);
+              },
+              (error) => {
+                console.error("Hubo un error: ", error)
               }
             );
-          });
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
+          }
+        );
       }
     }
   }
@@ -112,6 +122,9 @@ export class PaisComponent implements OnInit {
           () => {
             console.log("Ciudad " + ciudad_ant.nombre_anterior + " actualizada correctamente.");
             this.ciudades[i] = new CiudadModule(ciudad_ant.nombre);
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
           }
         );
       }

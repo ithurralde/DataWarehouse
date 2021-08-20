@@ -56,7 +56,10 @@ export class RegionComponent implements OnInit {
     console.log(this.region);
     this.paises.push(pais);
     this.paisService.agregarPais(this.region, pais).subscribe(
-      ()=> console.log("Agregado el pais " + pais.nombre + " a la BD.")
+      ()=> console.log("Agregado el pais " + pais.nombre + " a la BD."),
+      (error) => {
+        console.error("Hubo un error: ", error)
+      }
     )
   }
 
@@ -69,9 +72,16 @@ export class RegionComponent implements OnInit {
               () => {
                 console.log("Pais " + this.paises[i] + " eliminado correctamente.")
                 this.paises.splice(i,1);
+              },
+              (error) => {
+                console.error("Hubo un error: ", error)
               }
             );
-          });
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
+          }
+        )
       }
     }
   }
@@ -84,6 +94,9 @@ export class RegionComponent implements OnInit {
           () => {
             console.log("Pais " + pais + " eliminado correctamente.");
             this.paises[i].nombre = pais.nombre;
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
           }
         );
       }

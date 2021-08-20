@@ -29,6 +29,9 @@ export class ContactoComponent implements OnInit {
         this.region = region[0].region;
         console.log("la region es: " + region[0].region);
         console.log(region[0].region);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
     this.contactoService.obtenerPais(this.contacto.id_ciudad).subscribe(
@@ -36,6 +39,9 @@ export class ContactoComponent implements OnInit {
         this.pais = pais[0].nombre;
         console.log("el pais es: " + pais[0].nombre);
         console.log(pais[0].nombre);
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }

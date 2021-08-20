@@ -33,8 +33,14 @@ export class HeaderComponent implements OnInit {
             console.log(admin[0]);
             console.log(admin[0].admin);
             this.isAdmin = admin[0].admin;
+          },
+          (error) => {
+            console.error("Hubo un error: ", error)
           }
         )
+      },
+      (error) => {
+        console.error("Hubo un error: ", error)
       }
     );
   }
