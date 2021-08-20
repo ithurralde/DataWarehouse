@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-08-2021 a las 00:58:27
+-- Tiempo de generación: 20-08-2021 a las 17:13:07
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -90,8 +90,8 @@ CREATE TABLE `companias` (
 --
 
 INSERT INTO `companias` (`id`, `nombre`, `direccion`, `email`, `telefono`, `id_ciudad`) VALUES
-(2, 'Netflix', 'Alberdi 1008', 'netflix@gmail.com', '+542262458795', 12),
-(87, 'Ecom Experts', 'direccion 1', 'ecom@gmail.com', '+542262484865', 12),
+(2, 'Netflix', 'direccion netflix', 'netflix@gmail.com', '+542262458795', 12),
+(87, 'Ecom Experts', 'direccion Econ experts', 'ecom@gmail.com', '+542262484865', 12),
 (88, 'Acámica', 'direccion acamica', 'acamica@gmail.com', '+542262458795', 6),
 (89, 'Despegar', 'direccion despegar', 'despegar@gmail.com', '+542262458866', 13),
 (90, 'Bootmaker', 'direccion bootmaker', 'bootmaker@gmail.com', '+542262457744', 16),
@@ -328,7 +328,7 @@ ALTER TABLE `companias`
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT de la tabla `paises`

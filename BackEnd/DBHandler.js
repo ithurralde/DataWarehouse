@@ -345,10 +345,20 @@ async function crearUsuario(usuario) {
       }
     }
     if (companias[0].length != 0){
+      // primero borro las companias, y las companias borra los contactos que pertenecen a esa compania
       for (let i = 0; i < companias[0].length; i++){
         if (companias[0][i] != undefined){
           await borrarCompania(companias[0][i]);
         }
+      }
+      // luego borro los contactos que esten en esa ciudad (no importa la compania a la cual pertenecen)
+      let contactos = await myDataBase.query('SELECT * FROM contactos WHERE id_ciudad = ?', {
+        replacements: [idCiudad[0].id],
+        tpye: QueryTypes.SELECT
+      });
+      for (let i = 0; i < contactos[0].length; i++){
+        console.log("estoy queriendo borrar el contaco: ", contactos[0][i])
+        await borrarContacto(contactos[0][i]);
       }
     }
     else{
@@ -412,10 +422,10 @@ async function crearUsuario(usuario) {
       });
     }
 
-    await myDataBase.query('DELETE FROM contactos_trabajan_en_companias WHERE id_contacto = ?', {
-        replacements: [id_contacto[0].id],
-        type: QueryTypes.DELETE
-    });
+    // await myDataBase.query('DELETE FROM contactos_trabajan_en_companias WHERE id_contacto = ?', {
+    //     replacements: [id_contacto[0].id],
+    //     type: QueryTypes.DELETE
+    // });
 
     // borro el contacto de la compania
     await myDataBase.query('DELETE FROM contactos_trabajan_en_companias WHERE id_contacto = ?', {
