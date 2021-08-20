@@ -1,6 +1,6 @@
 # DataWarehouse
 
-_El proyecto contiene dos carpetas: Back-end y Front-end_
+
 
 _Instalaciones que se hicieron en el proyecto:_
 ## instalar npm para gestion de proyectos y node para correr el servidor
@@ -10,6 +10,7 @@ _https://www.npmjs.com/get-npm_
 _https://www.apachefriends.org/es/download.html_
 
 # IMPORTANTE
+_El proyecto contiene dos carpetas: Back-end y Front-end. Por ende, se necesitan abrir dos consolas para cada una de estas carpetas; ya que ambas necesitan ejecutar distintos scripts desarrollados para que funcione toda la aplicación DataWarehouse de manera correcta._
 # Instalar bibliotecas
 _El proyecto se envió sin las bibliotecas necesarias para poder ejecutar tanto el back-end como el front-end, por lo que es necesario ingresar a cada carpeta correspondiente:_
 _En una consola dentro de visual studio code escribir: "cd BackEnd", y luego escribir "npm i" para que automáticamente se instalen las bibliotecas utilizadas. (No cerrar la consola, dejarla abierta con la carpeta de back end ya que luego se utilizará para inicializar el server)._
