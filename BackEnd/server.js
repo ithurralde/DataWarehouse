@@ -33,7 +33,7 @@ server.use(cors());
 //middleware global
 server.use((error, request, response, next) => {
     if (error) {
-      response.status(500).send('Error');
+      response.status(500).send('Error global: ', error);
     } else {
       next();
     }
@@ -108,7 +108,7 @@ server.post('/usuarios/crear', autenticarUsuario, (request, response) => {
     response.status(201).send(respuesta)
   )
   .catch(respuesta => 
-    response.status(400).send({ message: "No se pudo crear el usuario."})
+    response.status(400).send({ message: "Ya existe un usuario con ese nombre de cuenta o mail asignado."})
   );
 });
 
@@ -290,27 +290,27 @@ server.delete('/companias', autenticarUsuario, (request, response) => {
   compania = JSON.parse(compania);
   transactionHandler.borrarCompania(compania)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+  .catch(error => response.status(404).send({ message: "No se pudo borrar la compania. " + error}));
 })
 
 server.delete('/companiasPais', autenticarUsuario, (request, response) => {
   let nombre = request.query.ciudad;
   transactionHandler.borrarCompaniaPais(nombre)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+  .catch(error => response.status(404).send({ message: "Hubo un error al intentar borrar la compañia. " + error}));
 })
 
 server.delete('/companiasRegion', autenticarUsuario, (request, response) => {
   let pais = request.query.pais;
   transactionHandler.borrarCompaniaRegion(pais)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+  .catch(error => response.status(404).send({ message: "Hubo un error al intentar borrar la compañia. " + error}));
 })
 
 server.get('/contactos', autenticarUsuario, (request, response) => {
   transactionHandler.getContactos()
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+  .catch(error => response.status(404).send({ message: "Hubo un error en el server. " + error}));
 });
 
 // tipo puede ser: region o pais
@@ -320,11 +320,11 @@ server.get('/contactos/:tipo', autenticarUsuario, (request, response) => {
   if (tipo == "region")
     transactionHandler.getRegion(id_ciudad)
     .then(respuesta => response.status(200).send(respuesta))
-    .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+    .catch(error => response.status(404).send({ message: "Hubo un error en el server. " + error}));
   else if (tipo == "pais")
     transactionHandler.getPais(id_ciudad)
     .then(respuesta => response.status(200).send(respuesta))
-    .catch(error => response.status(404).send({ message: "No existe la ciudad. " + error}));
+    .catch(error => response.status(404).send({ message: "Hubo un error en el server. " + error}));
 });
 
 server.get('/contactosCanales', autenticarUsuario, (request, response) => {
@@ -332,14 +332,14 @@ server.get('/contactosCanales', autenticarUsuario, (request, response) => {
   contacto = JSON.parse(contacto);
   transactionHandler.getCanales(contacto)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existen contactos. " + error}));
+  .catch(error => response.status(404).send({ message: "Hubo un error en el server. " + error}));
 })
 
 server.post('/contactos', autenticarUsuario, (request, response) => {
   let contacto = request.body;
   transactionHandler.addContacto(contacto)
   .then(respuesta => response.status(200).send(respuesta))
-  .catch(error => response.status(404).send({ message: "No existe la ciudad, la compañia o ya existe un usuario con ese mail. " + error}));
+  .catch(error => response.status(404).send({ message: "No existe la ciudad, la compañia o ya existe un contacto con ese mail. " + error}));
 });
 
 server.put('/contactos', autenticarUsuario, (request, response) => {

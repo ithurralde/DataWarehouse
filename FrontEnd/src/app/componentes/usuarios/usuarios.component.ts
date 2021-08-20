@@ -20,7 +20,7 @@ export class UsuariosComponent implements OnInit {
         this.usuarios = usuarios;
       },
       error => { 
-        console.log(error);
+        // console.log(error);
         console.error("Error: " + error.error.message)}
     );
   }

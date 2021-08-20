@@ -40,6 +40,8 @@ async function crearUsuario(usuario) {
       replacements: [usuario.usuario],
       type: QueryTypes.SELECT
     })
+    if (resultado.length == 0)
+      return status(404);
     return resultado;
   }
   
