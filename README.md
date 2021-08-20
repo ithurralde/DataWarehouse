@@ -40,9 +40,10 @@ _En la consola bash de visual studio code se inicializo npm init --yes, y se ins
 
 ### Comando para ejecutar el servidor
 _En la consola que teniamos para el back-end (dentro de visual studio code), cuando instalamos las bibliotecas, escribir: "node .\server.js" (sin comillas) para correr el servidor._
+_Recuerde que para ejecutar el servidor es necesario estar ubicado (dentro de la consola) en la carpeta de Back End._
 
 
 # Front-End:
 _En esta parte, como se utilizó el framework de Angular para realizar el proyecto, solo es necesario ingresar el siguiente comando:_
-_Primero ingresar a la carpeta de Front End desde una consola nueva (distinta a la consola que se utilizo para correr el servidor en el back-end) de visual studio code (escribir): "cd FrontEnd" (sin comiilas)._
-_Luego, ingresar el comando "ng serve -o", para que inicie el servidor desde angular y automáticamente abra su navegador por defecto con la URL del proyecto base_
+_"ng serve -o", para que inicie el servidor desde angular y automáticamente abra su navegador por defecto con la URL del proyecto base._
+_Recuerde que para ejecutar el servidor de Angular es necesario estar ubicado (dentro de la consola) en la carpeta de Front End._
