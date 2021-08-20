@@ -44,14 +44,22 @@
         </section>
     </section>
     <button class="btn btn-primary" (click)="agregar()">Agregar contacto</button>
-    <section class="eliminarSeleccionados" *ngIf="eliminarSeleccionados" (click)="eliminarContactos()">
+    <section class="eliminarSeleccionados" *ngIf="eliminarSeleccionados">
         <p class="seleccion" >{{seleccionados}} seleccionados</p>
-        <section class="basura">
+        <section class="basura" (click)="modalEliminarContactos()">
             <i class="fas fa-trash icono"></i>
             <p>Eliminar contactos</p>
         </section>
     </section>
 </section>
+
+<section *ngIf="modalEliminarContacto" class="modalEliminar">
+    <h1>¿Seguro desea eliminar los contactos seleccionados?</h1>
+    <section class="botonesModalEliminar">
+      <button (click)="eliminarContactos()" class="btn btn-primary">Eliminar</button>
+      <button (click)="cancelarEliminar()" class="btn btn-primary">Cancelar</button>
+    </section>
+  </section>
 <!-- [hidden]="!crear" -->
 <!-- [contactosFull]="contactoFull" -->
 <app-crear-contacto *ngIf="crear"

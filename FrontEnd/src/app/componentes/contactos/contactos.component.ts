@@ -27,6 +27,7 @@ export class ContactosComponent implements OnInit {
   contactosSeleccionados: ContactoModule[] = [];
   ordenAscendente:boolean = true; // orden en el click de las flechitas
   seleccionados:number = 0;
+  modalEliminarContacto:boolean = false;
 
   // los datos que necesito para saber por que ordenar o filtrar
   regionesPaises: any[] = [];
@@ -383,8 +384,17 @@ export class ContactosComponent implements OnInit {
     this.eliminarSeleccionados = false;
   }
 
+  modalEliminarContactos(){
+    this.modalEliminarContacto = true;
+  }
+
+  cancelarEliminar(){
+    this.modalEliminarContacto = false;
+  }
+
   // elimina todos los contactos seleccionados
   eliminarContactos(){
+    this.modalEliminarContacto = false;
     let check = document.querySelector<HTMLInputElement>(".globalCheck");
     if (check){
       check.checked = false;
