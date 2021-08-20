@@ -12,9 +12,9 @@ _https://www.apachefriends.org/es/download.html_
 # IMPORTANTE
 # Instalar bibliotecas
 _El proyecto se envió sin las bibliotecas necesarias para poder ejecutar tanto el back-end como el front-end, por lo que es necesario ingresar a cada carpeta correspondiente:_
-_En una consola dentro de visual studio code escribir: "cd BackEnd", y luego escribir "npm i" para que automáticamente se instalen las bibliotecas utilizadas._
+_En una consola dentro de visual studio code escribir: "cd BackEnd", y luego escribir "npm i" para que automáticamente se instalen las bibliotecas utilizadas. (No cerrar la consola, dejarla abierta con la carpeta de back end ya que luego se utilizará para inicializar el server)._
 
-_De igual forma, se necesita ingresar a la carpeta de front-end, por lo tanto se debe escribir en una nueva consola: "cd FrontEnd",  y luego escribir "npm i" para que automáticamente se instalen las bibliotecas utilizadas._
+_De igual forma, se necesita ingresar a la carpeta de front-end, por lo tanto se debe escribir en una nueva consola: "cd FrontEnd",  y luego escribir "npm i" para que automáticamente se instalen las bibliotecas utilizadas. (No cerrar la consola, dejarla abierta con la carpeta de front end ya que luego se utilizará para inicializar el server de Angular)._
 
 
 # Back-End:
@@ -39,8 +39,7 @@ _En la consola bash de visual studio code se inicializo npm init --yes, y se ins
 * npm i cors
 
 ### Comando para ejecutar el servidor
-_En una consola de visual studio code escribir: "cd BackEnd" (sin comillas) para acceder a la carpeta de back end._
-_Luego escribir: "node .\server.js" (sin comillas) para correr el servidor_
+_En la consola que teniamos para el back-end (dentro de visual studio code), cuando instalamos las bibliotecas, escribir: "node .\server.js" (sin comillas) para correr el servidor._
 
 
 # Front-End:
